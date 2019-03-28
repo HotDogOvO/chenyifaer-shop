@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.chenyifaer</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>chenyifaer-shop</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.chenyifaer</groupId>
