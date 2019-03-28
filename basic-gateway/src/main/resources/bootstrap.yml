@@ -1,0 +1,45 @@
+server:
+  port: 7001
+
+#服务名
+spring:
+  application:
+    name: gateway-service
+  #连接config配置中心
+  cloud:
+    config:
+      failFast: true
+      #server端ip地址
+      uri: http://basic_config@127.0.0.1:7005/
+
+#eureka注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.101.58.198:7008/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+#zuul网关配置
+zuul:
+  ignored-services: '*'
+  sensitiveHeaders:
+  routes:
+    api-back:
+      path: /api/back/**
+      serviceId: back-service
+      url: http://127.0.0.1:7002
+      strip-prefix: false
+    api-web:
+      path: /api/web/**
+      serviceId: web-service
+      url: http://127.0.0.1:7003
+      strip-prefix: false
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  add-proxy-headers: true

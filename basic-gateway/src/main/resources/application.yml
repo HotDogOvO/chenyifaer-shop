@@ -1,0 +1,6 @@
+#读取配置文件
+#spring:
+#  cloud:
+#    config:
+#      #数据库配置 redis配置
+#      name: dbConfig,  redisConfig, logConfig

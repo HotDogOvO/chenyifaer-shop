@@ -1,0 +1,37 @@
+server:
+  port: 7002
+
+spring:
+  #服务名
+  application:
+    name: back-service
+  #config配置中心
+  cloud:
+    config:
+      failFast: true
+      uri: http://basic_config@127.0.0.1:7005/
+
+#eureka注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.101.58.198:7008/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+#swagger支持
+swagger:
+  is_enable: true
+
+#MybatisPlus配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: null
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.chenyifaer.back.entity.po

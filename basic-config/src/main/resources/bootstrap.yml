@@ -1,0 +1,25 @@
+#配置中心端口
+server:
+  port: 7005
+
+#配置中心名
+spring:
+  application:
+    name: config-service
+  security:
+    user:
+      name: basic_config
+
+#注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.101.58.198:7008/eureka/
+    registry-fetch-interval-seconds: 5
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+

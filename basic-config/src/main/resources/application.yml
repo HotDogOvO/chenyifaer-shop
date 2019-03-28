@@ -1,0 +1,11 @@
+#配置中心名
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/configs
+        bootstrap: true
+

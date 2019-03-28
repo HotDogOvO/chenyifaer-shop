@@ -8,19 +8,28 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>com.chenyifaer</groupId>
-    <artifactId>basic-eureka</artifactId>
+    <artifactId>basic-config</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>basic-eureka</name>
+    <name>basic-config</name>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
     <dependencies>
+        <!-- config配置中心 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
+
+        <!-- eureka注册中心 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>
