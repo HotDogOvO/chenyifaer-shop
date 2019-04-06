@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.AdminPermissionDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.AdminPermissionPO">
+        <id column="admin_permission_id" property="adminPermissionId" />
+        <result column="admin_menu_id" property="adminMenuId" />
+        <result column="admin_permission_code" property="adminPermissionCode" />
+        <result column="admin_permission_url" property="adminPermissionUrl" />
+        <result column="admin_permission_text" property="adminPermissionText" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        admin_permission_id, admin_menu_id, admin_permission_code, admin_permission_url, admin_permission_text, create_time, update_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.AdminUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.AdminUserPO">
+        <id column="admin_user_id" property="adminUserId" />
+        <result column="admin_user_account" property="adminUserAccount" />
+        <result column="admin_user_password" property="adminUserPassword" />
+        <result column="admin_user_name" property="adminUserName" />
+        <result column="admin_user_phone" property="adminUserPhone" />
+        <result column="admin_user_email" property="adminUserEmail" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        admin_user_id, admin_user_account, admin_user_password, admin_user_name, admin_user_phone, admin_user_email, status, create_time, update_time
+    </sql>
+
+</mapper>
