@@ -1,0 +1,8 @@
+logging:
+  level:
+    root: info
+    com.chenyifaer.basic.authorization: debug
+    com.chenyifaer.basic.gateway: debug
+    com.chenyifaer.back: debug
+    com.chenyifaer.web: debug
+  file: logs/${spring.application.name}.log

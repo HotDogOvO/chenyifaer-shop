@@ -1,0 +1,20 @@
+spring:
+  ##rabbitMQ基本配置
+  rabbitmq:
+    addresses: 47.101.58.198:5672
+    username: chenyifaer
+    password: cyfe67373
+    #虚拟主机
+    virtual-host: chenyifaer
+    publisher-confirms: true
+    #连接超时时间15s
+    connection-timeout: 15000
+    ##消费端配置
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 10
+        #自动签收
+        acknowledge-mode: AUTO
+        #限流
+        prefetch: 1

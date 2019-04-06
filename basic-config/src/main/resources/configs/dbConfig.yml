@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.101.58.198:3306/chenyifaer_shop?useSSL=false&characterEncoding=utf8
+    username: chenyifaer
+    password: cyfe67373
+    max-active: 10
+    max-idle: 5
+    min-idle: 2
+    initial-size: 6s

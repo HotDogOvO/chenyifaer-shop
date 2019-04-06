@@ -1,0 +1,18 @@
+#负载配置
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+feign:
+  hystrix:
+    enabled: true
+
+#熔断配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
