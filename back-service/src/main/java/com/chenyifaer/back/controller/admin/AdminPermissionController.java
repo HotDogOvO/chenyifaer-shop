@@ -1,4 +1,4 @@
-package com.chenyifaer.back.controller;
+package com.chenyifaer.back.controller.admin;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

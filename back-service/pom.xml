@@ -14,6 +14,10 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <mybatisplus.version>3.0.6</mybatisplus.version>
+        <pagehelper.version>1.2.5</pagehelper.version>
+        <redis.version>2.0.6.RELEASE</redis.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencies>
@@ -29,16 +33,66 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
+        <!-- mybatisPlus 插件 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.version}</version>
+        </dependency>
+        <!-- mybatisPlus 生成模板 -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.28</version>
+        </dependency>
+
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!--通用common包-->
+        <dependency>
+            <groupId>com.chenyifaer</groupId>
+            <artifactId>basic-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+
+
+
+
+        <!-- mybatis分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+
+        <!-- redis支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+
+        <!-- rabbitmq -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <!-- Swagger支持 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>${swagger.version}</version>
         </dependency>
 
     </dependencies>

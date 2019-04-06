@@ -26,7 +26,7 @@ public class AdminUserPO extends Model<AdminUserPO> {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "admin_user_id", type = IdType.AUTO)
-    private String adminUserId;
+    private Integer adminUserId;
 
     @ApiModelProperty(value = "账号")
     private String adminUserAccount;
@@ -44,7 +44,7 @@ public class AdminUserPO extends Model<AdminUserPO> {
     private String adminUserEmail;
 
     @ApiModelProperty(value = "状态（0：禁用 1：启用）")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

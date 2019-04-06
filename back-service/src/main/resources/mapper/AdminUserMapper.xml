@@ -20,4 +20,44 @@
         admin_user_id, admin_user_account, admin_user_password, admin_user_name, admin_user_phone, admin_user_email, status, create_time, update_time
     </sql>
 
+    <!-- 查询后台用户列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.AdminUserVO">
+        select
+            u.admin_user_id adminUserId,
+            u.admin_user_account adminUserAccount,
+            u.admin_user_name adminUserName,
+            u.admin_user_phone adminUserPhone,
+            u.admin_user_email adminUserEmail,
+            u.status status,
+            u.create_time createTime,
+            r.admin_role_name adminRoleName
+        from
+            t_admin_user u
+        inner join
+            t_admin_role r
+        inner join
+            t_admin_user_role ur
+        on u.admin_user_id = ur.admin_user_id
+        and r.admin_role_id = ur.admin_role_id
+        <if test="adminUserAccount != '' and adminUserAccount != null">
+            and u.admin_user_account LIKE CONCAT('%',#{adminUserAccount},'%')
+        </if>
+        <if test="adminUserName != '' and adminUserName != null">
+            and u.admin_user_name LIKE CONCAT('%',#{adminUserName},'%')
+        </if>
+        <if test="adminUserPhone != '' and adminUserPhone != null">
+            and u.admin_user_phone LIKE CONCAT('%',#{adminUserPhone},'%')
+        </if>
+        <if test="adminUserEmail != '' and adminUserEmail != null">
+            and u.admin_user_email LIKE CONCAT('%',#{adminUserEmail},'%')
+        </if>
+        <if test="adminRoleId != '' ">
+            and r.admin_role_id = #{adminRoleId}
+        </if>
+        <if test="status != '' ">
+            and u.status = #{status}
+        </if>
+    </select>
+
+
 </mapper>

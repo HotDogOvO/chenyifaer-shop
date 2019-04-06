@@ -33,12 +33,12 @@ zuul:
       path: /api/back/**
       serviceId: back-service
       url: http://127.0.0.1:7002
-      strip-prefix: false
+      strip-prefix: true
     api-web:
       path: /api/web/**
       serviceId: web-service
       url: http://127.0.0.1:7003
-      strip-prefix: false
+      strip-prefix: true
   host:
     connect-timeout-millis: 10000
     socket-timeout-millis: 60000

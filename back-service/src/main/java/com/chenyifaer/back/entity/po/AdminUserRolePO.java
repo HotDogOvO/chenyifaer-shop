@@ -26,13 +26,13 @@ public class AdminUserRolePO extends Model<AdminUserRolePO> {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "admin_user_role_id", type = IdType.AUTO)
-    private String adminUserRoleId;
+    private Integer adminUserRoleId;
 
     @ApiModelProperty(value = "用户ID")
-    private String adminUserId;
+    private Integer adminUserId;
 
     @ApiModelProperty(value = "角色ID")
-    private String adminRoleId;
+    private Integer adminRoleId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

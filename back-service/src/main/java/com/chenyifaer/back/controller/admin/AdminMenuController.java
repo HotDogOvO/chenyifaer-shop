@@ -1,7 +1,6 @@
-package com.chenyifaer.back.controller;
+package com.chenyifaer.back.controller.admin;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-04-06
  */
 @RestController
-@RequestMapping("/adminMenuPO")
+@RequestMapping("/admin/menu")
 public class AdminMenuController {
+
 
 }
