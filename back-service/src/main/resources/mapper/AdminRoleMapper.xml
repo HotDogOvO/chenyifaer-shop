@@ -17,4 +17,39 @@
         admin_role_id, admin_role_name, admin_role_text, status, create_time, update_time
     </sql>
 
+    <!-- 角色列表一对多返回值 -->
+    <resultMap id="RoleResultMap" type="com.chenyifaer.back.entity.vo.AdminRoleVO">
+        <id column="admin_role_id" property="adminRoleId" />
+        <result column="admin_role_name" property="adminRoleName" />
+        <result column="admin_role_text" property="adminRoleText" />
+        <result column="status" property="status" />
+        <collection property="permissionList" javaType="list" ofType="String">
+            <result column="admin_permission_text" property="adminPermissionText" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询角色列表 -->
+    <select id="getList" resultMap="RoleResultMap">
+        SELECT
+            r.admin_role_id,
+            r.admin_role_name,
+            r.admin_role_text,
+            r.status,
+            p.admin_permission_text
+        FROM
+            t_admin_role r,
+            t_admin_permission p,
+            t_admin_role_permission rp
+        WHERE
+            r.admin_role_id = rp.admin_role_id
+        AND
+            p.admin_permission_id = rp.admin_permission_id
+        <if test="adminRoleName != null and adminRoleName != '' ">
+            AND r.admin_role_name LIKE CONCAT('%',#{adminRoleName},'%')
+        </if>
+        <if test="status != null">
+            AND r.status = #{status}
+        </if>
+    </select>
+
 </mapper>

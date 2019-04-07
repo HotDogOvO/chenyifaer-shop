@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,7 +27,7 @@ public class AdminRolePO extends Model<AdminRolePO> {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "admin_role_id", type = IdType.AUTO)
-    private String adminRoleId;
+    private Integer adminRoleId;
 
     @ApiModelProperty(value = "角色名")
     private String adminRoleName;
@@ -35,12 +36,12 @@ public class AdminRolePO extends Model<AdminRolePO> {
     private String adminRoleText;
 
     @ApiModelProperty(value = "状态（0：禁用 1：启用）")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }

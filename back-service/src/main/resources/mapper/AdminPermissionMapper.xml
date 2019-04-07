@@ -18,4 +18,28 @@
         admin_permission_id, admin_menu_id, admin_permission_code, admin_permission_url, admin_permission_text, create_time, update_time
     </sql>
 
+    <!-- 权限一对多返回值 -->
+    <resultMap id="PermissionResultMap" type="com.chenyifaer.back.entity.vo.AdminPermissionMenuVO">
+        <result column="admin_menu_name" property="adminMenuName" />
+        <collection property="permissionList" javaType="list" ofType="com.chenyifaer.back.entity.vo.AdminPermissionVO">
+            <id column="admin_permission_id" property="adminPermissionId" />
+            <result column="admin_menu_id" property="adminMenuId" />
+            <result column="admin_permission_text" property="adminPermissionText" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询权限列表 -->
+    <select id="getList" resultMap="PermissionResultMap">
+        SELECT
+            m.admin_menu_name,
+            p.admin_permission_id,
+            p.admin_menu_id,
+            p.admin_permission_text
+        FROM
+            t_admin_menu m,
+            t_admin_permission p
+        WHERE
+            p.admin_menu_id = m.admin_menu_id
+    </select>
+
 </mapper>

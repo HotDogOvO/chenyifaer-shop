@@ -19,4 +19,49 @@
         admin_menu_id, admin_menu_name, admin_menu_parent_id, icon, url, status, create_time, update_time
     </sql>
 
+    <!-- 菜单一对多返回值 -->
+    <resultMap id="MenuResultMap" type="com.chenyifaer.back.entity.vo.AdminMenuVO">
+        <id column="parentAdminMenuId" property="parentAdminMenuId" />
+        <result column="parentMenuName" property="parentMenuName" />
+        <result column="parentIcon" property="parentIcon" />
+        <result column="parentUrl" property="parentUrl" />
+        <collection property="childMenuList" javaType="list" ofType="com.chenyifaer.back.entity.vo.AdminChildMenuVO">
+            <id column="childAdminMenuId" property="childAdminMenuId" />
+            <result column="childMenuName" property="childMenuName" />
+            <result column="childIcon" property="childIcon" />
+            <result column="childUrl" property="childUrl" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询菜单列表 -->
+    <select id="getList" resultMap="MenuResultMap">
+        SELECT
+            p.admin_menu_id parentAdminMenuId,
+            p.admin_menu_name parentMenuName,
+            p.icon parentIcon,
+            p.url parentUrl,
+            m.admin_menu_id childAdminMenuId,
+            m.admin_menu_name childMenuName,
+            m.icon childIcon,
+            m.url childUrl
+        FROM
+            t_admin_menu p,
+            t_admin_menu m
+        WHERE
+            m.admin_menu_parent_id = p.admin_menu_id
+        ORDER BY
+            p.weight DESC
+    </select>
+
+    <!-- 查询父菜单下是否存在子菜单 -->
+    <select id="getCount" resultType="int">
+        SELECT
+            count( * )
+        FROM
+            t_admin_menu
+        WHERE
+            admin_menu_parent_id = #{adminMenuId}
+    </select>
+
+
 </mapper>

@@ -22,40 +22,42 @@
 
     <!-- 查询后台用户列表 -->
     <select id="getList" resultType="com.chenyifaer.back.entity.vo.AdminUserVO">
-        select
+        SELECT
             u.admin_user_id adminUserId,
             u.admin_user_account adminUserAccount,
             u.admin_user_name adminUserName,
             u.admin_user_phone adminUserPhone,
             u.admin_user_email adminUserEmail,
-            u.status status,
+            u.STATUS STATUS,
             u.create_time createTime,
             r.admin_role_name adminRoleName
-        from
+        FROM
             t_admin_user u
-        inner join
+        INNER JOIN
             t_admin_role r
-        inner join
+        INNER JOIN
             t_admin_user_role ur
-        on u.admin_user_id = ur.admin_user_id
-        and r.admin_role_id = ur.admin_role_id
+        ON
+            u.admin_user_id = ur.admin_user_id
+        AND
+            r.admin_role_id = ur.admin_role_id
         <if test="adminUserAccount != '' and adminUserAccount != null">
-            and u.admin_user_account LIKE CONCAT('%',#{adminUserAccount},'%')
+            AND u.admin_user_account LIKE CONCAT('%',#{adminUserAccount},'%')
         </if>
         <if test="adminUserName != '' and adminUserName != null">
-            and u.admin_user_name LIKE CONCAT('%',#{adminUserName},'%')
+            AND u.admin_user_name LIKE CONCAT('%',#{adminUserName},'%')
         </if>
         <if test="adminUserPhone != '' and adminUserPhone != null">
-            and u.admin_user_phone LIKE CONCAT('%',#{adminUserPhone},'%')
+            AND u.admin_user_phone LIKE CONCAT('%',#{adminUserPhone},'%')
         </if>
         <if test="adminUserEmail != '' and adminUserEmail != null">
-            and u.admin_user_email LIKE CONCAT('%',#{adminUserEmail},'%')
+            AND u.admin_user_email LIKE CONCAT('%',#{adminUserEmail},'%')
         </if>
         <if test="adminRoleId != '' ">
-            and r.admin_role_id = #{adminRoleId}
+            AND r.admin_role_id = #{adminRoleId}
         </if>
         <if test="status != '' ">
-            and u.status = #{status}
+            AND u.status = #{status}
         </if>
     </select>
 

@@ -21,7 +21,7 @@ public class CheckUtil {
                 String field = fError.getField();
                 String defaultMessage = fError.getDefaultMessage();
                 vData.put(field,defaultMessage);
-                return  ResponseResult.Fail(ResultCodeEnums.CHECK, fError.getDefaultMessage());
+                return  ResponseResult.Fail(ResultCodeEnums.CHECK_001, fError.getDefaultMessage());
             }
         }
 

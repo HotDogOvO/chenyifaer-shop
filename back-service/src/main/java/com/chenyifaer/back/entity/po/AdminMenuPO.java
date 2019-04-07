@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,13 +27,13 @@ public class AdminMenuPO extends Model<AdminMenuPO> {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "admin_menu_id", type = IdType.AUTO)
-    private String adminMenuId;
+    private Integer adminMenuId;
 
     @ApiModelProperty(value = "菜单名")
     private String adminMenuName;
 
     @ApiModelProperty(value = "父节点ID")
-    private String adminMenuParentId;
+    private Integer adminMenuParentId;
 
     @ApiModelProperty(value = "菜单图标")
     private String icon;
@@ -41,12 +42,15 @@ public class AdminMenuPO extends Model<AdminMenuPO> {
     private String url;
 
     @ApiModelProperty(value = "状态（0：禁用 1：启用）")
-    private String status;
+    private Integer status;
+
+    @ApiModelProperty(value = "权重")
+    private Integer weight;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
     @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }

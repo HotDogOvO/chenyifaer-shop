@@ -12,6 +12,7 @@ import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.emun.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
+import com.chenyifaer.basic.common.util.DateUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -143,7 +144,8 @@ public class AdminUserController {
                 .setAdminUserId(adminUserDTO.getAdminUserId())
                 .setAdminUserName(adminUserDTO.getAdminUserName())
                 .setAdminUserPhone(adminUserDTO.getAdminUserPhone())
-                .setAdminUserEmail(adminUserDTO.getAdminUserEmail());
+                .setAdminUserEmail(adminUserDTO.getAdminUserEmail())
+                .setUpdateTime(DateUtil.getTime());
         boolean flag = this.adminUserService.updateById(adminUserPO);
 
         //如果角色ID不为空，则更新用户角色表
@@ -167,8 +169,8 @@ public class AdminUserController {
 
     @ApiOperation(value = "禁用/启用用户")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "adminUserId", value = "用户ID", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "adminUserId", value = "用户ID", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
     })
     @RequestMapping(value = "/disableUser" , method = RequestMethod.POST)
     public JsonResult disableUser(@RequestBody @Validated(AdminUserDTO.Disable.class) AdminUserDTO adminUserDTO , BindingResult br){
@@ -180,16 +182,17 @@ public class AdminUserController {
         }
         AdminUserPO adminUserPO = new AdminUserPO()
                 .setAdminUserId(adminUserDTO.getAdminUserId())
-                .setStatus(adminUserDTO.getStatus());
+                .setStatus(adminUserDTO.getStatus())
+                .setUpdateTime(DateUtil.getTime());
         boolean flag = this.adminUserService.updateById(adminUserPO);
 
         //若flag为true
         if(flag){
             log.debug("function end AdminUserController - disableUser , 禁用/启用用户成功 , 禁用的用户信息为：" + adminUserPO);
-            return ResponseResult.Success(ResultCodeEnums.SUCCESS);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
         log.error("function AdminUserController - disableUser , 禁用/启用用户失败");
-        return ResponseResult.Fail(ResultCodeEnums.FAIL);
+        return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
     @ApiOperation(value = "重置用户密码")
@@ -207,16 +210,17 @@ public class AdminUserController {
 
         AdminUserPO adminUserPO = new AdminUserPO()
                 .setAdminUserId(adminUserDTO.getAdminUserId())
-                .setAdminUserPassword(SystemConstant.SYSTEM_PASSWORD);
+                .setAdminUserPassword(SystemConstant.SYSTEM_PASSWORD)
+                .setUpdateTime(DateUtil.getTime());
         boolean flag = this.adminUserService.updateById(adminUserPO);
 
         //若flag为true
         if(flag){
             log.debug("function end AdminUserController - resetUser , 密码重置成功，重置的用户信息为：" + adminUserPO);
-            return ResponseResult.Success(ResultCodeEnums.SUCCESS);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminUserController - disableUser , 禁用/启用用户失败");
-        return ResponseResult.Fail(ResultCodeEnums.FAIL);
+        log.error("function AdminUserController - resetUser , 密码重置失败");
+        return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
 }

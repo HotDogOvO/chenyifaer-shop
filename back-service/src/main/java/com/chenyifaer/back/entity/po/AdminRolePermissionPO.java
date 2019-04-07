@@ -26,16 +26,16 @@ public class AdminRolePermissionPO extends Model<AdminRolePermissionPO> {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "admin_role_permission_id", type = IdType.AUTO)
-    private String adminRolePermissionId;
+    private Integer adminRolePermissionId;
 
     @ApiModelProperty(value = "角色ID")
-    private String adminRoleId;
+    private Integer adminRoleId;
 
     @ApiModelProperty(value = "菜单ID")
-    private String adminMenuId;
+    private Integer adminMenuId;
 
     @ApiModelProperty(value = "权限ID")
-    private String adminPermissionId;
+    private Integer adminPermissionId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

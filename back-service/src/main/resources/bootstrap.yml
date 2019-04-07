@@ -34,7 +34,6 @@ swagger:
 #MybatisPlus配置
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
     jdbc-type-for-null: null
   mapper-locations: classpath:mapper/*.xml
