@@ -1,11 +1,14 @@
 package com.chenyifaer.back.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminMenuDTO;
 import com.chenyifaer.back.entity.po.AdminMenuPO;
 import com.chenyifaer.back.entity.vo.AdminMenuVO;
 import com.chenyifaer.back.service.AdminMenuService;
 import com.chenyifaer.basic.common.constant.JsonResult;
+import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.emun.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
@@ -43,7 +46,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/admin/menu")
-@Api(value = "账号管理",tags = {"菜单管理 - 后台菜单管理"})
+@Api(value = "账号管理",tags = {"账号管理 - 后台菜单管理"})
 public class AdminMenuController {
 
     @Autowired
@@ -67,6 +70,10 @@ public class AdminMenuController {
         @ApiImplicitParam(name = "url", value = "菜单路由", required = true, dataType = "string"),
         @ApiImplicitParam(name = "weight", value = "权重", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_MENU_MENU_NAME,
+        action = LogConstant.ADD,
+        operation = LogConstant.OPERATION_MENU_ADD)
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminMenuDTO.Add.class) AdminMenuDTO adminMenuDTO , BindingResult br){
         log.debug("function start AdminMenuController - add");
@@ -102,6 +109,10 @@ public class AdminMenuController {
         @ApiImplicitParam(name = "url", value = "菜单路由", dataType = "string"),
         @ApiImplicitParam(name = "weight", value = "权重", dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_MENU_MENU_NAME,
+        action = LogConstant.UPDATE,
+        operation = LogConstant.OPERATION_MENU_UPDATE)
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminMenuDTO.Update.class) AdminMenuDTO adminMenuDTO , BindingResult br){
         log.debug("function start AdminMenuController - update");
@@ -140,6 +151,10 @@ public class AdminMenuController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminMenuId", value = "主键", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_MENU_MENU_NAME,
+        action = LogConstant.DELETE,
+        operation = LogConstant.OPERATION_MENU_DELETE)
     @RequestMapping(value = "/delete" , method = RequestMethod.POST)
     public JsonResult delete(@RequestBody @Validated(AdminMenuDTO.Delete.class) AdminMenuDTO adminMenuDTO , BindingResult br) {
         log.debug("function start AdminMenuController - delete");

@@ -2,6 +2,8 @@ package com.chenyifaer.back.controller.admin;
 
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminRoleDTO;
 import com.chenyifaer.back.entity.dto.AdminRolePermissionDTO;
 import com.chenyifaer.back.entity.po.AdminRolePO;
@@ -75,6 +77,10 @@ public class AdminRoleController {
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
         @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
+        action = LogConstant.DISABLE,
+        operation = LogConstant.OPERATION_ROLE_DISABLE)
     @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
     public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - disableRole");
@@ -104,6 +110,10 @@ public class AdminRoleController {
         @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
         @ApiImplicitParam(name = "adminRoleText", value = "角色介绍", dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
+        action = LogConstant.UPDATE,
+        operation = LogConstant.OPERATION_ROLE_UPDATE)
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminRoleDTO.Update.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - update");
@@ -135,6 +145,10 @@ public class AdminRoleController {
         @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
         @ApiImplicitParam(name = "adminRoleText", value = "角色介绍", dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
+        action = LogConstant.PERMISSION,
+        operation = LogConstant.OPERATION_ROLE_PERMISSION)
     @RequestMapping(value = "/permission" , method = RequestMethod.POST)
     public JsonResult permission(@RequestBody @Validated AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
         log.debug("function start AdminRoleController - permission");

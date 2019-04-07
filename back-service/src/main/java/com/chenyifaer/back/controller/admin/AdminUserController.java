@@ -2,6 +2,8 @@ package com.chenyifaer.back.controller.admin;
 
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminUserDTO;
 import com.chenyifaer.back.entity.po.AdminUserPO;
 import com.chenyifaer.back.entity.po.AdminUserRolePO;
@@ -90,6 +92,10 @@ public class AdminUserController {
         @ApiImplicitParam(name = "adminUserName", value = "姓名", required = true, dataType = "string"),
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_USER_MENU_NAME,
+        action = LogConstant.ADD,
+        operation = LogConstant.OPERATION_USER_ADD)
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminUserDTO.Add.class) AdminUserDTO adminUserDTO, BindingResult br){
         log.debug("function start AdminUserController - add");
@@ -131,6 +137,10 @@ public class AdminUserController {
         @ApiImplicitParam(name = "adminUserEmail", value = "邮箱", dataType = "string"),
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_USER_MENU_NAME,
+        action = LogConstant.UPDATE,
+        operation = LogConstant.OPERATION_USER_UPDATE)
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminUserDTO.Update.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - update");
@@ -172,6 +182,10 @@ public class AdminUserController {
         @ApiImplicitParam(name = "adminUserId", value = "用户ID", required = true, dataType = "int"),
         @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_USER_MENU_NAME,
+        action = LogConstant.DISABLE,
+        operation = LogConstant.OPERATION_USER_DISABLE)
     @RequestMapping(value = "/disableUser" , method = RequestMethod.POST)
     public JsonResult disableUser(@RequestBody @Validated(AdminUserDTO.Disable.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - disableUser");
@@ -199,6 +213,10 @@ public class AdminUserController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminUserId", value = "用户ID", required = true, dataType = "int"),
     })
+    @LogAnnotation(
+        menuName = LogConstant.ADMIN_USER_MENU_NAME,
+        action = LogConstant.RESET,
+        operation = LogConstant.OPERATION_USER_RESET)
     @RequestMapping(value = "/resetUser" , method = RequestMethod.POST)
     public JsonResult resetUser(@RequestBody @Validated(AdminUserDTO.Reset.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - resetUser");

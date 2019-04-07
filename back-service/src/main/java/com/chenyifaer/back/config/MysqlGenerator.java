@@ -27,7 +27,7 @@ public class MysqlGenerator {
         int result = scanner();
 
         //需要生成的表
-        String[] tableList = {"t_admin_user_role","t_admin_role_permission","t_admin_role","t_admin_permission","t_admin_menu"};
+        String[] tableList = {"t_sys_log"};
         final String projectPath = "E:\\JAVA\\Idea\\chenyifaer-shop\\back-service";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator().setGlobalConfig(
