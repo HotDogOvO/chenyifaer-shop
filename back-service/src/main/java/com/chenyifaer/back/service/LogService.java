@@ -8,10 +8,7 @@ import com.chenyifaer.back.entity.vo.LogVO;
 import java.util.List;
 
 /**
- * <p>
  * 系统管理 - 系统日志表 服务类
- * </p>
- *
  * @author wudh
  * @since 2019-04-07
  */
