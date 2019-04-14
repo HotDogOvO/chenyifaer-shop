@@ -7,7 +7,6 @@ import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.basic.common.util.StringUtil;
 import com.chenyifaer.basic.gateway.entity.dto.AdminLoginDTO;
-import com.chenyifaer.basic.gateway.feign.LoginFeign;
 import com.chenyifaer.basic.gateway.feign.Oauth2Client;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -45,9 +44,6 @@ public class LoginController {
 
     @Autowired
     private Oauth2Client oauth2Client;
-
-    @Autowired
-    private LoginFeign loginFeign;
 
     @ApiOperation(value = "后台登录")
     @ApiImplicitParams({

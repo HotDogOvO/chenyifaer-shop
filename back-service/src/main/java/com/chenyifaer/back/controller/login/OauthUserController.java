@@ -23,6 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 
+/**
+ * Oauth2.0系统内部用户验证
+ * @Author:wudh
+ * @Date: 2019/4/14 15:34
+ */
 @Slf4j
 @RestController
 public class OauthUserController {

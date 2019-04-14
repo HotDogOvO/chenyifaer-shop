@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  */
 
 /**
- * 根据用户名获取用户信息
+ * 重写Oauth2内部方法，实现系统内部用户认证
  * @Author:wudh
  * @Date: 2019/4/13 16:38
  */

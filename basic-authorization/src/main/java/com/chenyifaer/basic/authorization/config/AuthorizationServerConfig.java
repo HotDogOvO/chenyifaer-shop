@@ -35,6 +35,11 @@ import java.util.Map;
  *
  */
 
+/**
+ * Oauth2.0登录认证
+ * @Author:wudh
+ * @Date: 2019/4/14 15:32
+ */
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -45,7 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private DataSource dataSource;
 
-    /** 登陆后返回的json数据是否追加当前用户信息,默认false */
+    /** 登陆后返回的json数据是否追加当前用户信息*/
     @Value("${access_token.add-userinfo}")
     private boolean addUserInfo;
 
@@ -110,7 +115,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 userDetail.put("enabled",((LoginAppUser) principal).getEnabled());
 
                 Map<String, Object> map = new HashMap<>(defaultOAuth2AccessToken.getAdditionalInformation()); // 旧的附加参数
-                map.put("userDetail", userDetail); // 追加当前登陆用户
+                // 追加当前登陆用户
+                map.put("userDetail", userDetail);
 
                 defaultOAuth2AccessToken.setAdditionalInformation(map);
             }
@@ -119,6 +125,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.allowFormAuthenticationForClients(); // 允许表单形式的认证
+        // 允许表单形式的认证
+        security.allowFormAuthenticationForClients();
     }
 }

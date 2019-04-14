@@ -22,6 +22,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  */
 
+/**
+ * Oauth2.0服务认证
+ * @Author:wudh
+ * @Date: 2019/4/14 15:33
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
