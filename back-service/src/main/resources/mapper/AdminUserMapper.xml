@@ -61,5 +61,19 @@
         </if>
     </select>
 
+    <!-- 查询Oauth认证需要的用户数据 -->
+    <select id="getOauthUser" resultType="com.chenyifaer.back.entity.vo.OauthUserVO">
+        SELECT
+            admin_user_id adminUserId,
+            admin_user_account adminUserAccount,
+            admin_user_password adminUserPassword,
+            admin_user_name adminUserName,
+            status status
+        FROM
+            t_admin_user
+        WHERE
+            admin_user_account = #{adminUserAccount}
+    </select>
+
 
 </mapper>

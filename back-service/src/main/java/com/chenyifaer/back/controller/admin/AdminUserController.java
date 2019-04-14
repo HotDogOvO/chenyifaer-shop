@@ -12,7 +12,7 @@ import com.chenyifaer.back.service.AdminUserRoleService;
 import com.chenyifaer.back.service.AdminUserService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.constant.SystemConstant;
-import com.chenyifaer.basic.common.emun.ResultCodeEnums;
+import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;

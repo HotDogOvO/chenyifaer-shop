@@ -4,7 +4,7 @@ package com.chenyifaer.back.controller.admin;
 import com.chenyifaer.back.entity.vo.AdminPermissionMenuVO;
 import com.chenyifaer.back.service.AdminPermissionService;
 import com.chenyifaer.basic.common.constant.JsonResult;
-import com.chenyifaer.basic.common.emun.ResultCodeEnums;
+import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

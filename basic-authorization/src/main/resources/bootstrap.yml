@@ -1,6 +1,10 @@
 server:
   port: 7004
 
+#登錄的用戶信息是否返回
+access_token:
+  add-userinfo: true
+
 spring:
   #服务名
   application:
@@ -23,4 +27,3 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-

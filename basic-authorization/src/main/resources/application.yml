@@ -1,5 +1,5 @@
 #读取配置文件
-#spring:
-#  cloud:
-#    config:
-#      name: dbConfig, ribbonConfig ,logConfig ,redisConfig
+spring:
+  cloud:
+    config:
+      name: dbConfig, ribbonConfig ,logConfig , druidConfig

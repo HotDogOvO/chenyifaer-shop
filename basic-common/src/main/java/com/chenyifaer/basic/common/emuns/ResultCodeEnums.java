@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.emun;
+package com.chenyifaer.basic.common.emuns;
 
 /**
  * 系统返回值 枚举
@@ -7,6 +7,8 @@ package com.chenyifaer.basic.common.emun;
  */
 public enum ResultCodeEnums {
     /*********************************************/
+    /** 登录成功 */
+    SUCCESS_LOGIN("200","登录成功"),
     /** 请求成功 */
     SUCCESS("200", "请求成功"),
     /** 查询成功 */
@@ -32,8 +34,9 @@ public enum ResultCodeEnums {
 
 
     /** 用户名、密码错误 */
-    FAIL_11001("11001", "用户名、密码错误"),
-
+    FAIL_11001("11001", "用户名或密码错误，请重新输入"),
+    /** 登录用户被禁用 */
+    FAIL_11002("11002","用户被禁用，请联系管理员"),
 
     /*********************************************/
     /** Check验证 */

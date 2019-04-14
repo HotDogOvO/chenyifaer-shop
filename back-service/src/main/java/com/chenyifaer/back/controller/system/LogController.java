@@ -5,7 +5,7 @@ import com.chenyifaer.back.entity.dto.LogDTO;
 import com.chenyifaer.back.entity.vo.LogVO;
 import com.chenyifaer.back.service.LogService;
 import com.chenyifaer.basic.common.constant.JsonResult;
-import com.chenyifaer.basic.common.emun.ResultCodeEnums;
+import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.github.pagehelper.PageHelper;

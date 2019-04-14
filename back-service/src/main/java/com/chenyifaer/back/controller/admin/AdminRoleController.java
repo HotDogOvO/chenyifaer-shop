@@ -12,7 +12,7 @@ import com.chenyifaer.back.entity.vo.AdminRoleVO;
 import com.chenyifaer.back.service.AdminRolePermissionService;
 import com.chenyifaer.back.service.AdminRoleService;
 import com.chenyifaer.basic.common.constant.JsonResult;
-import com.chenyifaer.basic.common.emun.ResultCodeEnums;
+import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;

@@ -14,6 +14,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <mybatisplus.version>3.0.6</mybatisplus.version>
+        <redis.version>2.0.6.RELEASE</redis.version>
     </properties>
 
     <dependencies>
@@ -34,6 +36,34 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
+
+        <!-- feign声明式调用 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- Spring Boot JDBC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- 公用Common依赖 -->
+        <dependency>
+            <groupId>com.chenyifaer</groupId>
+            <artifactId>basic-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>

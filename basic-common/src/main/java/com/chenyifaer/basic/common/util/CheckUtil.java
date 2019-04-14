@@ -1,7 +1,7 @@
 package com.chenyifaer.basic.common.util;
 
 import com.chenyifaer.basic.common.constant.JsonResult;
-import com.chenyifaer.basic.common.emun.ResultCodeEnums;
+import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;

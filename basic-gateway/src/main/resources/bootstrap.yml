@@ -1,5 +1,6 @@
 server:
   port: 7001
+  use-forward-headers: true
 
 #服务名
 spring:
@@ -24,6 +25,10 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
+#swagger支持
+swagger:
+  is_enable: true
+
 #zuul网关配置
 zuul:
   ignored-services: '*'
@@ -43,3 +48,4 @@ zuul:
     connect-timeout-millis: 10000
     socket-timeout-millis: 60000
   add-proxy-headers: true
+
