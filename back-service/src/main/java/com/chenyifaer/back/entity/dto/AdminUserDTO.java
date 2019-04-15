@@ -47,6 +47,10 @@ public class AdminUserDTO extends PageDTO {
     @NotNull(groups = {Add.class},message = "角色不能为空")
     private Integer adminRoleId;
 
+    /** 角色名 */
+    @Length(max = 20 , message = "角色名不能超过20个字符")
+    private String adminRoleName;
+
     /** 手机号 */
     @Length(max = 11 , message = "手机号不能超过11个字符")
     private String adminUserPhone;

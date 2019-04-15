@@ -1,4 +1,5 @@
-package com.chenyifaer.back.controller;
+package com.chenyifaer.basic.common.util.RSA;
+
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -9,24 +10,17 @@ package com.chenyifaer.back.controller;
  *
  */
 
-import com.chenyifaer.basic.common.entity.LoginAppUser;
-import com.chenyifaer.basic.common.util.SystemUserUtil;
-
 /**
- * 全局公用controller
+ * RSA加密生成签名
+ * 运行后会在D盘下生成两个文件：publicKey,privateKey
+ * 分别对应私钥与公钥
  * @Author:wudh
- * @Date: 2019/4/7 19:50
+ * @Date: 2019/1/20 13:41
  */
-public class BaseController {
+public class GetRSAKey {
 
-    /**
-     * 获取userId
-     * @Author:wudh
-     * @Date: 2019/4/7 19:51
-     */
-    public Integer getUserId() {
-        LoginAppUser loginAppUser = SystemUserUtil.getLoginAppUser();
-        int userId = loginAppUser.getAdminUserId();
-        return userId;
+    public static void main(String[] args) throws Exception {
+        String filepath="D:/";
+        RSAEncrypt.genKeyPair(filepath);
     }
 }

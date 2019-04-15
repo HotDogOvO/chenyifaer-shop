@@ -23,6 +23,7 @@
         <result column="admin_role_name" property="adminRoleName" />
         <result column="admin_role_text" property="adminRoleText" />
         <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
         <collection property="permissionList" javaType="list" ofType="String">
             <result column="admin_permission_text" property="adminPermissionText" />
         </collection>
@@ -35,6 +36,7 @@
             r.admin_role_name,
             r.admin_role_text,
             r.status,
+            r.create_time,
             p.admin_permission_text
         FROM
             t_admin_role r,
@@ -50,6 +52,7 @@
         <if test="status != null">
             AND r.status = #{status}
         </if>
+        ORDER BY r.create_time DESC
     </select>
 
 </mapper>

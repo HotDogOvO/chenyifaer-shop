@@ -3,6 +3,7 @@ package com.chenyifaer.back.entity.vo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,9 @@ public class AdminRoleVO {
 
     /** 状态 */
     private Integer status;
+
+    /** 创建时间 */
+    private Date createTime;
 
     /** 角色权限 */
     private List<String> permissionList;

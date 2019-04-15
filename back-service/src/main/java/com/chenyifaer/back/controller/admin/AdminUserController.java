@@ -3,6 +3,7 @@ package com.chenyifaer.back.controller.admin;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminUserDTO;
 import com.chenyifaer.back.entity.po.AdminUserPO;
@@ -68,9 +69,10 @@ public class AdminUserController {
         @ApiImplicitParam(name = "adminUserName", value = "姓名", dataType = "string"),
         @ApiImplicitParam(name = "adminUserPhone", value = "手机号", dataType = "string"),
         @ApiImplicitParam(name = "adminUserEmail", value = "邮箱", dataType = "string"),
-        @ApiImplicitParam(name = "adminRoleId", value = "角色ID", dataType = "int"),
+        @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
         @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", dataType = "int"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - list");

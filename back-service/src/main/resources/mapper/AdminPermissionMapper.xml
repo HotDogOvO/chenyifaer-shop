@@ -21,6 +21,7 @@
     <!-- 权限一对多返回值 -->
     <resultMap id="PermissionResultMap" type="com.chenyifaer.back.entity.vo.AdminPermissionMenuVO">
         <result column="admin_menu_name" property="adminMenuName" />
+        <result column="admin_menu_id" property="adminParentMenuId" />
         <collection property="permissionList" javaType="list" ofType="com.chenyifaer.back.entity.vo.AdminPermissionVO">
             <id column="admin_permission_id" property="adminPermissionId" />
             <result column="admin_menu_id" property="adminMenuId" />
@@ -32,6 +33,7 @@
     <select id="getList" resultMap="PermissionResultMap">
         SELECT
             m.admin_menu_name,
+            m.admin_menu_id,
             p.admin_permission_id,
             p.admin_menu_id,
             p.admin_permission_text

@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <oauth.version>2.2.1.RELEASE</oauth.version>
     </properties>
 
     <dependencies>
@@ -24,6 +25,13 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>${oauth.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

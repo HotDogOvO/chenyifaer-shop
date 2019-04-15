@@ -21,6 +21,9 @@ public class AdminPermissionMenuVO {
     /** 权限父菜单名 */
     private String adminMenuName;
 
+    /** 权限父菜单ID */
+    private Integer adminParentMenuId;
+
     /** 权限集合 */
     private List<AdminPermissionVO> permissionList;
 

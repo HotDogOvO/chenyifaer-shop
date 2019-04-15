@@ -1,5 +1,7 @@
 package com.chenyifaer.back.controller.login;
 
+import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.OauthUserDTO;
 import com.chenyifaer.back.entity.vo.OauthUserVO;
 import com.chenyifaer.back.service.AdminUserService;
@@ -35,6 +37,11 @@ public class OauthUserController {
     @Autowired
     private AdminUserService adminUserService;
 
+    /**
+     * 查询Oauth认证 - 登录用户详细信息
+     * @Author:wudh
+     * @Date: 2019/4/15 17:21
+     */
     @RequestMapping(value = "/getOauthUserDetail" , method = RequestMethod.POST)
     public LoginAppUser login(@RequestParam("account") String account) {
         log.debug("[START] - function OauthUserController login");
@@ -61,11 +68,26 @@ public class OauthUserController {
             loginAppUser.setAdminUserPassword(new BCryptPasswordEncoder()
                     .encode(oauthUserVO.getAdminUserPassword()));
 
+            this.loginLog(loginAppUser.getAdminUserName());
+
             log.debug("[END] - function OauthUserController login return");
             return loginAppUser;
         }
         log.debug("[error] - function OauthUserController login return: null");
         return null;
+    }
+
+    /**
+     * 处理登录日志
+     * @Author:wudh
+     * @Date: 2019/4/15 17:20
+     */
+    @LogAnnotation(
+            menuName = LogConstant.SYSTEM_MENU_NAME,
+            action = LogConstant.LOGIN,
+            operation = LogConstant.OPERATION_SYSTEM_LOGIN)
+    public void loginLog(String username){
+        log.debug("[RUN] - function loginLog 登录日志记录，登录的用户为：{}",username);
     }
 
 }

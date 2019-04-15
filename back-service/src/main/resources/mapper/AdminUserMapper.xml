@@ -53,12 +53,13 @@
         <if test="adminUserEmail != '' and adminUserEmail != null">
             AND u.admin_user_email LIKE CONCAT('%',#{adminUserEmail},'%')
         </if>
-        <if test="adminRoleId != null ">
-            AND r.admin_role_id = #{adminRoleId}
+        <if test="adminRoleName != null and adminRoleName != '' ">
+            AND r.admin_role_name = #{adminRoleName}
         </if>
         <if test="status != null ">
             AND u.status = #{status}
         </if>
+        ORDER BY u.create_time DESC
     </select>
 
     <!-- 查询Oauth认证需要的用户数据 -->

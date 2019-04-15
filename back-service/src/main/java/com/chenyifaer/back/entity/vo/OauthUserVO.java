@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 public class OauthUserVO {
 
     /** 主键 */
-    private String adminUserId;
+    private Integer adminUserId;
 
     /** 账号 */
     private String adminUserAccount;

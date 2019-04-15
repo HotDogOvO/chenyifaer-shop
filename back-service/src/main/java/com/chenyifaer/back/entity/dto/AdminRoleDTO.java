@@ -20,6 +20,8 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class AdminRoleDTO extends PageDTO {
 
+    public interface Add{};
+
     public interface Disable{};
 
     public interface Update{};
@@ -29,10 +31,12 @@ public class AdminRoleDTO extends PageDTO {
     private Integer adminRoleId;
 
     /** 角色名 */
+    @NotNull(groups = {Add.class} , message = "角色名不能为空")
     @Length(max = 30 , message = "角色名不能超过30个字符")
     private String adminRoleName;
 
     /** 角色简介 */
+    @NotNull(groups = {Add.class} , message = "角色简介不能为空")
     @Length(max = 100 , message = "角色简介不能超过100个字符")
     private String adminRoleText;
 

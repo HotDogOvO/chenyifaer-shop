@@ -44,7 +44,6 @@ public class LoginController {
 
     @Autowired
     private Oauth2Client oauth2Client;
-
     @ApiOperation(value = "后台登录")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminUserAccount", value = "账号", required = true, dataType = "string"),

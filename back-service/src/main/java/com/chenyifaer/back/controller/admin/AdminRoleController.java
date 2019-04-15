@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,8 +53,6 @@ public class AdminRoleController {
 
     @ApiOperation(value = "查询角色列表")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
         @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", dataType = "int"),
     })
@@ -65,43 +64,53 @@ public class AdminRoleController {
             log.error("function AdminRoleController - list 参数校验失败");
             return check;
         }
-        PageHelper.startPage(adminRoleDTO.getPageIndex(),adminRoleDTO.getPageSize());
         List<AdminRoleVO> list = this.adminRoleService.getList(adminRoleDTO);
-        PageInfo<AdminRoleVO> pageList = new PageInfo<>(list);
         log.debug("function end AdminRoleController - list 查询的结果为：" + list);
-        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,pageList);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
-    @ApiOperation(value = "禁用/启用角色")
+    @ApiOperation(value = "查询角色下拉框")
+    @RequestMapping(value = "/getRoleName" , method = RequestMethod.POST)
+    public JsonResult getRoleName(){
+        log.debug("function start AdminRoleController - getRoleName");
+        List<AdminRolePO> list = this.adminRoleService.list();
+        List<String> roleList = new ArrayList<>();
+        list.forEach(x ->{
+            roleList.add(x.getAdminRoleName());
+        });
+        log.debug("function end AdminRoleController - getRoleName 返回的结果为：" + roleList);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,roleList);
+    }
+
+    @ApiOperation(value = "新增角色")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
-        @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "adminRoleName", value = "角色名", required = true, dataType = "string"),
+        @ApiImplicitParam(name = "adminRoleText", value = "角色描述", required = true, dataType = "string"),
     })
     @LogAnnotation(
-        menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
-        action = LogConstant.DISABLE,
-        operation = LogConstant.OPERATION_ROLE_DISABLE)
-    @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
-    public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){
-        log.debug("function start AdminRoleController - disableRole");
+            menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
+            action = LogConstant.ADD,
+            operation = LogConstant.OPERATION_ROLE_ADD)
+    @RequestMapping(value = "/addRole" , method = RequestMethod.POST)
+    public JsonResult addRole(@RequestBody @Validated(AdminRoleDTO.Add.class) AdminRoleDTO adminRoleDTO , BindingResult br){
+        log.debug("function start AdminRoleController - addRole");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - disableRole 参数校验失败");
+            log.error("function AdminRoleController - addRole 参数校验失败");
             return check;
         }
         AdminRolePO adminRolePO = new AdminRolePO()
-                .setAdminRoleId(adminRoleDTO.getAdminRoleId())
-                .setStatus(adminRoleDTO.getStatus())
-                .setUpdateTime(DateUtil.getTime());
-        boolean flag = this.adminRoleService.updateById(adminRolePO);
+                .setAdminRoleName(adminRoleDTO.getAdminRoleName())
+                .setAdminRoleText(adminRoleDTO.getAdminRoleText());
+        boolean flag = this.adminRoleService.save(adminRolePO);
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminRoleController - disableRole , 禁用/启用角色成功 , 禁用的角色信息为：" + adminRolePO);
-            return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
+            log.debug("function end AdminRoleController - addRole , 新增角色成功 , 新增的角色信息为：" + adminRolePO);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
         }
-        log.error("function AdminRoleController - disableRole , 禁用/启用角色成功");
-        return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
+        log.error("function AdminRoleController - addRole , 新增角色成功");
+        return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
     }
 
     @ApiOperation(value = "更新角色")
@@ -176,6 +185,38 @@ public class AdminRoleController {
         }
         log.debug("function end AdminRoleController - permission , 角色授权成功，授权的角色信息为：" + adminRolePermissionDTO);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
+    }
+
+    @ApiOperation(value = "禁用/启用角色")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", required = true, dataType = "int"),
+    })
+    @LogAnnotation(
+            menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
+            action = LogConstant.DISABLE,
+            operation = LogConstant.OPERATION_ROLE_DISABLE)
+    @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
+    public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){
+        log.debug("function start AdminRoleController - disableRole");
+        JsonResult check = CheckUtil.check(br);
+        if(check != null){
+            log.error("function AdminRoleController - disableRole 参数校验失败");
+            return check;
+        }
+        AdminRolePO adminRolePO = new AdminRolePO()
+                .setAdminRoleId(adminRoleDTO.getAdminRoleId())
+                .setStatus(adminRoleDTO.getStatus())
+                .setUpdateTime(DateUtil.getTime());
+        boolean flag = this.adminRoleService.updateById(adminRolePO);
+
+        //若flag为true
+        if(flag){
+            log.debug("function end AdminRoleController - disableRole , 禁用/启用角色成功 , 禁用的角色信息为：" + adminRolePO);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
+        }
+        log.error("function AdminRoleController - disableRole , 禁用/启用角色成功");
+        return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
 }

@@ -35,7 +35,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/sys/log")
+@RequestMapping("/system/log")
 @Api(value = "系统管理",tags = {"系统管理 - 系统日志管理"})
 public class LogController {
 

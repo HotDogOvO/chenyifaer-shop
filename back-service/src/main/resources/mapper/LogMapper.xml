@@ -41,6 +41,7 @@
                 DATE_FORMAT(l.create_time,'%Y-%m-%d')
             BETWEEN #{startTime} AND #{endTime}
         </if>
+        ORDER BY l.create_time DESC
     </select>
 
 </mapper>

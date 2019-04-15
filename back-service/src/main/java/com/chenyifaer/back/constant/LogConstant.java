@@ -56,7 +56,7 @@ public class LogConstant {
     /**********************************************/
     /** 操作 */
     /** 系统操作 */
-    public static final String OPERATION_SYSTEM_LOGIN = "登录";
+    public static final String OPERATION_SYSTEM_LOGIN = "系统登录";
 
     /** 后台用户列表 */
     public static final String OPERATION_USER_ADD = "新增用户";
