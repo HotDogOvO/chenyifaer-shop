@@ -1,6 +1,7 @@
 package com.chenyifaer.back.controller.admin;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
@@ -8,16 +9,17 @@ import com.chenyifaer.back.entity.dto.AdminRoleDTO;
 import com.chenyifaer.back.entity.dto.AdminRolePermissionDTO;
 import com.chenyifaer.back.entity.po.AdminRolePO;
 import com.chenyifaer.back.entity.po.AdminRolePermissionPO;
+import com.chenyifaer.back.entity.po.AdminUserRolePO;
+import com.chenyifaer.back.entity.vo.AdminRoleNameVO;
 import com.chenyifaer.back.entity.vo.AdminRoleVO;
 import com.chenyifaer.back.service.AdminRolePermissionService;
 import com.chenyifaer.back.service.AdminRoleService;
+import com.chenyifaer.back.service.AdminUserRoleService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,6 +51,9 @@ public class AdminRoleController {
     private AdminRoleService adminRoleService;
 
     @Autowired
+    private AdminUserRoleService adminUserRoleService;
+
+    @Autowired
     private AdminRolePermissionService adminRolePermissionService;
 
     @ApiOperation(value = "查询角色列表")
@@ -74,9 +79,11 @@ public class AdminRoleController {
     public JsonResult getRoleName(){
         log.debug("function start AdminRoleController - getRoleName");
         List<AdminRolePO> list = this.adminRoleService.list();
-        List<String> roleList = new ArrayList<>();
+        List<AdminRoleNameVO> roleList = new ArrayList<AdminRoleNameVO>();
         list.forEach(x ->{
-            roleList.add(x.getAdminRoleName());
+            roleList.add(new AdminRoleNameVO()
+                    .setAdminRoleName(x.getAdminRoleName())
+                    .setAdminRoleId(x.getAdminRoleId()));
         });
         log.debug("function end AdminRoleController - getRoleName 返回的结果为：" + roleList);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,roleList);
@@ -91,7 +98,7 @@ public class AdminRoleController {
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.ADD,
             operation = LogConstant.OPERATION_ROLE_ADD)
-    @RequestMapping(value = "/addRole" , method = RequestMethod.POST)
+    @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult addRole(@RequestBody @Validated(AdminRoleDTO.Add.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - addRole");
         JsonResult check = CheckUtil.check(br);
@@ -99,6 +106,15 @@ public class AdminRoleController {
             log.error("function AdminRoleController - addRole 参数校验失败");
             return check;
         }
+
+        //判断当前角色名是否存在
+        int count = this.adminRoleService.count(new QueryWrapper<>(new AdminRolePO()
+                .setAdminRoleName(adminRoleDTO.getAdminRoleName())));
+        if(count > 0){
+            log.debug("function end AdminRoleController - addRole , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
+            return ResponseResult.Success(ResultCodeEnums.CHECK_005);
+        }
+
         AdminRolePO adminRolePO = new AdminRolePO()
                 .setAdminRoleName(adminRoleDTO.getAdminRoleName())
                 .setAdminRoleText(adminRoleDTO.getAdminRoleText());
@@ -130,6 +146,14 @@ public class AdminRoleController {
         if(check != null){
             log.error("function AdminRoleController - update 参数校验失败");
             return check;
+        }
+
+        //判断当前角色名是否存在
+        int count = this.adminRoleService.count(new QueryWrapper<>(new AdminRolePO()
+                .setAdminRoleName(adminRoleDTO.getAdminRoleName())));
+        if(count > 0){
+            log.debug("function end AdminRoleController - update , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
+            return ResponseResult.Success(ResultCodeEnums.CHECK_005);
         }
 
         AdminRolePO adminRolePO = new AdminRolePO()
@@ -204,6 +228,14 @@ public class AdminRoleController {
             log.error("function AdminRoleController - disableRole 参数校验失败");
             return check;
         }
+
+        int count = this.adminUserRoleService.count(new QueryWrapper<>(new AdminUserRolePO()
+                .setAdminRoleId(adminRoleDTO.getAdminRoleId())));
+        if(count > 0){
+            log.debug("function end AdminRoleController - disableRole , 角色【{}】正在使用，无法禁用",adminRoleDTO.getAdminRoleId());
+            return ResponseResult.Success(ResultCodeEnums.CHECK_006);
+        }
+
         AdminRolePO adminRolePO = new AdminRolePO()
                 .setAdminRoleId(adminRoleDTO.getAdminRoleId())
                 .setStatus(adminRoleDTO.getStatus())

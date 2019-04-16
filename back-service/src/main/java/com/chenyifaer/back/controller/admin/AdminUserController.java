@@ -1,6 +1,7 @@
 package com.chenyifaer.back.controller.admin;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
@@ -8,6 +9,7 @@ import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminUserDTO;
 import com.chenyifaer.back.entity.po.AdminUserPO;
 import com.chenyifaer.back.entity.po.AdminUserRolePO;
+import com.chenyifaer.back.entity.vo.AdminUpdateUserVO;
 import com.chenyifaer.back.entity.vo.AdminUserVO;
 import com.chenyifaer.back.service.AdminUserRoleService;
 import com.chenyifaer.back.service.AdminUserService;
@@ -88,11 +90,32 @@ public class AdminUserController {
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,pageList);
     }
 
+    @ApiOperation(value = "根据ID查询用户信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "adminUserId", value = "用戶ID", required = true, paramType = "query", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getUserById" , method = RequestMethod.POST)
+    public JsonResult getUserById(@RequestBody @Validated(AdminUserDTO.GetOne.class) AdminUserDTO adminUserDTO , BindingResult br){
+        log.debug("function start AdminUserController - getUserById");
+        JsonResult check = CheckUtil.check(br);
+        if(check != null){
+            log.error("function AdminUserController - getUserById 参数校验失败");
+            return check;
+        }
+        List<AdminUpdateUserVO> list = this.adminUserService.getUserById(adminUserDTO);
+
+        log.debug("function end AdminUserController - getUserById 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
     @ApiOperation(value = "新增账号")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminUserAccount", value = "账号", required = true, dataType = "string"),
         @ApiImplicitParam(name = "adminUserName", value = "姓名", required = true, dataType = "string"),
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "AdminUserEmail", value = "邮箱", required = false, dataType = "string"),
+        @ApiImplicitParam(name = "AdminUserPhone", value = "手机号", required = false, dataType = "string"),
     })
     @LogAnnotation(
         menuName = LogConstant.ADMIN_USER_MENU_NAME,
@@ -107,11 +130,21 @@ public class AdminUserController {
             return check;
         }
 
+        //判断当前账号是否存在
+        int count = this.adminUserService.count(new QueryWrapper<>(new AdminUserPO()
+                .setAdminUserAccount(adminUserDTO.getAdminUserAccount())));
+        if(count > 0){
+            log.debug("function end AdminUserController - add , 用户【{}】已经存在了",adminUserDTO.getAdminUserAccount());
+            return ResponseResult.Success(ResultCodeEnums.CHECK_004);
+        }
+
         //获得要插入的数据
         AdminUserPO adminUserPO = new AdminUserPO()
                 .setAdminUserAccount(adminUserDTO.getAdminUserAccount())
                 .setAdminUserName(adminUserDTO.getAdminUserName())
-                .setAdminUserPassword(SystemConstant.SYSTEM_PASSWORD);
+                .setAdminUserPassword(SystemConstant.SYSTEM_PASSWORD)
+                .setAdminUserEmail(adminUserDTO.getAdminUserEmail())
+                .setAdminUserPhone(adminUserDTO.getAdminUserPhone());
         //插入用户表
         boolean flag = this.adminUserService.save(adminUserPO);
         //如果返回的值为成功，则插入用户角色表

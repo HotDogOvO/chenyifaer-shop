@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.chenyifaer.back.entity.dto.AdminUserDTO;
 import com.chenyifaer.back.entity.dto.OauthUserDTO;
 import com.chenyifaer.back.entity.po.AdminUserPO;
+import com.chenyifaer.back.entity.vo.AdminUpdateUserVO;
 import com.chenyifaer.back.entity.vo.AdminUserVO;
 import com.chenyifaer.back.entity.vo.OauthUserVO;
 
@@ -29,4 +30,11 @@ public interface AdminUserDao extends BaseMapper<AdminUserPO> {
      * @Date: 2019/4/13 18:04
      */
     OauthUserVO getOauthUser(OauthUserDTO oauthUserDTO);
+
+    /**
+     * 根據ID查詢用戶信息
+     * @Author:wudh
+     * @Date: 2019/4/16 13:09
+     */
+    List<AdminUpdateUserVO> getUserById(AdminUserDTO adminUserDTO);
 }

@@ -23,6 +23,8 @@ public class AdminUserDTO extends PageDTO {
 
     public interface Add{};
 
+    public interface GetOne{};
+
     public interface Update{};
 
     public interface Disable{};
@@ -30,7 +32,7 @@ public class AdminUserDTO extends PageDTO {
     public interface Reset{};
 
     /** 主键 */
-    @NotNull(groups = {Update.class,Disable.class,Reset.class} , message = "userId不能为空")
+    @NotNull(groups = {GetOne.class,Update.class,Disable.class,Reset.class} , message = "userId不能为空")
     private Integer adminUserId;
 
     /** 账号 */

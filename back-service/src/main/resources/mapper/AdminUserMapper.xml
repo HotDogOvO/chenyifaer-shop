@@ -59,7 +59,7 @@
         <if test="status != null ">
             AND u.status = #{status}
         </if>
-        ORDER BY u.create_time DESC
+        ORDER BY u.create_time
     </select>
 
     <!-- 查询Oauth认证需要的用户数据 -->
@@ -76,5 +76,26 @@
             admin_user_account = #{adminUserAccount}
     </select>
 
+    <!-- 根據ID查詢用戶信息 -->
+    <select id="getUserById" resultType="com.chenyifaer.back.entity.vo.AdminUpdateUserVO">
+        SELECT
+            u.admin_user_name adminUserName,
+            u.admin_user_phone adminUserPhone,
+            u.admin_user_email adminUserEmail,
+            r.admin_role_id adminRoleId,
+            r.admin_role_name adminRoleName
+        FROM
+            t_admin_user u
+        INNER JOIN
+            t_admin_role r
+        INNER JOIN
+            t_admin_user_role ur
+        ON
+            u.admin_user_id = ur.admin_user_id
+        AND
+            r.admin_role_id = ur.admin_role_id
+        AND
+            u.admin_user_id = #{adminUserId}
+    </select>
 
 </mapper>
