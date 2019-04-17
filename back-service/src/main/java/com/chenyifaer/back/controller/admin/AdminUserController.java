@@ -121,6 +121,7 @@ public class AdminUserController {
         menuName = LogConstant.ADMIN_USER_MENU_NAME,
         action = LogConstant.ADD,
         operation = LogConstant.OPERATION_USER_ADD)
+    @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminUserDTO.Add.class) AdminUserDTO adminUserDTO, BindingResult br){
         log.debug("function start AdminUserController - add");
@@ -176,6 +177,7 @@ public class AdminUserController {
         menuName = LogConstant.ADMIN_USER_MENU_NAME,
         action = LogConstant.UPDATE,
         operation = LogConstant.OPERATION_USER_UPDATE)
+    @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminUserDTO.Update.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - update");
@@ -221,6 +223,7 @@ public class AdminUserController {
         menuName = LogConstant.ADMIN_USER_MENU_NAME,
         action = LogConstant.DISABLE,
         operation = LogConstant.OPERATION_USER_DISABLE)
+    @RsaAnnotation
     @RequestMapping(value = "/disableUser" , method = RequestMethod.POST)
     public JsonResult disableUser(@RequestBody @Validated(AdminUserDTO.Disable.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - disableUser");
@@ -252,6 +255,7 @@ public class AdminUserController {
         menuName = LogConstant.ADMIN_USER_MENU_NAME,
         action = LogConstant.RESET,
         operation = LogConstant.OPERATION_USER_RESET)
+    @RsaAnnotation
     @RequestMapping(value = "/resetUser" , method = RequestMethod.POST)
     public JsonResult resetUser(@RequestBody @Validated(AdminUserDTO.Reset.class) AdminUserDTO adminUserDTO , BindingResult br){
         log.debug("function start AdminUserController - resetUser");

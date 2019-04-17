@@ -5,7 +5,6 @@ import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -26,9 +25,11 @@ public class AdminMenuDTO {
 
     public interface Add{};
 
+    public interface GetOne{};
+
 
     /** 主键 */
-    @NotNull(groups = {Update.class , Delete.class} , message = "主键不能为空")
+    @NotNull(groups = {GetOne.class, Update.class , Delete.class} , message = "主键不能为空")
     private Integer adminMenuId;
 
     /** 菜单名 */
@@ -49,7 +50,7 @@ public class AdminMenuDTO {
     private String url;
 
     /** 权重 */
-    @Size(max = 999 , message = "权重不能超过999")
+    @Length(max = 999 , message = "权重不能超过999")
     @NotNull(groups = {Add.class} , message = "权重不能为空")
     private Integer weight;
 

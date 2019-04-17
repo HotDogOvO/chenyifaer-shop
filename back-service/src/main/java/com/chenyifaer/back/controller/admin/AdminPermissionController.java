@@ -1,7 +1,10 @@
 package com.chenyifaer.back.controller.admin;
 
 
+import com.chenyifaer.back.annotation.RsaAnnotation;
+import com.chenyifaer.back.entity.dto.AdminUserMenuDTO;
 import com.chenyifaer.back.entity.vo.AdminPermissionMenuVO;
+import com.chenyifaer.back.entity.vo.AdminUserMenuVO;
 import com.chenyifaer.back.service.AdminPermissionService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
@@ -10,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +35,22 @@ public class AdminPermissionController {
     private AdminPermissionService adminPermissionService;
 
     @ApiOperation(value = "查询权限列表")
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(){
         log.debug("function start AdminPermissionController - list");
         List<AdminPermissionMenuVO> list = this.adminPermissionService.getList();
         log.debug("function end AdminPermissionController - list 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
+    @ApiOperation(value = "查询当前登录用户拥有的权限")
+    @RsaAnnotation
+    @RequestMapping(value = "/getUserMenuList" , method = RequestMethod.POST)
+    public JsonResult getUserMenuList(@RequestBody AdminUserMenuDTO adminUserMenuDTO){
+        log.debug("function start AdminPermissionController - getUserMenuList");
+        List<AdminUserMenuVO> list = this.adminPermissionService.getUserMenuList(adminUserMenuDTO);
+        log.debug("function end AdminPermissionController - getUserMenuList 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 

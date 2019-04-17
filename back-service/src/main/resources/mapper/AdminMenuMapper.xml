@@ -56,12 +56,11 @@
     <!-- 查询父菜单下是否存在子菜单 -->
     <select id="getCount" resultType="int">
         SELECT
-            count( * )
+            count(*)
         FROM
             t_admin_menu
         WHERE
             admin_menu_parent_id = #{adminMenuId}
     </select>
-
 
 </mapper>

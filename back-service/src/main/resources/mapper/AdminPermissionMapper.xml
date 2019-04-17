@@ -44,4 +44,22 @@
             p.admin_menu_id = m.admin_menu_id
     </select>
 
+    <!-- 查询当前登录用户拥有的菜单权限 -->
+    <select id="getUserMenuList" resultType="com.chenyifaer.back.entity.vo.AdminUserMenuVO">
+        SELECT DISTINCT
+            m.admin_menu_name adminMenuName,
+            m.url url,
+            rp.admin_role_id adminRoleId
+        FROM
+            t_admin_menu m,
+            t_admin_role_permission rp,
+            t_admin_user_role ur,
+            t_admin_user u
+        WHERE
+            u.admin_user_id = ur.admin_user_id
+        AND rp.admin_role_id = ur.admin_role_id
+        AND rp.admin_menu_id = m.admin_menu_id
+        AND u.admin_user_account = #{adminUserAccount}
+    </select>
+
 </mapper>

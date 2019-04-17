@@ -4,6 +4,7 @@ package com.chenyifaer.back.controller.admin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminRolePermissionDTO;
 import com.chenyifaer.back.entity.po.AdminRolePermissionPO;
@@ -45,6 +46,7 @@ public class AdminRolePermissionController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", dataType = "string"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated(AdminRolePermissionDTO.Select.class) AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
         log.debug("function start AdminRolePermissionController - list");
@@ -70,6 +72,7 @@ public class AdminRolePermissionController {
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.PERMISSION,
             operation = LogConstant.OPERATION_ROLE_PERMISSION)
+    @RsaAnnotation
     @RequestMapping(value = "/permission" , method = RequestMethod.POST)
     public JsonResult permission(@RequestBody @Validated(AdminRolePermissionDTO.Permission.class) AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
         log.debug("function start AdminRoleController - permission");

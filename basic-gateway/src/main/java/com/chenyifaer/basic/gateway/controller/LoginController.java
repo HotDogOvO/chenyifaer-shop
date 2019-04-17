@@ -1,5 +1,6 @@
 package com.chenyifaer.basic.gateway.controller;
 
+
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.constant.OauthClientConstant;
 import com.chenyifaer.basic.common.emuns.OauthUserTypeEnum;
@@ -7,6 +8,8 @@ import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.basic.common.util.StringUtil;
 import com.chenyifaer.basic.gateway.entity.dto.AdminLoginDTO;
+import com.chenyifaer.basic.gateway.entity.dto.AdminUserMenuDTO;
+import com.chenyifaer.basic.gateway.feign.AdminUserFeign;
 import com.chenyifaer.basic.gateway.feign.Oauth2Client;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -19,6 +22,7 @@ import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +48,10 @@ public class LoginController {
 
     @Autowired
     private Oauth2Client oauth2Client;
+
+    @Autowired
+    private AdminUserFeign adminUserFeign;
+
     @ApiOperation(value = "后台登录")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminUserAccount", value = "账号", required = true, dataType = "string"),
@@ -63,10 +71,19 @@ public class LoginController {
         parameters.put("username", adminLoginDTO.getAdminUserAccount() + "|" + OauthUserTypeEnum.USERNAME.name());
         parameters.put("password", adminLoginDTO.getAdminUserPassword());
 
+        //获取Oauth返回的Token信息
         Map<String, Object> tokenInfo = oauth2Client.postAccessToken(parameters);
 
+        //获取当前用户登录的权限
+        JsonResult jsonResult = this.adminUserFeign.getUserMenuList(new AdminUserMenuDTO()
+                .setAdminUserAccount(adminLoginDTO.getAdminUserAccount()));
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",jsonResult.getData());
+        map.put("tokenInfo",tokenInfo);
+
         log.debug("[END] - function LoginController - login");
-        return ResponseResult.Success(ResultCodeEnums.SUCCESS_LOGIN, tokenInfo);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_LOGIN, map);
     }
 
     /**

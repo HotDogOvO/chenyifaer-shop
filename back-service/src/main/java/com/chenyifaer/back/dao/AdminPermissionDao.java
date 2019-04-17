@@ -1,8 +1,10 @@
 package com.chenyifaer.back.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.chenyifaer.back.entity.dto.AdminUserMenuDTO;
 import com.chenyifaer.back.entity.po.AdminPermissionPO;
 import com.chenyifaer.back.entity.vo.AdminPermissionMenuVO;
+import com.chenyifaer.back.entity.vo.AdminUserMenuVO;
 
 import java.util.List;
 
@@ -19,5 +21,12 @@ public interface AdminPermissionDao extends BaseMapper<AdminPermissionPO> {
      * @Date: 2019/4/7 17:31
      */
     List<AdminPermissionMenuVO> getList();
+
+    /**
+     * 查询当前登录用户拥有的菜单权限
+     * @Author:wudh
+     * @Date: 2019/4/17 22:19
+     */
+    List<AdminUserMenuVO> getUserMenuList(AdminUserMenuDTO adminUserMenuDTO);
 
 }

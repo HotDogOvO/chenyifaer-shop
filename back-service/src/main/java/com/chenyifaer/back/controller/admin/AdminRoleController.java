@@ -2,13 +2,11 @@ package com.chenyifaer.back.controller.admin;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminRoleDTO;
-import com.chenyifaer.back.entity.dto.AdminRolePermissionDTO;
 import com.chenyifaer.back.entity.po.AdminRolePO;
-import com.chenyifaer.back.entity.po.AdminRolePermissionPO;
 import com.chenyifaer.back.entity.po.AdminUserRolePO;
 import com.chenyifaer.back.entity.vo.AdminRoleNameVO;
 import com.chenyifaer.back.entity.vo.AdminRoleVO;
@@ -61,6 +59,7 @@ public class AdminRoleController {
         @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
         @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", dataType = "int"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - list");
@@ -75,6 +74,7 @@ public class AdminRoleController {
     }
 
     @ApiOperation(value = "查询角色下拉框")
+    @RsaAnnotation
     @RequestMapping(value = "/getRoleName" , method = RequestMethod.POST)
     public JsonResult getRoleName(){
         log.debug("function start AdminRoleController - getRoleName");
@@ -98,6 +98,7 @@ public class AdminRoleController {
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.ADD,
             operation = LogConstant.OPERATION_ROLE_ADD)
+    @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult addRole(@RequestBody @Validated(AdminRoleDTO.Add.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - addRole");
@@ -139,6 +140,7 @@ public class AdminRoleController {
         menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
         action = LogConstant.UPDATE,
         operation = LogConstant.OPERATION_ROLE_UPDATE)
+    @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminRoleDTO.Update.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - update");
@@ -181,6 +183,7 @@ public class AdminRoleController {
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.DISABLE,
             operation = LogConstant.OPERATION_ROLE_DISABLE)
+    @RsaAnnotation
     @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
     public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){
         log.debug("function start AdminRoleController - disableRole");

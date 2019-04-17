@@ -1,7 +1,9 @@
 package com.chenyifaer.back.controller.admin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
+import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminMenuDTO;
 import com.chenyifaer.back.entity.po.AdminMenuPO;
@@ -52,12 +54,40 @@ public class AdminMenuController {
     private AdminMenuService adminMenuService;
 
     @ApiOperation(value = "查询菜单列表")
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(){
         log.debug("function start AdminMenuController - list ");
 
         List<AdminMenuVO> list = this.adminMenuService.getList();
         log.debug("function end AdminMenuController - list 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
+    @ApiOperation(value = "查询父菜单")
+    @RsaAnnotation
+    @RequestMapping(value = "/getParentMenu" , method = RequestMethod.POST)
+    public JsonResult getParentMenu(){
+        log.debug("function start AdminMenuController - getParentMenu ");
+        List<AdminMenuPO> list = this.adminMenuService.list(new QueryWrapper<>(new AdminMenuPO().setAdminMenuParentId(0)));
+        log.debug("function end AdminMenuController - getParentMenu 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
+    @ApiOperation(value = "根据ID查询菜单详情")
+    @RsaAnnotation
+    @RequestMapping(value = "/getMenuById" , method = RequestMethod.POST)
+    public JsonResult getMenuById(@RequestBody @Validated(AdminMenuDTO.GetOne.class) AdminMenuDTO adminMenuDTO , BindingResult br){
+        log.debug("function start AdminMenuController - getMenuById ");
+
+        JsonResult check = CheckUtil.check(br);
+        if(check != null){
+            log.error("function AdminMenuController - getMenuById 参数校验失败");
+            return check;
+        }
+
+        List<AdminMenuPO> list = this.adminMenuService.list(new QueryWrapper<>(new AdminMenuPO().setAdminMenuId(adminMenuDTO.getAdminMenuId())));
+        log.debug("function end AdminMenuController - getMenuById 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -73,6 +103,7 @@ public class AdminMenuController {
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.ADD,
         operation = LogConstant.OPERATION_MENU_ADD)
+    @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminMenuDTO.Add.class) AdminMenuDTO adminMenuDTO , BindingResult br){
         log.debug("function start AdminMenuController - add");
@@ -112,6 +143,7 @@ public class AdminMenuController {
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.UPDATE,
         operation = LogConstant.OPERATION_MENU_UPDATE)
+    @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminMenuDTO.Update.class) AdminMenuDTO adminMenuDTO , BindingResult br){
         log.debug("function start AdminMenuController - update");
@@ -154,6 +186,7 @@ public class AdminMenuController {
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.DELETE,
         operation = LogConstant.OPERATION_MENU_DELETE)
+    @RsaAnnotation
     @RequestMapping(value = "/delete" , method = RequestMethod.POST)
     public JsonResult delete(@RequestBody @Validated(AdminMenuDTO.Delete.class) AdminMenuDTO adminMenuDTO , BindingResult br) {
         log.debug("function start AdminMenuController - delete");
