@@ -35,7 +35,6 @@ public class AdminPermissionController {
     public JsonResult list(){
         log.debug("function start AdminPermissionController - list");
         List<AdminPermissionMenuVO> list = this.adminPermissionService.getList();
-
         log.debug("function end AdminPermissionController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }

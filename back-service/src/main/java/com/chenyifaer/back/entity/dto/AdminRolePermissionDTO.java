@@ -19,12 +19,16 @@ import java.util.List;
 @Accessors(chain = true)
 public class AdminRolePermissionDTO {
 
+    public interface Select{};
+    public interface Permission{};
+
     /** 角色ID */
-    @NotNull(message = "角色ID不能为空")
+    @NotNull(groups = {Select.class,Permission.class},message = "角色ID不能为空")
     private Integer adminRoleId;
 
+
     /** 菜单ID */
-    @NotNull(message = "菜单ID集合不能为空")
+    @NotNull(groups = {Permission.class},message = "菜单ID集合不能为空")
     private List<AdminRoleMenuDTO> adminMenuList;
 
 }

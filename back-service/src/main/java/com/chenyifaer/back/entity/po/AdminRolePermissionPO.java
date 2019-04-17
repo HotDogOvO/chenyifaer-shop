@@ -35,7 +35,7 @@ public class AdminRolePermissionPO extends Model<AdminRolePermissionPO> {
     private Integer adminMenuId;
 
     @ApiModelProperty(value = "权限ID")
-    private Integer adminPermissionId;
+    private String adminPermissionId;
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;

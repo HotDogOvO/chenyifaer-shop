@@ -22,7 +22,7 @@ public class AdminPermissionMenuVO {
     private String adminMenuName;
 
     /** 权限父菜单ID */
-    private Integer adminParentMenuId;
+    private String adminParentMenuId;
 
     /** 权限集合 */
     private List<AdminPermissionVO> permissionList;

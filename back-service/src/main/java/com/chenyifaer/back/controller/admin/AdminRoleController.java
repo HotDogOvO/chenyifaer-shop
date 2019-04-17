@@ -172,45 +172,6 @@ public class AdminRoleController {
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
-    @ApiOperation(value = "角色授权")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),
-        @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
-        @ApiImplicitParam(name = "adminRoleText", value = "角色介绍", dataType = "int"),
-    })
-    @LogAnnotation(
-        menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
-        action = LogConstant.PERMISSION,
-        operation = LogConstant.OPERATION_ROLE_PERMISSION)
-    @RequestMapping(value = "/permission" , method = RequestMethod.POST)
-    public JsonResult permission(@RequestBody @Validated AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
-        log.debug("function start AdminRoleController - permission");
-        JsonResult check = CheckUtil.check(br);
-        if(check != null){
-            log.error("function AdminRoleController - permission 参数校验失败");
-            return check;
-        }
-
-        //清空对应角色的权限
-        boolean deleteFlag = this.adminRolePermissionService.remove(
-            new UpdateWrapper(new AdminRolePermissionPO().setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())));
-        //若清空操作成功，则进行插入
-        if(deleteFlag){
-            adminRolePermissionDTO.getAdminMenuList().forEach(x -> {
-                x.getAdminPermissionIdList().forEach(j -> {
-                    AdminRolePermissionPO adminRolePermissionPO = new AdminRolePermissionPO()
-                            .setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())
-                            .setAdminPermissionId(j)
-                            .setAdminMenuId(x.getAdminMenuId());
-                    //插入权限表
-                    this.adminRolePermissionService.save(adminRolePermissionPO);
-                });
-            });
-        }
-        log.debug("function end AdminRoleController - permission , 角色授权成功，授权的角色信息为：" + adminRolePermissionDTO);
-        return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
-    }
-
     @ApiOperation(value = "禁用/启用角色")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "adminRoleId", value = "角色ID", required = true, dataType = "int"),

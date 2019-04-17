@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 public class AdminPermissionVO {
 
     /** 主键 */
-    private Integer adminPermissionId;
+    private String adminPermissionId;
 
     /** 菜单ID */
     private Integer adminMenuId;

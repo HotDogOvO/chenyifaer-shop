@@ -23,6 +23,6 @@ public class AdminRoleMenuDTO {
     private Integer adminMenuId;
 
     @NotNull(message = "权限ID集合不能为空")
-    private List<Integer> adminPermissionIdList;
+    private List<String> adminPermissionIdList;
 
 }

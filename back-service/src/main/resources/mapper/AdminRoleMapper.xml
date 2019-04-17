@@ -35,24 +35,24 @@
             r.admin_role_id,
             r.admin_role_name,
             r.admin_role_text,
-            r.status,
+            r.STATUS,
             r.create_time,
             p.admin_permission_text
         FROM
-            t_admin_role r,
-            t_admin_permission p,
-            t_admin_role_permission rp
-        WHERE
-            r.admin_role_id = rp.admin_role_id
-        AND
-            p.admin_permission_id = rp.admin_permission_id
-        <if test="adminRoleName != null and adminRoleName != '' ">
-            AND r.admin_role_name LIKE CONCAT('%',#{adminRoleName},'%')
-        </if>
-        <if test="status != null">
-            AND r.status = #{status}
-        </if>
-        ORDER BY r.create_time DESC
+            t_admin_role r
+        LEFT JOIN
+            t_admin_role_permission rp ON r.admin_role_id = rp.admin_role_id
+        LEFT JOIN
+            t_admin_permission p ON p.admin_permission_id = rp.admin_permission_id
+        <where>
+            <if test="adminRoleName != null and adminRoleName != '' ">
+                AND r.admin_role_name LIKE CONCAT('%',#{adminRoleName},'%')
+            </if>
+            <if test="status != null">
+                AND r.status = #{status}
+            </if>
+        </where>
+        ORDER BY r.create_time
     </select>
 
 </mapper>
