@@ -7,7 +7,9 @@ import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminRolePermissionDTO;
+import com.chenyifaer.back.entity.po.AdminPermissionPO;
 import com.chenyifaer.back.entity.po.AdminRolePermissionPO;
+import com.chenyifaer.back.service.AdminPermissionService;
 import com.chenyifaer.back.service.AdminRolePermissionService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
@@ -38,6 +40,9 @@ import java.util.List;
 @RequestMapping("/admin/rolePermission")
 @Api(value = "账号管理",tags = {"账号管理 - 后台角色管理"})
 public class AdminRolePermissionController {
+
+    @Autowired
+    private AdminPermissionService adminPermissionService;
 
     @Autowired
     private AdminRolePermissionService adminRolePermissionService;
@@ -87,15 +92,16 @@ public class AdminRolePermissionController {
                 new UpdateWrapper(new AdminRolePermissionPO().setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())));
         //若清空操作成功，则进行插入
         if(deleteFlag){
-            adminRolePermissionDTO.getAdminMenuList().forEach(x -> {
-                x.getAdminPermissionIdList().forEach(j -> {
-                    AdminRolePermissionPO adminRolePermissionPO = new AdminRolePermissionPO()
-                            .setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())
-                            .setAdminPermissionId(j)
-                            .setAdminMenuId(x.getAdminMenuId());
-                    //插入权限表
-                    this.adminRolePermissionService.save(adminRolePermissionPO);
-                });
+            adminRolePermissionDTO.getAdminPermissionList().forEach(x -> {
+                //查询权限对应的菜单ID
+                AdminPermissionPO adminPermissionPO = this.adminPermissionService.getMenuIdByPermissionId(x);
+
+                AdminRolePermissionPO adminRolePermissionPO = new AdminRolePermissionPO()
+                        .setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())
+                        .setAdminPermissionId(x)
+                        .setAdminMenuId(adminPermissionPO.getAdminMenuId());
+                //插入权限表
+                this.adminRolePermissionService.save(adminRolePermissionPO);
             });
         }
         log.debug("function end AdminRoleController - permission , 角色授权成功，授权的角色信息为：" + adminRolePermissionDTO);

@@ -29,4 +29,11 @@ public interface AdminPermissionDao extends BaseMapper<AdminPermissionPO> {
      */
     List<AdminUserMenuVO> getUserMenuList(AdminUserMenuDTO adminUserMenuDTO);
 
+    /**
+     * 查询当前权限ID对应的菜单ID
+     * @Author:wudh
+     * @Date: 2019/4/18 12:54
+     */
+    AdminPermissionPO getMenuIdByPermissionId(String adminPermissionId);
+
 }

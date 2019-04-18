@@ -25,11 +25,11 @@ public class AdminPermissionPO extends Model<AdminPermissionPO> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "admin_permission_id", type = IdType.AUTO)
+    @TableId(value = "admin_permission_id", type = IdType.UUID)
     private String adminPermissionId;
 
     @ApiModelProperty(value = "菜单ID")
-    private String adminMenuId;
+    private Integer adminMenuId;
 
     @ApiModelProperty(value = "权限code")
     private String adminPermissionCode;

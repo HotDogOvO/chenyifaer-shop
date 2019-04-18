@@ -20,7 +20,7 @@ public class AdminPermissionVO {
     private String adminPermissionId;
 
     /** 菜单ID */
-    private Integer adminMenuId;
+    private Integer adminPermissionMenuId;
 
     /** 权限介绍 */
     private String adminPermissionText;

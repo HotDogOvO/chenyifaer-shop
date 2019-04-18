@@ -18,14 +18,13 @@ import java.util.List;
 @Accessors(chain = true)
 public class AdminPermissionMenuVO {
 
-    /** 权限父菜单名 */
-    private String adminMenuName;
+    /** 父菜单ID */
+    private Integer adminParentMenuId;
 
-    /** 权限父菜单ID */
-    private String adminParentMenuId;
+    /** 父菜单名 */
+    private String adminParentMenuName;
 
-    /** 权限集合 */
-    private List<AdminPermissionVO> permissionList;
-
+    /** 子菜单集合 */
+    private List<AdminPermissionChildMenuVO> childMenuList;
 
 }

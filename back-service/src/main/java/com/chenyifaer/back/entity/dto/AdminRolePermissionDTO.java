@@ -29,6 +29,6 @@ public class AdminRolePermissionDTO {
 
     /** 菜单ID */
     @NotNull(groups = {Permission.class},message = "菜单ID集合不能为空")
-    private List<AdminRoleMenuDTO> adminMenuList;
+    private List<String> adminPermissionList;
 
 }

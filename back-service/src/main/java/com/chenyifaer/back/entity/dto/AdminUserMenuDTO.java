@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AdminUserMenuDTO {
 
-    /** 用户ID */
+    /** 用户账号 */
     private String adminUserAccount;
 
 }

@@ -1,9 +1,8 @@
-package com.chenyifaer.back.entity.dto;
+package com.chenyifaer.back.entity.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,14 +14,17 @@ import java.util.List;
  *	  \_____|_| |_|\___|_| |_|_|  |_|_|  \__,_|\___|_|   \___/_/   |____//_/   |____/
  *
  */
+
 @Data
 @Accessors(chain = true)
-public class AdminRoleMenuDTO {
+public class AdminPermissionChildMenuVO {
 
-    @NotNull(message = "菜单ID不能为空")
-    private Integer adminMenuId;
+    /** 权限子菜单ID */
+    private String adminChildMenuId;
 
-    @NotNull(message = "权限ID集合不能为空")
-    private List<String> adminPermissionIdList;
+    /** 权限子菜单名 */
+    private String adminChildMenuName;
 
+    /** 权限集合 */
+    private List<AdminPermissionVO> permissionList;
 }

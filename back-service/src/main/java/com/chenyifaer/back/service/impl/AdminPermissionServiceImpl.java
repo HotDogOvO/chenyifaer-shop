@@ -32,4 +32,9 @@ public class AdminPermissionServiceImpl extends ServiceImpl<AdminPermissionDao, 
     public List<AdminUserMenuVO> getUserMenuList(AdminUserMenuDTO adminUserMenuDTO) {
         return this.adminPermissionDao.getUserMenuList(adminUserMenuDTO);
     }
+
+    @Override
+    public AdminPermissionPO getMenuIdByPermissionId(String adminPermissionId) {
+        return this.adminPermissionDao.getMenuIdByPermissionId(adminPermissionId);
+    }
 }
