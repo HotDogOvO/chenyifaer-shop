@@ -97,7 +97,7 @@ public class AdminRoleController {
     @LogAnnotation(
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.ADD,
-            operation = LogConstant.OPERATION_ROLE_ADD)
+            operation = LogConstant.OPERATION_ADMIN_ROLE_ADD)
     @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult addRole(@RequestBody @Validated(AdminRoleDTO.Add.class) AdminRoleDTO adminRoleDTO , BindingResult br){
@@ -139,7 +139,7 @@ public class AdminRoleController {
     @LogAnnotation(
         menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
         action = LogConstant.UPDATE,
-        operation = LogConstant.OPERATION_ROLE_UPDATE)
+        operation = LogConstant.OPERATION_ADMIN_ROLE_UPDATE)
     @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminRoleDTO.Update.class) AdminRoleDTO adminRoleDTO , BindingResult br){
@@ -182,7 +182,7 @@ public class AdminRoleController {
     @LogAnnotation(
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.DISABLE,
-            operation = LogConstant.OPERATION_ROLE_DISABLE)
+            operation = LogConstant.OPERATION_ADMIN_ROLE_DISABLE)
     @RsaAnnotation
     @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
     public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){

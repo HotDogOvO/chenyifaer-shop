@@ -22,11 +22,15 @@ public class LogConstant {
     /** 菜单名 */
     public static final String SYSTEM_MENU_NAME = "喜瑞斯商城";
 
-    public static final String ADMIN_USER_MENU_NAME = "运营账号";
+    public static final String ADMIN_USER_MENU_NAME = "运营账号管理";
 
-    public static final String ADMIN_ROLE_MENU_NAME = "后台角色";
+    public static final String ADMIN_ROLE_MENU_NAME = "后台角色管理";
 
-    public static final String ADMIN_MENU_MENU_NAME = "后台菜单";
+    public static final String ADMIN_MENU_MENU_NAME = "菜单管理";
+
+    public static final String USER_MENU_NAME = "用户管理";
+
+    public static final String ROLE_MENU_NAME = "角色管理";
 
     /**********************************************/
     /** 动作 */
@@ -59,22 +63,25 @@ public class LogConstant {
     public static final String OPERATION_SYSTEM_LOGIN = "系统登录";
 
     /** 后台用户列表 */
-    public static final String OPERATION_USER_ADD = "新增用户";
-    public static final String OPERATION_USER_UPDATE = "更新用户";
-    public static final String OPERATION_USER_DISABLE = "禁用/启用用户";
-    public static final String OPERATION_USER_RESET = "重置用户密码";
+    public static final String OPERATION_ADMIN_USER_ADD = "新增用户";
+    public static final String OPERATION_ADMIN_USER_UPDATE = "更新用户";
+    public static final String OPERATION_ADMIN_USER_DISABLE = "禁用/启用用户";
+    public static final String OPERATION_ADMIN_USER_RESET = "重置用户密码";
 
     /** 后台角色列表 */
-    public static final String OPERATION_ROLE_ADD = "新增角色";
-    public static final String OPERATION_ROLE_UPDATE = "更新角色";
-    public static final String OPERATION_ROLE_DISABLE = "禁用/启用角色";
-    public static final String OPERATION_ROLE_PERMISSION = "授权角色";
+    public static final String OPERATION_ADMIN_ROLE_ADD = "新增角色";
+    public static final String OPERATION_ADMIN_ROLE_UPDATE = "更新角色";
+    public static final String OPERATION_ADMIN_ROLE_DISABLE = "禁用/启用角色";
+    public static final String OPERATION_ADMIN_ROLE_PERMISSION = "授权角色";
 
     /** 后台菜单列表 */
-    public static final String OPERATION_MENU_ADD = "新增菜单";
-    public static final String OPERATION_MENU_UPDATE = "更新菜单";
-    public static final String OPERATION_MENU_DELETE = "删除菜单";
+    public static final String OPERATION_ADMIN_MENU_ADD = "新增菜单";
+    public static final String OPERATION_ADMIN_MENU_UPDATE = "更新菜单";
+    public static final String OPERATION_ADMIN_MENU_DELETE = "删除菜单";
 
+    /** 用户管理 */
+    public static final String OPERATION_USER_DISABLE = "禁用/启用用户";
+    public static final String OPERATION_USER_EXPORT = "导出用户列表";
 
 
 

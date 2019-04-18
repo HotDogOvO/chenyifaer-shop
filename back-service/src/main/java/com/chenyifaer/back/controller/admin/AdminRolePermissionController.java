@@ -76,7 +76,7 @@ public class AdminRolePermissionController {
     @LogAnnotation(
             menuName = LogConstant.ADMIN_ROLE_MENU_NAME,
             action = LogConstant.PERMISSION,
-            operation = LogConstant.OPERATION_ROLE_PERMISSION)
+            operation = LogConstant.OPERATION_ADMIN_ROLE_PERMISSION)
     @RsaAnnotation
     @RequestMapping(value = "/permission" , method = RequestMethod.POST)
     public JsonResult permission(@RequestBody @Validated(AdminRolePermissionDTO.Permission.class) AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){

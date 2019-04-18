@@ -43,16 +43,16 @@
             <if test="userNickName != null and userNickName != ''">
                 AND u.user_nick_name LIKE CONCAT('%',#{userNickName},'%')
             </if>
-            <if test="userType != null and userType != ''">
+            <if test="userType != null ">
                 AND u.user_type = #{userType}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null ">
                 AND u.status = #{status}
             </if>
-            <if test="userSex != null and userSex != ''">
-                AND u.user_sex = #{userSex}
+            <if test="userSex != null">
+                AND ud.user_sex = #{userSex}
             </if>
-            <if test="roleId != null and roleId != ''">
+            <if test="roleId != null">
                 AND r.role_id = #{roleId}
             </if>
             <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">

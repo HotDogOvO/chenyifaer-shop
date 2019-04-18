@@ -102,7 +102,7 @@ public class AdminMenuController {
     @LogAnnotation(
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.ADD,
-        operation = LogConstant.OPERATION_MENU_ADD)
+        operation = LogConstant.OPERATION_ADMIN_MENU_ADD)
     @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminMenuDTO.Add.class) AdminMenuDTO adminMenuDTO , BindingResult br){
@@ -142,7 +142,7 @@ public class AdminMenuController {
     @LogAnnotation(
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.UPDATE,
-        operation = LogConstant.OPERATION_MENU_UPDATE)
+        operation = LogConstant.OPERATION_ADMIN_MENU_UPDATE)
     @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminMenuDTO.Update.class) AdminMenuDTO adminMenuDTO , BindingResult br){
@@ -185,7 +185,7 @@ public class AdminMenuController {
     @LogAnnotation(
         menuName = LogConstant.ADMIN_MENU_MENU_NAME,
         action = LogConstant.DELETE,
-        operation = LogConstant.OPERATION_MENU_DELETE)
+        operation = LogConstant.OPERATION_ADMIN_MENU_DELETE)
     @RsaAnnotation
     @RequestMapping(value = "/delete" , method = RequestMethod.POST)
     public JsonResult delete(@RequestBody @Validated(AdminMenuDTO.Delete.class) AdminMenuDTO adminMenuDTO , BindingResult br) {

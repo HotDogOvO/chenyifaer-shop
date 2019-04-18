@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
+
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -24,6 +26,12 @@ import org.hibernate.validator.constraints.Length;
 @Accessors(chain = true)
 public class WebUserDTO extends PageDTO {
 
+    public interface Add{};
+
+    /** 用戶ID */
+    @NotNull(groups = {Add.class} , message = "userId不能為空")
+    private Integer userId;
+
     /** 账号 */
     @Length(max = 30 , message = "账号不能超过30个字符")
     private String userAccount;
@@ -41,7 +49,7 @@ public class WebUserDTO extends PageDTO {
     /** 用户性别（0：保密 1：男 2：女） */
     private Integer userSex;
 
-    /** 角色ID */
+    /** 角色名 */
     private Integer roleId;
 
     /** 创建起始时间 */

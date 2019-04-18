@@ -18,6 +18,7 @@
         <pagehelper.version>1.2.5</pagehelper.version>
         <redis.version>2.0.6.RELEASE</redis.version>
         <druid.version>1.1.10</druid.version>
+        <guava.version>20.0</guava.version>
         <swagger.version>2.9.2</swagger.version>
     </properties>
 
@@ -51,6 +52,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatisplus.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jsqlparser</artifactId>
+                    <groupId>com.github.jsqlparser</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- mybatisPlus 生成模板 -->
         <dependency>
@@ -70,6 +77,12 @@
             <groupId>com.chenyifaer</groupId>
             <artifactId>basic-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>easypoi-base</artifactId>
+                    <groupId>cn.afterturn</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- mybatis分页插件 -->
@@ -97,6 +110,23 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid.version}</version>
+        </dependency>
+
+        <!-- excel导入导出 - easyPoi -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+        </dependency>
+
+        <!-- 解决easyPoi和eureka 版本冲突问题 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
 
         <!-- Swagger支持 -->

@@ -21,4 +21,36 @@
         user_detail_id, user_id, user_sex, user_name, user_phone, user_email, user_birthday, user_head_image, create_time, update_time
     </sql>
 
+    <!-- 查询用户详情 -->
+    <select id="getUserDetail" resultType="com.chenyifaer.back.entity.vo.WebUserDetailVO">
+        SELECT
+            u.user_account userAccount,
+            u.user_nick_name userNickName,
+            u.user_type userType,
+            u.create_time createTime,
+            ud.user_sex userSex,
+            ud.user_name userName,
+            ud.user_phone userPhone,
+            ud.user_email userEmail,
+            ud.user_birthday userBirthday,
+            ua.consignee_name consigneeName,
+            ua.consignee_phone consigneePhone,
+            ua.province province,
+            ua.city city,
+            ua.area area,
+            ua.address address,
+            ua.longitude longitude,
+            ua.latitude latitude,
+            ua.zip zip
+        FROM
+            t_web_user u
+        INNER JOIN
+            t_web_user_detail ud ON u.user_id = ud.user_id
+        LEFT JOIN
+            t_web_user_address ua ON u.user_id = ua.user_id
+        WHERE
+            ua.default_status = 1
+        AND
+            u.user_id = #{userId}
+    </select>
 </mapper>

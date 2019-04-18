@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.chenyifaer.back.entity.dto.WebUserDTO;
 import com.chenyifaer.back.entity.po.WebUserPO;
 import com.chenyifaer.back.entity.vo.WebUserVO;
+import com.chenyifaer.basic.common.exception.ExportException;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -30,5 +32,12 @@ public interface WebUserService extends IService<WebUserPO> {
      * @Date: 2019/4/18 14:18
      */
     List<WebUserVO> getList(WebUserDTO webUserDTO);
+
+    /**
+     * 导出用户列表
+     * @Author:wudh
+     * @Date: 2019/4/18 21:35
+     */
+    void export(WebUserDTO webUserDTO , HttpServletResponse response) throws ExportException;
 
 }
