@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.WebUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.WebUserPO">
+        <id column="user_id" property="userId" />
+        <result column="user_account" property="userAccount" />
+        <result column="user_password" property="userPassword" />
+        <result column="user_nick_name" property="userNickName" />
+        <result column="user_type" property="userType" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="cancelled_time" property="cancelledTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, user_account, user_password, user_nick_name, user_type, status, create_time, update_time, cancelled_time
+    </sql>
+
+    <!-- 查询用户列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.WebUserVO">
+        SELECT
+            u.user_id userId,
+            u.user_account userAccount,
+            u.user_nick_name userNickName,
+            r.role_name roleName,
+            u.user_type userType,
+            u.status status,
+            ud.user_sex userSex,
+            u.create_time createTime
+        FROM
+            t_web_user u
+        INNER JOIN t_web_user_detail ud ON u.user_id = ud.user_id
+        INNER JOIN t_web_user_role ur ON u.user_id = ur.user_id
+        INNER JOIN t_web_role r ON r.role_id = ur.role_id
+        <where>
+            <if test="userAccount != null and userAccount != ''">
+                u.user_account LIKE CONCAT('%',#{userAccount},'%')
+            </if>
+            <if test="userNickName != null and userNickName != ''">
+                AND u.user_nick_name LIKE CONCAT('%',#{userNickName},'%')
+            </if>
+            <if test="userType != null and userType != ''">
+                AND u.user_type = #{userType}
+            </if>
+            <if test="status != null and status != ''">
+                AND u.status = #{status}
+            </if>
+            <if test="userSex != null and userSex != ''">
+                AND u.user_sex = #{userSex}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                AND r.role_id = #{roleId}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(u.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY u.create_time DESC
+    </select>
+
+</mapper>

@@ -1,4 +1,4 @@
-package com.chenyifaer.back.config;
+package com.chenyifaer.back.util;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
@@ -27,7 +28,7 @@ public class MysqlGenerator {
         int result = scanner();
 
         //需要生成的表
-        String[] tableList = {"t_sys_log"};
+        String[] tableList = {"t_web_role","t_web_user","t_web_user_detail","t_web_user_role","t_web_user_address"};
         final String projectPath = "E:\\JAVA\\Idea\\chenyifaer-shop\\back-service";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator().setGlobalConfig(
@@ -60,7 +61,7 @@ public class MysqlGenerator {
                 new DataSourceConfig()
                         // 数据库类型
                         .setDbType(DbType.MYSQL)
-                        .setTypeConvert(new OracleTypeConvert() {
+                        .setTypeConvert(new MySqlTypeConvert() {
                             // 自定义数据库表字段类型转换【可选】
                             @Override
                             public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {

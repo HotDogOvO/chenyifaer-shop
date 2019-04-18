@@ -44,12 +44,12 @@ public class LogController {
 
     @ApiOperation(value = "查询日志列表")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "用户ID", required = true, dataType = "int"),
-        @ApiImplicitParam(name = "pageSize", value = "用户ID", required = true, dataType = "int"),
-        @ApiImplicitParam(name = "adminUserName", value = "用户ID", dataType = "string"),
-        @ApiImplicitParam(name = "action", value = "用户ID", dataType = "string"),
-        @ApiImplicitParam(name = "startTime", value = "用户ID", dataType = "string"),
-        @ApiImplicitParam(name = "endTime", value = "用户ID", dataType = "string"),
+        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "adminUserName", value = "操作人姓名", dataType = "string"),
+        @ApiImplicitParam(name = "action", value = "动作", dataType = "string"),
+        @ApiImplicitParam(name = "startTime", value = "起始时间", dataType = "string"),
+        @ApiImplicitParam(name = "endTime", value = "结束时间", dataType = "string"),
     })
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated LogDTO logDTO , BindingResult br) {
