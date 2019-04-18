@@ -33,16 +33,10 @@
         <commons-collections>4.1</commons-collections>
         <lombok.version>1.16.18</lombok.version>
         <fastjson.version>1.2.38</fastjson.version>
+        <easypoi.version>3.0.1</easypoi.version>
     </properties>
 
     <dependencies>
-        <!--commons-io工具类 -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -54,6 +48,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--commons-io工具类 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -91,7 +91,25 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- excel导出 - easyPoi -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-web</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-annotation</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <build>
