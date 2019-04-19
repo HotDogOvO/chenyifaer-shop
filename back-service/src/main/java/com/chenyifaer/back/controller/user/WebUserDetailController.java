@@ -1,6 +1,7 @@
 package com.chenyifaer.back.controller.user;
 
 
+import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.entity.dto.WebUserDetailDTO;
 import com.chenyifaer.back.entity.vo.WebUserDetailVO;
 import com.chenyifaer.back.service.WebUserDetailService;
@@ -51,6 +52,7 @@ public class WebUserDetailController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "userId", value = "用戶ID", required = true, paramType = "query", dataType = "int"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated WebUserDetailDTO webUserDetailDTO , BindingResult br) {
         log.debug("function start WebUserDetailController - list");

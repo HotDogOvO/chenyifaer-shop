@@ -32,6 +32,8 @@ public class LogConstant {
 
     public static final String ROLE_MENU_NAME = "角色管理";
 
+    public static final String LOG_MENU_NAME = "日志管理";
+
     /**********************************************/
     /** 动作 */
     public static final String LOGIN = "登录";
@@ -83,6 +85,8 @@ public class LogConstant {
     public static final String OPERATION_USER_DISABLE = "禁用/启用用户";
     public static final String OPERATION_USER_EXPORT = "导出用户列表";
 
+    /** 日志管理 */
+    public static final String OPERATION_LOG_EXPORT = "导出日志列表";
 
 
 }

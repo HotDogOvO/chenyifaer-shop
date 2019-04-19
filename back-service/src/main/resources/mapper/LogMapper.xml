@@ -44,4 +44,12 @@
         ORDER BY l.create_time DESC
     </select>
 
+    <!-- 获取动作下拉框 -->
+    <select id="getAction" resultType="com.chenyifaer.back.entity.vo.LogActionVO">
+        SELECT DISTINCT
+            action
+        FROM
+            t_sys_log
+    </select>
+
 </mapper>

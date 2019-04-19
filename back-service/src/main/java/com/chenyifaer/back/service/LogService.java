@@ -3,8 +3,11 @@ package com.chenyifaer.back.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chenyifaer.back.entity.dto.LogDTO;
 import com.chenyifaer.back.entity.po.LogPO;
+import com.chenyifaer.back.entity.vo.LogActionVO;
 import com.chenyifaer.back.entity.vo.LogVO;
+import com.chenyifaer.basic.common.exception.ExportException;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -21,5 +24,18 @@ public interface LogService extends IService<LogPO> {
      */
     List<LogVO> getList(LogDTO logDTO);
 
+    /**
+     * 获取操作下拉框
+     * @Author:wudh
+     * @Date: 2019/4/19 10:00
+     */
+    List<LogActionVO> getAction();
+
+    /**
+     * 导出日志列表
+     * @Author:wudh
+     * @Date: 2019/4/19 10:14
+     */
+    void export(LogDTO logDTO , HttpServletResponse response) throws ExportException;
 
 }

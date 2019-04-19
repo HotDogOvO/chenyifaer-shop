@@ -74,6 +74,7 @@ public class WebUserController {
             @ApiImplicitParam(name = "startTime", value = "起始时间", dataType = "string"),
             @ApiImplicitParam(name = "endTime", value = "结束时间", dataType = "string"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated WebUserDTO webUserDTO, BindingResult br) {
         log.debug("function start WebUserController - list");
