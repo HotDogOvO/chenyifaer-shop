@@ -55,14 +55,14 @@ public class WebUserDetailController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated WebUserDetailDTO webUserDetailDTO , BindingResult br) {
-        log.debug("function start WebUserDetailController - list");
+        log.debug("【START】 - function WebUserDetailController - list");
         JsonResult check = CheckUtil.check(br);
         if (check != null) {
-            log.error("function WebUserDetailController - list 参数校验失败");
+            log.error("【ERROR】 - function WebUserDetailController - list 参数校验失败");
             return check;
         }
         List<WebUserDetailVO> list = this.webUserDetailService.getUserDetail(webUserDetailDTO);
-        log.debug("function end WebUserDetailController - list 查询的结果为：" + list);
+        log.debug("【END】 - function end WebUserDetailController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
     

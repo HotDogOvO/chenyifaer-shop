@@ -38,12 +38,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * _____ _            __     ___ ______                ________ ____ ______ ____
- * / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
+ *   _____ _            __     ___ ______                ________ ____ ______ ____
+ *  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
  * | |    | |__   ___ _ _\ \_/ / _| |__ __ _  ___ _ __ / /_   / /  __) |  / /  __) |
  * | |    | '_ \ / _ \ '_ \   / | |  __/ _` |/ _ \ '__| '_ \ / /  |__ <  / /  |__ <
  * | |____| | | |  __/ | | | |  | | | | (_| |  __/ |  | (_) / /   ___) |/ /   ___) |
- * \_____|_| |_|\___|_| |_|_|  |_|_|  \__,_|\___|_|   \___/_/   |____//_/   |____/
+ *  \_____|_| |_|\___|_| |_|_|  |_|_|  \__,_|\___|_|   \___/_/   |____//_/   |____/
  */
 
 /**
@@ -77,16 +77,16 @@ public class WebUserController {
     @RsaAnnotation
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated WebUserDTO webUserDTO, BindingResult br) {
-        log.debug("function start WebUserController - list");
+        log.debug("【START】 - function WebUserController - list");
         JsonResult check = CheckUtil.check(br);
         if (check != null) {
-            log.error("function WebUserController - list 参数校验失败");
+            log.error("【ERROR】 - function WebUserController - list 参数校验失败");
             return check;
         }
         PageHelper.startPage(webUserDTO.getPageIndex(), webUserDTO.getPageSize());
         List<WebUserVO> list = this.webUserService.getList(webUserDTO);
         PageInfo<WebUserVO> pageList = new PageInfo<>(list);
-        log.debug("function end WebUserController - list 查询的结果为：" + list);
+        log.debug("【END】 - function WebUserController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
     }
 
@@ -102,10 +102,10 @@ public class WebUserController {
     @RsaAnnotation
     @RequestMapping(value = "/disableUser", method = RequestMethod.POST)
     public JsonResult disableUser(@RequestBody @Validated(WebUserDTO.Add.class) WebUserDTO webUserDTO, BindingResult br) {
-        log.debug("function start WebUserController - disableUser");
+        log.debug("【START】 - function WebUserController - disableUser");
         JsonResult check = CheckUtil.check(br);
         if (check != null) {
-            log.error("function WebUserController - disableUser 参数校验失败");
+            log.error("【ERROR】 - function WebUserController - disableUser 参数校验失败");
             return check;
         }
         WebUserPO webUserPO = new WebUserPO()
@@ -116,10 +116,10 @@ public class WebUserController {
 
         //若flag为true
         if (flag) {
-            log.debug("function end WebUserController - disableUser , 禁用/启用用户成功 , 禁用的用户信息为：" + webUserPO);
+            log.debug("【END】 - function WebUserController - disableUser , 禁用/启用用户成功 , 禁用的用户信息为：" + webUserPO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function WebUserController - disableUser , 禁用/启用用户失败");
+        log.error("【ERROR】 - function WebUserController - disableUser , 禁用/启用用户失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
@@ -143,13 +143,13 @@ public class WebUserController {
     @RsaAnnotation
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     public void export(@RequestBody @Validated WebUserDTO webUserDTO, HttpServletResponse response) {
-        log.debug("function start WebUserController - export");
+        log.debug("【START】 - function WebUserController - export");
         try {
             this.webUserService.export(webUserDTO, response);
         } catch (ExportException e) {
             e.printStackTrace();
         }
-        log.debug("function end WebUserController - export");
+        log.debug("【END】 - function end WebUserController - export");
     }
 
 }

@@ -44,7 +44,7 @@ public class OauthUserController {
      */
     @RequestMapping(value = "/getOauthUserDetail" , method = RequestMethod.POST)
     public LoginAppUser login(@RequestParam("account") String account) {
-        log.debug("[START] - function OauthUserController login");
+        log.debug("【START】 - function OauthUserController login");
 
         OauthUserVO oauthUserVO = this.adminUserService.getOauthUser(
                 new OauthUserDTO().setAdminUserAccount(account));
@@ -70,10 +70,10 @@ public class OauthUserController {
 
             this.loginLog(loginAppUser.getAdminUserName());
 
-            log.debug("[END] - function OauthUserController login return");
+            log.debug("【END】 - function OauthUserController login return");
             return loginAppUser;
         }
-        log.debug("[error] - function OauthUserController login return: null");
+        log.debug("【error】 - function OauthUserController login return: null");
         return null;
     }
 
@@ -87,7 +87,7 @@ public class OauthUserController {
             action = LogConstant.LOGIN,
             operation = LogConstant.OPERATION_SYSTEM_LOGIN)
     public void loginLog(String username){
-        log.debug("[RUN] - function loginLog 登录日志记录，登录的用户为：{}",username);
+        log.debug("【RUN】 - function loginLog 登录日志记录，登录的用户为：{}",username);
     }
 
 }

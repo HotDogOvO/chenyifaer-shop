@@ -54,15 +54,15 @@ public class AdminRolePermissionController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated(AdminRolePermissionDTO.Select.class) AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
-        log.debug("function start AdminRolePermissionController - list");
+        log.debug("【START】 - function AdminRolePermissionController - list");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRolePermissionController - list 参数校验失败");
+            log.error("【ERROR】 - function AdminRolePermissionController - list 参数校验失败");
             return check;
         }
         List<AdminRolePermissionPO> list = this.adminRolePermissionService.list(new QueryWrapper<>(new AdminRolePermissionPO()
                 .setAdminRoleId(adminRolePermissionDTO.getAdminRoleId())));
-        log.debug("function end AdminRolePermissionController - list 查询的结果为：" + list);
+        log.debug("【END】 - function AdminRolePermissionController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -80,10 +80,10 @@ public class AdminRolePermissionController {
     @RsaAnnotation
     @RequestMapping(value = "/permission" , method = RequestMethod.POST)
     public JsonResult permission(@RequestBody @Validated(AdminRolePermissionDTO.Permission.class) AdminRolePermissionDTO adminRolePermissionDTO , BindingResult br){
-        log.debug("function start AdminRoleController - permission");
+        log.debug("【START】 - function AdminRoleController - permission");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - permission 参数校验失败");
+            log.error("【ERROR】 - function AdminRoleController - permission 参数校验失败");
             return check;
         }
 
@@ -104,7 +104,7 @@ public class AdminRolePermissionController {
                 this.adminRolePermissionService.save(adminRolePermissionPO);
             });
         }
-        log.debug("function end AdminRoleController - permission , 角色授权成功，授权的角色信息为：" + adminRolePermissionDTO);
+        log.debug("【END】 - function AdminRoleController - permission , 角色授权成功，授权的角色信息为：" + adminRolePermissionDTO);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
     }
 

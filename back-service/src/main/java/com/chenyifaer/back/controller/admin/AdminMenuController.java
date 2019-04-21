@@ -57,10 +57,10 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(){
-        log.debug("function start AdminMenuController - list ");
+        log.debug("【START】 - function AdminMenuController - list ");
 
         List<AdminMenuVO> list = this.adminMenuService.getList();
-        log.debug("function end AdminMenuController - list 查询的结果为：" + list);
+        log.debug("【END】 - function AdminMenuController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -68,9 +68,9 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/getParentMenu" , method = RequestMethod.POST)
     public JsonResult getParentMenu(){
-        log.debug("function start AdminMenuController - getParentMenu ");
+        log.debug("【START】 - function AdminMenuController - getParentMenu ");
         List<AdminMenuPO> list = this.adminMenuService.list(new QueryWrapper<>(new AdminMenuPO().setAdminMenuParentId(0)));
-        log.debug("function end AdminMenuController - getParentMenu 查询的结果为：" + list);
+        log.debug("【END】 - function AdminMenuController - getParentMenu 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -78,16 +78,16 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/getMenuById" , method = RequestMethod.POST)
     public JsonResult getMenuById(@RequestBody @Validated(AdminMenuDTO.GetOne.class) AdminMenuDTO adminMenuDTO , BindingResult br){
-        log.debug("function start AdminMenuController - getMenuById ");
+        log.debug("【START】 - function AdminMenuController - getMenuById ");
 
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminMenuController - getMenuById 参数校验失败");
+            log.error("【ERROR】 - function AdminMenuController - getMenuById 参数校验失败");
             return check;
         }
 
         List<AdminMenuPO> list = this.adminMenuService.list(new QueryWrapper<>(new AdminMenuPO().setAdminMenuId(adminMenuDTO.getAdminMenuId())));
-        log.debug("function end AdminMenuController - getMenuById 查询的结果为：" + list);
+        log.debug("【END】 - function AdminMenuController - getMenuById 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -106,10 +106,10 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminMenuDTO.Add.class) AdminMenuDTO adminMenuDTO , BindingResult br){
-        log.debug("function start AdminMenuController - add");
+        log.debug("【START】 - function AdminMenuController - add");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminMenuController - add 参数校验失败");
+            log.error("【ERROR】 - function AdminMenuController - add 参数校验失败");
             return check;
         }
 
@@ -123,10 +123,10 @@ public class AdminMenuController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminMenuController - add , 菜单新增成功，新增的数据为：" + adminMenuPO);
+            log.debug("【END】 - function AdminMenuController - add , 菜单新增成功，新增的数据为：" + adminMenuPO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
         }
-        log.error("function AdminMenuController - add , 菜单新增失败");
+        log.error("【ERROR】 - function AdminMenuController - add , 菜单新增失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
     }
 
@@ -146,16 +146,16 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminMenuDTO.Update.class) AdminMenuDTO adminMenuDTO , BindingResult br){
-        log.debug("function start AdminMenuController - update");
+        log.debug("【START】 - function AdminMenuController - update");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminMenuController - update 参数校验失败");
+            log.error("【ERROR】 - function AdminMenuController - update 参数校验失败");
             return check;
         }
 
         //如果传递的父ID与本身主键重复，则返回失败
         if(adminMenuDTO.getAdminMenuParentId() != null && adminMenuDTO.getAdminMenuParentId().equals(adminMenuDTO.getAdminMenuId())){
-            log.error("function AdminMenuController - update 传递的主键与父节点重复");
+            log.error("【ERROR】 - function AdminMenuController - update 传递的主键与父节点重复");
             return ResponseResult.Fail(ResultCodeEnums.CHECK_002);
         }
 
@@ -171,10 +171,10 @@ public class AdminMenuController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminMenuController - update , 菜单更新成功，更新的数据为：" + adminMenuPO);
+            log.debug("【END】 - function AdminMenuController - update , 菜单更新成功，更新的数据为：" + adminMenuPO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminMenuController - update , 菜单更新失败");
+        log.error("【ERROR】 - function AdminMenuController - update , 菜单更新失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
@@ -189,16 +189,16 @@ public class AdminMenuController {
     @RsaAnnotation
     @RequestMapping(value = "/delete" , method = RequestMethod.POST)
     public JsonResult delete(@RequestBody @Validated(AdminMenuDTO.Delete.class) AdminMenuDTO adminMenuDTO , BindingResult br) {
-        log.debug("function start AdminMenuController - delete");
+        log.debug("【START】 - function AdminMenuController - delete");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminMenuController - delete 参数校验失败");
+            log.error("【ERROR】 - function AdminMenuController - delete 参数校验失败");
             return check;
         }
 
         int count = this.adminMenuService.getCount(adminMenuDTO.getAdminMenuId());
         if(count > 0){
-            log.error("function AdminMenuController - delete , 菜单删除失败，菜单下拥有子菜单");
+            log.error("【ERROR】 - function AdminMenuController - delete , 菜单删除失败，菜单下拥有子菜单");
             return ResponseResult.Fail(ResultCodeEnums.CHECK_003);
         }
 
@@ -207,10 +207,10 @@ public class AdminMenuController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminMenuController - delete , 菜单删除成功");
+            log.debug("【END】 - function AdminMenuController - delete , 菜单删除成功");
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_004);
         }
-        log.error("function AdminMenuController - delete , 菜单删除失败");
+        log.error("【ERROR】 - function AdminMenuController - delete , 菜单删除失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10004);
     }
 

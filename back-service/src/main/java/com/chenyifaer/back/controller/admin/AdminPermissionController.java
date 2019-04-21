@@ -38,19 +38,18 @@ public class AdminPermissionController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(){
-        log.debug("function start AdminPermissionController - list");
+        log.debug("【START】 - function AdminPermissionController - list");
         List<AdminPermissionMenuVO> list = this.adminPermissionService.getList();
-        log.debug("function end AdminPermissionController - list 查询的结果为：" + list);
+        log.debug("【END】 - function AdminPermissionController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
     @ApiOperation(value = "查询当前登录用户拥有的权限")
-    @RsaAnnotation
     @RequestMapping(value = "/getUserMenuList" , method = RequestMethod.POST)
     public JsonResult getUserMenuList(@RequestBody AdminUserMenuDTO adminUserMenuDTO){
-        log.debug("function start AdminPermissionController - getUserMenuList");
+        log.debug("【START】 - function AdminPermissionController - getUserMenuList");
         List<AdminUserMenuVO> list = this.adminPermissionService.getUserMenuList(adminUserMenuDTO);
-        log.debug("function end AdminPermissionController - getUserMenuList 查询的结果为：" + list);
+        log.debug("【END】 - function AdminPermissionController - getUserMenuList 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 

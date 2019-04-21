@@ -77,16 +77,16 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated AdminUserDTO adminUserDTO , BindingResult br){
-        log.debug("function start AdminUserController - list");
+        log.debug("【START】 - function AdminUserController - list");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - list 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - list 参数校验失败");
             return check;
         }
         PageHelper.startPage(adminUserDTO.getPageIndex(),adminUserDTO.getPageSize());
         List<AdminUserVO> list = this.adminUserService.getList(adminUserDTO);
         PageInfo<AdminUserVO> pageList = new PageInfo<>(list);
-        log.debug("function end AdminUserController - list 查询的结果为：" + list);
+        log.debug("【END】 - function AdminUserController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,pageList);
     }
 
@@ -97,15 +97,15 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/getUserById" , method = RequestMethod.POST)
     public JsonResult getUserById(@RequestBody @Validated(AdminUserDTO.GetOne.class) AdminUserDTO adminUserDTO , BindingResult br){
-        log.debug("function start AdminUserController - getUserById");
+        log.debug("【START】 - function AdminUserController - getUserById");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - getUserById 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - getUserById 参数校验失败");
             return check;
         }
         List<AdminUpdateUserVO> list = this.adminUserService.getUserById(adminUserDTO);
 
-        log.debug("function end AdminUserController - getUserById 查询的结果为：" + list);
+        log.debug("【END】 - function AdminUserController - getUserById 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -124,10 +124,10 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(AdminUserDTO.Add.class) AdminUserDTO adminUserDTO, BindingResult br){
-        log.debug("function start AdminUserController - add");
+        log.debug("【START】 - function AdminUserController - add");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - add 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - add 参数校验失败");
             return check;
         }
 
@@ -135,7 +135,7 @@ public class AdminUserController {
         int count = this.adminUserService.count(new QueryWrapper<>(new AdminUserPO()
                 .setAdminUserAccount(adminUserDTO.getAdminUserAccount())));
         if(count > 0){
-            log.debug("function end AdminUserController - add , 用户【{}】已经存在了",adminUserDTO.getAdminUserAccount());
+            log.error("【ERROR】 - function end AdminUserController - add , 用户【{}】已经存在了",adminUserDTO.getAdminUserAccount());
             return ResponseResult.Success(ResultCodeEnums.CHECK_004);
         }
 
@@ -156,12 +156,12 @@ public class AdminUserController {
                     .setAdminUserId(adminUserPO.getAdminUserId()));
             //如果再次返回的flag为true，则返回成功
             if(flag){
-                log.debug("function end AdminUserController - add , 新增用户成功");
+                log.debug("【END】 - function AdminUserController - add , 新增用户成功");
                 return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
             }
         }
 
-        log.error("function AdminUserController - add 新增用户失败");
+        log.error("【ERROR】 - function AdminUserController - add 新增用户失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
     }
 
@@ -180,10 +180,10 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminUserDTO.Update.class) AdminUserDTO adminUserDTO , BindingResult br){
-        log.debug("function start AdminUserController - update");
+        log.debug("【START】 - function AdminUserController - update");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - update 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - update 参数校验失败");
             return check;
         }
 
@@ -201,16 +201,16 @@ public class AdminUserController {
                     new AdminUserRolePO().setAdminRoleId(adminUserDTO.getAdminRoleId()),
                     new UpdateWrapper(new AdminUserRolePO().setAdminUserId(adminUserDTO.getAdminUserId())));
             if(roleFlag){
-                log.debug("function end AdminUserController - update , 更新用户成功");
+                log.debug("【END】 - function AdminUserController - update , 更新用户成功");
                 return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
             }
         }
         //若flag为true
         if(flag){
-            log.debug("function end AdminUserController - update , 更新用户成功，更新的用户信息为：" + adminUserDTO);
+            log.debug("【END】 - function AdminUserController - update , 更新用户成功，更新的用户信息为：" + adminUserDTO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminUserController - update 更新用户失败");
+        log.error("【ERROR】 - function AdminUserController - update 更新用户失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
@@ -226,10 +226,10 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/disableUser" , method = RequestMethod.POST)
     public JsonResult disableUser(@RequestBody @Validated(AdminUserDTO.Disable.class) AdminUserDTO adminUserDTO , BindingResult br){
-        log.debug("function start AdminUserController - disableUser");
+        log.debug("【START】 - function AdminUserController - disableUser");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - disableUser 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - disableUser 参数校验失败");
             return check;
         }
         AdminUserPO adminUserPO = new AdminUserPO()
@@ -240,10 +240,10 @@ public class AdminUserController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminUserController - disableUser , 禁用/启用用户成功 , 禁用的用户信息为：" + adminUserPO);
+            log.debug("【END】 - function AdminUserController - disableUser , 禁用/启用用户成功 , 禁用的用户信息为：" + adminUserPO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminUserController - disableUser , 禁用/启用用户失败");
+        log.error("【ERROR】 - function AdminUserController - disableUser , 禁用/启用用户失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
@@ -258,10 +258,10 @@ public class AdminUserController {
     @RsaAnnotation
     @RequestMapping(value = "/resetUser" , method = RequestMethod.POST)
     public JsonResult resetUser(@RequestBody @Validated(AdminUserDTO.Reset.class) AdminUserDTO adminUserDTO , BindingResult br){
-        log.debug("function start AdminUserController - resetUser");
+        log.debug("【START】 - function AdminUserController - resetUser");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminUserController - resetUser 参数校验失败");
+            log.error("【ERROR】 - function AdminUserController - resetUser 参数校验失败");
             return check;
         }
 
@@ -273,10 +273,10 @@ public class AdminUserController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminUserController - resetUser , 密码重置成功，重置的用户信息为：" + adminUserPO);
+            log.debug("【END】 - function AdminUserController - resetUser , 密码重置成功，重置的用户信息为：" + adminUserPO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminUserController - resetUser , 密码重置失败");
+        log.error("【ERROR】 - function AdminUserController - resetUser , 密码重置失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 

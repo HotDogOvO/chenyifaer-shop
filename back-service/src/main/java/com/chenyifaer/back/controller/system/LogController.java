@@ -57,16 +57,16 @@ public class LogController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated LogDTO logDTO , BindingResult br) {
-        log.debug("function start LogController - list");
+        log.debug("【START】 - function LogController - list");
         JsonResult check = CheckUtil.check(br);
         if (check != null) {
-            log.error("function LogController - list 参数校验失败");
+            log.error("【ERROR】 - function LogController - list 参数校验失败");
             return check;
         }
         PageHelper.startPage(logDTO.getPageIndex(), logDTO.getPageSize());
         List<LogVO> list = this.logService.getList(logDTO);
         PageInfo<LogVO> pageList = new PageInfo<>(list);
-        log.debug("function end LogController - list 查询的结果为：" + list);
+        log.debug("【END】 - function LogController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
     }
 
@@ -74,9 +74,9 @@ public class LogController {
     @RsaAnnotation
     @RequestMapping(value = "/getAction" , method = RequestMethod.POST)
     public JsonResult getAction() {
-        log.debug("function start LogController - getAction");
+        log.debug("【START】 - function LogController - getAction");
         List<LogActionVO> list = this.logService.getAction();
-        log.debug("function end LogController - getAction 查询的结果为：" + list);
+        log.debug("【END】 - function LogController - getAction 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
 
@@ -94,13 +94,13 @@ public class LogController {
     @RsaAnnotation
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     public void export(@RequestBody @Validated LogDTO logDTO, HttpServletResponse response) {
-        log.debug("function start LogController - export");
+        log.debug("【START】 - function LogController - export");
         try {
             this.logService.export(logDTO, response);
         } catch (ExportException e) {
             e.printStackTrace();
         }
-        log.debug("function end LogController - export");
+        log.debug("【END】 - function LogController - export");
     }
 
 

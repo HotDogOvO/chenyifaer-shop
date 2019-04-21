@@ -62,14 +62,14 @@ public class AdminRoleController {
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(@RequestBody @Validated AdminRoleDTO adminRoleDTO , BindingResult br){
-        log.debug("function start AdminRoleController - list");
+        log.debug("【START】 - function AdminRoleController - list");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - list 参数校验失败");
+            log.error("【ERROR】 - function AdminRoleController - list 参数校验失败");
             return check;
         }
         List<AdminRoleVO> list = this.adminRoleService.getList(adminRoleDTO);
-        log.debug("function end AdminRoleController - list 查询的结果为：" + list);
+        log.debug("【END】 - function AdminRoleController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
     }
 
@@ -77,7 +77,7 @@ public class AdminRoleController {
     @RsaAnnotation
     @RequestMapping(value = "/getRoleName" , method = RequestMethod.POST)
     public JsonResult getRoleName(){
-        log.debug("function start AdminRoleController - getRoleName");
+        log.debug("【START】 - function AdminRoleController - getRoleName");
         List<AdminRolePO> list = this.adminRoleService.list();
         List<AdminRoleNameVO> roleList = new ArrayList<AdminRoleNameVO>();
         list.forEach(x ->{
@@ -85,7 +85,7 @@ public class AdminRoleController {
                     .setAdminRoleName(x.getAdminRoleName())
                     .setAdminRoleId(x.getAdminRoleId()));
         });
-        log.debug("function end AdminRoleController - getRoleName 返回的结果为：" + roleList);
+        log.debug("【END】 - function AdminRoleController - getRoleName 返回的结果为：" + roleList);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,roleList);
     }
 
@@ -101,10 +101,10 @@ public class AdminRoleController {
     @RsaAnnotation
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult addRole(@RequestBody @Validated(AdminRoleDTO.Add.class) AdminRoleDTO adminRoleDTO , BindingResult br){
-        log.debug("function start AdminRoleController - addRole");
+        log.debug("【START】 - function AdminRoleController - addRole");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - addRole 参数校验失败");
+            log.error("【ERROR】 - function AdminRoleController - addRole 参数校验失败");
             return check;
         }
 
@@ -112,7 +112,7 @@ public class AdminRoleController {
         int count = this.adminRoleService.count(new QueryWrapper<>(new AdminRolePO()
                 .setAdminRoleName(adminRoleDTO.getAdminRoleName())));
         if(count > 0){
-            log.debug("function end AdminRoleController - addRole , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
+            log.error("【ERROR】 - function AdminRoleController - addRole , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
             return ResponseResult.Success(ResultCodeEnums.CHECK_005);
         }
 
@@ -123,10 +123,10 @@ public class AdminRoleController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminRoleController - addRole , 新增角色成功 , 新增的角色信息为：" + adminRolePO);
+            log.debug("【END】 - function AdminRoleController - addRole , 新增角色成功 , 新增的角色信息为：" + adminRolePO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
         }
-        log.error("function AdminRoleController - addRole , 新增角色成功");
+        log.error("【ERROR】 - function AdminRoleController - addRole , 新增角色成功");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
     }
 
@@ -143,10 +143,10 @@ public class AdminRoleController {
     @RsaAnnotation
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(AdminRoleDTO.Update.class) AdminRoleDTO adminRoleDTO , BindingResult br){
-        log.debug("function start AdminRoleController - update");
+        log.debug("【START】 - function AdminRoleController - update");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - update 参数校验失败");
+            log.error("【ERROR】 - function AdminRoleController - update 参数校验失败");
             return check;
         }
 
@@ -154,7 +154,7 @@ public class AdminRoleController {
         int count = this.adminRoleService.count(new QueryWrapper<>(new AdminRolePO()
                 .setAdminRoleName(adminRoleDTO.getAdminRoleName())));
         if(count > 0){
-            log.debug("function end AdminRoleController - update , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
+            log.error("【ERROR】 - function AdminRoleController - update , 角色【{}】已经存在了",adminRoleDTO.getAdminRoleName());
             return ResponseResult.Success(ResultCodeEnums.CHECK_005);
         }
 
@@ -167,10 +167,10 @@ public class AdminRoleController {
 
         //若flag为true
         if(flag){
-            log.debug("function end AdminRoleController - update , 更新角色成功，更新的角色信息为：" + adminRolePO);
+            log.debug("【END】 - function AdminRoleController - update , 更新角色成功，更新的角色信息为：" + adminRolePO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminRoleController - update 更新角色失败");
+        log.error("【ERROR】 - function AdminRoleController - update 更新角色失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
@@ -186,17 +186,17 @@ public class AdminRoleController {
     @RsaAnnotation
     @RequestMapping(value = "/disableRole" , method = RequestMethod.POST)
     public JsonResult disableRole(@RequestBody @Validated(AdminRoleDTO.Disable.class) AdminRoleDTO adminRoleDTO , BindingResult br){
-        log.debug("function start AdminRoleController - disableRole");
+        log.debug("【START】 - function AdminRoleController - disableRole");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("function AdminRoleController - disableRole 参数校验失败");
+            log.error("【ERROR】 - function AdminRoleController - disableRole 参数校验失败");
             return check;
         }
 
         int count = this.adminUserRoleService.count(new QueryWrapper<>(new AdminUserRolePO()
                 .setAdminRoleId(adminRoleDTO.getAdminRoleId())));
         if(count > 0){
-            log.debug("function end AdminRoleController - disableRole , 角色【{}】正在使用，无法禁用",adminRoleDTO.getAdminRoleId());
+            log.error("【ERROR】 - function AdminRoleController - disableRole , 角色【{}】正在使用，无法禁用",adminRoleDTO.getAdminRoleId());
             return ResponseResult.Success(ResultCodeEnums.CHECK_006);
         }
 
@@ -211,7 +211,7 @@ public class AdminRoleController {
             log.debug("function end AdminRoleController - disableRole , 禁用/启用角色成功 , 禁用的角色信息为：" + adminRolePO);
             return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-        log.error("function AdminRoleController - disableRole , 禁用/启用角色成功");
+        log.error("【ERROR】 - function AdminRoleController - disableRole , 禁用/启用角色成功");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
