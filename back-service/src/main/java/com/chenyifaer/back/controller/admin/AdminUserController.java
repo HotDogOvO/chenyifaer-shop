@@ -7,6 +7,7 @@ import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.AdminUserDTO;
+import com.chenyifaer.back.entity.dto.LogDTO;
 import com.chenyifaer.back.entity.po.AdminUserPO;
 import com.chenyifaer.back.entity.po.AdminUserRolePO;
 import com.chenyifaer.back.entity.vo.AdminUpdateUserVO;
@@ -16,6 +17,7 @@ import com.chenyifaer.back.service.AdminUserService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
+import com.chenyifaer.basic.common.exception.ExportException;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
@@ -34,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -278,6 +281,31 @@ public class AdminUserController {
         }
         log.error("【ERROR】 - function AdminUserController - resetUser , 密码重置失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
+    }
+
+    @ApiOperation(value = "导出运营账号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "adminUserAccount", value = "账号", dataType = "string"),
+            @ApiImplicitParam(name = "adminUserName", value = "姓名", dataType = "string"),
+            @ApiImplicitParam(name = "adminUserPhone", value = "手机号", dataType = "string"),
+            @ApiImplicitParam(name = "adminUserEmail", value = "邮箱", dataType = "string"),
+            @ApiImplicitParam(name = "adminRoleName", value = "角色名", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "状态 0：禁用 1：启用", dataType = "int"),
+    })
+    @LogAnnotation(
+            menuName = LogConstant.ADMIN_USER_MENU_NAME,
+            action = LogConstant.EXPORT,
+            operation = LogConstant.OPERATION_ADMIN_USER_EXPORT)
+    @RsaAnnotation
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public void export(@RequestBody @Validated AdminUserDTO adminUserDTO, HttpServletResponse response) {
+        log.debug("【START】 - function AdminUserController - export");
+        try {
+            this.adminUserService.export(adminUserDTO, response);
+        } catch (ExportException e) {
+            e.printStackTrace();
+        }
+        log.debug("【END】 - function AdminUserController - export");
     }
 
 }

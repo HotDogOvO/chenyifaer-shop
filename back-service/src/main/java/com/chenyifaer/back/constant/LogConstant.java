@@ -69,6 +69,7 @@ public class LogConstant {
     public static final String OPERATION_ADMIN_USER_UPDATE = "更新用户";
     public static final String OPERATION_ADMIN_USER_DISABLE = "禁用/启用用户";
     public static final String OPERATION_ADMIN_USER_RESET = "重置用户密码";
+    public static final String OPERATION_ADMIN_USER_EXPORT = "导出用户列表";
 
     /** 后台角色列表 */
     public static final String OPERATION_ADMIN_ROLE_ADD = "新增角色";
@@ -81,9 +82,14 @@ public class LogConstant {
     public static final String OPERATION_ADMIN_MENU_UPDATE = "更新菜单";
     public static final String OPERATION_ADMIN_MENU_DELETE = "删除菜单";
 
-    /** 用户管理 */
+    /** 前台用户列表 */
     public static final String OPERATION_USER_DISABLE = "禁用/启用用户";
     public static final String OPERATION_USER_EXPORT = "导出用户列表";
+
+    /** 前台角色列表 */
+    public static final String OPERATION_ROLE_ADD = "新增角色";
+    public static final String OPERATION_ROLE_UPDATE = "更新角色";
+    public static final String OPERATION_ROLE_DISABLE = "禁用/启用角色";
 
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";

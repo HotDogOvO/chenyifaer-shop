@@ -123,7 +123,7 @@ public class WebUserController {
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
-    @ApiOperation(value = "导出数据")
+    @ApiOperation(value = "导出用户列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),

@@ -2,7 +2,9 @@ package com.chenyifaer.back.controller.user;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.WebRoleDTO;
 import com.chenyifaer.back.entity.po.WebRolePO;
 import com.chenyifaer.back.entity.vo.WebRoleNameVO;
@@ -86,6 +88,10 @@ public class WebRoleController {
 
     @ApiOperation(value = "新增角色")
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.ROLE_MENU_NAME,
+            action = LogConstant.ADD,
+            operation = LogConstant.OPERATION_ROLE_ADD)
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(WebRoleDTO.Add.class) WebRoleDTO webRoleDTO , BindingResult br){
         log.debug("【START】 - function WebRoleController - add");
@@ -110,6 +116,10 @@ public class WebRoleController {
 
     @ApiOperation(value = "更新角色")
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.ROLE_MENU_NAME,
+            action = LogConstant.UPDATE,
+            operation = LogConstant.OPERATION_ROLE_UPDATE)
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(WebRoleDTO.Update.class) WebRoleDTO webRoleDTO , BindingResult br){
         log.debug("【START】 - function WebRoleController - update");
@@ -136,6 +146,10 @@ public class WebRoleController {
 
     @ApiOperation(value = "禁用/启用角色")
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.ROLE_MENU_NAME,
+            action = LogConstant.DISABLE,
+            operation = LogConstant.OPERATION_ROLE_DISABLE)
     @RequestMapping(value = "/disable" , method = RequestMethod.POST)
     public JsonResult disable(@RequestBody @Validated(WebRoleDTO.Disable.class) WebRoleDTO webRoleDTO , BindingResult br){
         log.debug("【START】 - function WebRoleController - disable");
@@ -145,7 +159,8 @@ public class WebRoleController {
             return check;
         }
 
-        boolean flag = this.webRoleService.save(new WebRolePO()
+        boolean flag = this.webRoleService.updateById(new WebRolePO()
+                .setRoleId(webRoleDTO.getRoleId())
                 .setStatus(webRoleDTO.getStatus())
                 .setUpdateTime(DateUtil.getTime()));
 

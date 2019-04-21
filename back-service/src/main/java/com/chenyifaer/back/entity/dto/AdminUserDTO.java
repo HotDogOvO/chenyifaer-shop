@@ -65,4 +65,10 @@ public class AdminUserDTO extends PageDTO {
     @NotNull(groups = {Disable.class},message = "状态不能为空")
     private Integer status;
 
+    /** 起始时间 */
+    private String startTime;
+
+    /** 结束时间 */
+    private String endTime;
+
 }

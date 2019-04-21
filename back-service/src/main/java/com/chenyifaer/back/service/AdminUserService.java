@@ -7,7 +7,9 @@ import com.chenyifaer.back.entity.po.AdminUserPO;
 import com.chenyifaer.back.entity.vo.AdminUpdateUserVO;
 import com.chenyifaer.back.entity.vo.AdminUserVO;
 import com.chenyifaer.back.entity.vo.OauthUserVO;
+import com.chenyifaer.basic.common.exception.ExportException;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -38,4 +40,10 @@ public interface AdminUserService extends IService<AdminUserPO> {
      */
     List<AdminUpdateUserVO> getUserById(AdminUserDTO adminUserDTO);
 
+    /**
+     * 导出运营账号列表
+     * @Author:wudh
+     * @Date: 2019/4/21 14:02
+     */
+    void export(AdminUserDTO adminUserDTO , HttpServletResponse response) throws ExportException;
 }

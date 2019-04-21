@@ -51,7 +51,7 @@ public class LogServiceImpl extends ServiceImpl<LogDao, LogPO> implements LogSer
             ExportPOIUtils.start_download(response, "日志列表" + DateUtil.getTime().toString(), list, columnNames, keys);
         } catch (IOException e) {
             e.printStackTrace();
-            log.error("function error WebUserServiceImpl - export 用户列表导出失败，失败原因是：{}",e);
+            log.error("function error WebUserServiceImpl - export 日志列表导出失败，失败原因是：{}",e);
         }
     }
 }

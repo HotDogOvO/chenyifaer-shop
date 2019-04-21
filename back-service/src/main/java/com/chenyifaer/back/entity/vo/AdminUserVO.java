@@ -32,7 +32,7 @@ public class AdminUserVO {
     /** 邮箱 */
     private String adminUserEmail;
     /** 状态 */
-    private Integer status;
+    private String status;
     /** 创建时间 */
     private Date createTime;
 

@@ -44,6 +44,7 @@ public class WebRoleDTO {
     private String roleText;
 
     /** 状态 */
+    @NotNull(groups = {Disable.class} , message = "状态不能为空")
     private Integer status;
 
 }

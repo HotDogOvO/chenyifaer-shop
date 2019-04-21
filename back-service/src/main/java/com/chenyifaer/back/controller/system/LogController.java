@@ -80,7 +80,7 @@ public class LogController {
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
 
-    @ApiOperation(value = "查询日志列表")
+    @ApiOperation(value = "导出日志列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "adminUserName", value = "操作人姓名", dataType = "string"),
             @ApiImplicitParam(name = "action", value = "动作", dataType = "string"),

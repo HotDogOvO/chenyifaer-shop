@@ -59,6 +59,11 @@
         <if test="status != null ">
             AND u.status = #{status}
         </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND
+            DATE_FORMAT(u.create_time,'%Y-%m-%d')
+            BETWEEN #{startTime} AND #{endTime}
+        </if>
         ORDER BY u.create_time
     </select>
 
