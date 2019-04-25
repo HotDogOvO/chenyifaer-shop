@@ -1,6 +1,9 @@
 package com.chenyifaer.basic.common.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -26,6 +29,33 @@ public class DateUtil {
      */
     public static LocalDateTime getTime(){
         return LocalDateTime.now();
+    }
+
+    /**
+     * 获取yyyy/MM/dd格式
+     * @Author:wudh
+     * @Date: 2019/4/21 17:48
+     */
+    public static String getYYYYMMDDBySprit(Date date) {
+        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        String time = sdf.format(date);
+        return time;
+    }
+
+    /**
+     * 获取时间 HH:mm:ss格式
+     * @Author:wudh
+     * @Date: 2019/4/21 17:53
+     */
+    public static String getHHmmssDate(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+        String sdate = sdf.format(date);
+        return sdate;
+    }
+
+
+    public static void main(String[] args){
+     System.out.println(getYYYYMMDDBySprit(new Date()));
     }
 
 }

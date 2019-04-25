@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopGoodsTypeDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopGoodsTypePO">
+        <id column="shop_goods_type_id" property="shopGoodsTypeId" />
+        <result column="type_name" property="typeName" />
+        <result column="parent_type_id" property="parentTypeId" />
+        <result column="rank" property="rank" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_goods_type_id, type_name, parent_type_id, rank, status, create_time, update_time
+    </sql>
+
+    <!-- 查询商品分类列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.ShopGoodsTypeVO">
+        SELECT
+            t.shop_goods_type_id shopGoodsTypeId,
+            t.type_name typeName,
+            t.parent_type_id parentTypeId,
+            t.rank rank,
+            t.STATUS status,
+            t.create_time createTime,
+            pt.type_name parentTypeName
+        FROM
+            t_shop_goods_type t
+        LEFT JOIN
+            t_shop_goods_type pt
+        ON t.parent_type_id = pt.shop_goods_type_id
+        <where>
+            <if test="typeName != null and typeName != ''">
+                t.type_name LIKE CONCAT('%',#{typeName},'%')
+            </if>
+            <if test="rank != null ">
+                t.rank = #{rank}
+            </if>
+            <if test="status != null ">
+                t.status = #{status}
+            </if>
+            <if test="parentTypeName != null and parentTypeName != ''">
+                pt.type_name LIKE CONCAT('%',#{parentTypeName},'%')
+            </if>
+        </where>
+        ORDER BY t.parent_type_id
+    </select>
+
+</mapper>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-04-18
  */
 @RestController
-@RequestMapping("/webUserAddressPO")
+@RequestMapping("/web/userAddress")
 public class WebUserAddressController {
 
 }

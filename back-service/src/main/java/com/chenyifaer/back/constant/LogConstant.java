@@ -32,6 +32,8 @@ public class LogConstant {
 
     public static final String ROLE_MENU_NAME = "角色管理";
 
+    public static final String GOODS_TYPE_MENU_NAME = "商品分类管理";
+
     public static final String LOG_MENU_NAME = "日志管理";
 
     /**********************************************/
@@ -90,6 +92,12 @@ public class LogConstant {
     public static final String OPERATION_ROLE_ADD = "新增角色";
     public static final String OPERATION_ROLE_UPDATE = "更新角色";
     public static final String OPERATION_ROLE_DISABLE = "禁用/启用角色";
+
+    /** 商品分类管理 */
+    public static final String OPERATION_GOODS_TYPE_ADD = "新增商品分类";
+    public static final String OPERATION_GOODS_TYPE_UPDATE = "更新商品分类";
+    public static final String OPERATION_GOODS_TYPE_DISABLE = "禁用/启用商品分类";
+
 
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";
