@@ -1,11 +1,13 @@
 package com.chenyifaer.back.controller.sku;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.ShopGoodsTypeDTO;
 import com.chenyifaer.back.entity.po.ShopGoodsTypePO;
+import com.chenyifaer.back.entity.vo.ShopGoodsTypeNameVO;
 import com.chenyifaer.back.entity.vo.ShopGoodsTypeVO;
 import com.chenyifaer.back.service.ShopGoodsTypeService;
 import com.chenyifaer.basic.common.constant.JsonResult;
@@ -28,7 +30,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -57,12 +61,12 @@ public class ShopGoodsTypeController {
 
     @ApiOperation(value = "查询分类列表")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "typeName", value = "分类名称", required = false, dataType = "string"),
-        @ApiImplicitParam(name = "rank", value = "分类等级", required = false, dataType = "int"),
-        @ApiImplicitParam(name = "status", value = "分类状态（0：禁用 1：启用）", required = false, dataType = "int"),
-        @ApiImplicitParam(name = "parentTypeName", value = "父分类名称", required = false, dataType = "string"),
+            @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "typeName", value = "分类名称", required = false, dataType = "string"),
+            @ApiImplicitParam(name = "rank", value = "分类等级", required = false, dataType = "int"),
+            @ApiImplicitParam(name = "status", value = "分类状态（0：禁用 1：启用）", required = false, dataType = "int"),
+            @ApiImplicitParam(name = "parentTypeName", value = "父分类名称", required = false, dataType = "string"),
     })
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
@@ -78,6 +82,33 @@ public class ShopGoodsTypeController {
         PageInfo<ShopGoodsTypeVO> pageList = new PageInfo<>(list);
         log.debug("【END】 - function end ShopGoodsTypeController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
+    }
+
+    @ApiOperation(value = "查询分类下拉框")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "rank", value = "分类等级", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "parentTypeId", value = "父级分类ID", required = false, dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getTypeName" , method = RequestMethod.POST)
+    public JsonResult getTypeName(@RequestBody @Validated ShopGoodsTypeDTO shopGoodsTypeDTO , BindingResult br) {
+        log.debug("【START】 - function ShopGoodsTypeController - getTypeName");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsTypeController - getTypeName 参数校验失败");
+            return check;
+        }
+        List<ShopGoodsTypePO> list = this.shopGoodsTypeService.list(new QueryWrapper<>(
+                new ShopGoodsTypePO().setRank(shopGoodsTypeDTO.getRank())
+                        .setParentTypeId(shopGoodsTypeDTO.getParentTypeId())));
+        List<ShopGoodsTypeNameVO> typeNameList = new ArrayList<>();
+        list.stream().filter(
+            x -> typeNameList.add(new ShopGoodsTypeNameVO()
+                .setTypeName(x.getTypeName())
+                .setShopGoodsTypeId(x.getShopGoodsTypeId())
+        )).collect(Collectors.toList());
+        log.debug("【END】 - function end ShopGoodsTypeController - getTypeName 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, typeNameList);
     }
 
     @ApiOperation(value = "新增分类")

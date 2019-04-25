@@ -32,6 +32,8 @@ public class ShopGoodsTypeDTO extends PageDTO {
 
     public interface Disable{};
 
+    public interface GetTypeName{};
+
     /** 主键 */
     @NotNull(groups = {ShopGoodsTypeDTO.Update.class , ShopGoodsTypeDTO.Disable.class} , message = "shopGoodsTypeId不能为空")
     private Integer shopGoodsTypeId;
@@ -42,7 +44,7 @@ public class ShopGoodsTypeDTO extends PageDTO {
     private String typeName;
 
     /** 分类等级 */
-    @NotNull(groups = {ShopGoodsTypeDTO.Add.class} , message = "分类名不能为空")
+    @NotNull(groups = {ShopGoodsTypeDTO.Add.class , ShopGoodsTypeDTO.GetTypeName.class} , message = "分类名不能为空")
     private Integer rank;
 
     /** 父级分类ID */
