@@ -59,9 +59,11 @@ public class ShopOrdersController {
             @ApiImplicitParam(name = "expressNumber", value = "快递单号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "payFlowNumber", value = "支付流水号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "ordersPrice", value = "订单价格", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "status", value = "状态", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "integralStatus", value = "是否积分支付", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "couponsStatus", value = "是否优惠券支付", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "状态 （0：待付款 1：付款完毕，待发货 2：已发货，待收货 3：已收货，待完成\n" +
+                    " 4：已完成，待评论 7：已取消\n" +
+                    " 8： 超时关闭 9：已关闭 99：退货）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "integralStatus", value = "是否积分支付 （0：否 1：是）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "couponsStatus", value = "是否优惠券支付 （0：否 1：是）", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "ordersName", value = "订单名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "consigneeName", value = "收货人姓名", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startTime", value = "起始时间", required = false, paramType = "query", dataType = "string"),

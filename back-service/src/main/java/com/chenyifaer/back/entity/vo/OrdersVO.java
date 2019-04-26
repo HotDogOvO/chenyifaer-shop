@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -67,5 +68,5 @@ public class OrdersVO {
     private String payFlowNumber;
 
     /** 创建时间 */
-    private String createTime;
+    private Date createTime;
 }

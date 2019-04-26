@@ -12,6 +12,7 @@ import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -43,14 +46,44 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/ordersConsignee")
+@Api(value = "订单管理",tags = {"订单管理 - 订单管理"})
 public class ShopOrdersConsigneeController {
 
     @Autowired
     private ShopOrdersConsigneeService shopOrdersConsigneeService;
 
+    @ApiOperation(value = "查询修改订单信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ordersId", value = "主键", required = true, paramType = "query", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getUpdateOrders" , method = RequestMethod.POST)
+    public JsonResult getUpdateOrders(@RequestBody @Validated OrdersConsigneeDTO ordersConsigneeDTO , BindingResult br){
+        log.debug("【START】 - function ShopOrdersConsigneeController - getUpdateOrders");
+        JsonResult check = CheckUtil.check(br);
+        if(check != null){
+            log.error("【ERROR】 - function ShopOrdersConsigneeController - getUpdateOrders 参数校验失败");
+            return check;
+        }
+
+        //获取修改的信息
+        List<ShopOrdersConsigneePO> list = this.shopOrdersConsigneeService.list(
+                new QueryWrapper<>(new ShopOrdersConsigneePO()
+                        .setOrdersId(ordersConsigneeDTO.getOrdersId())));
+
+        log.debug("【END】 - function ShopOrdersConsigneeController - getUpdateOrders , 查询更新的订单信息成功，查询的信息为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
     @ApiOperation(value = "修改订单")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "ordersId", value = "主键", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "consigneeName", value = "收货人姓名", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "consigneePhone", value = "收货人手机号", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "province", value = "省", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "city", value = "市", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "area", value = "区", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "address", value = "详细地址", required = false, paramType = "query", dataType = "string"),
     })
     @LogAnnotation(
             menuName = LogConstant.ORDERS_MENU_NAME,
