@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopPayDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopPayPO">
+        <id column="pay_id" property="payId" />
+        <result column="user_id" property="userId" />
+        <result column="orders_id" property="ordersId" />
+        <result column="pay_flow_number" property="payFlowNumber" />
+        <result column="pay_type" property="payType" />
+        <result column="pay_money" property="payMoney" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="pay_success_time" property="paySuccessTime" />
+        <result column="pay_fail_time" property="payFailTime" />
+        <result column="pay_fail_remark" property="payFailRemark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        pay_id, user_id, orders_id, pay_flow_number, pay_type, pay_money, status, create_time, pay_success_time, pay_fail_time, pay_fail_remark
+    </sql>
+
+</mapper>

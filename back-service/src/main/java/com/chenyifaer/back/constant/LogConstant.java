@@ -34,6 +34,10 @@ public class LogConstant {
 
     public static final String GOODS_TYPE_MENU_NAME = "商品分类管理";
 
+    public static final String ORDERS_MENU_NAME = "订单管理";
+
+    public static final String RETURN_ORDERS_MENU_NAME = "退单管理";
+
     public static final String LOG_MENU_NAME = "日志管理";
 
     /**********************************************/
@@ -98,6 +102,11 @@ public class LogConstant {
     public static final String OPERATION_GOODS_TYPE_UPDATE = "更新商品分类";
     public static final String OPERATION_GOODS_TYPE_DISABLE = "禁用/启用商品分类";
 
+    /** 订单管理 */
+    public static final String OPERATION_ORDERS_UPDATE = "更新订单";
+
+    /** 退单管理 */
+    public static final String OPERATION_RETURN_ORDERS_CHECK = "审核退单申请";
 
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";

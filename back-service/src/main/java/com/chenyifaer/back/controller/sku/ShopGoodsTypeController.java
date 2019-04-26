@@ -185,8 +185,8 @@ public class ShopGoodsTypeController {
     })
     @LogAnnotation(
             menuName = LogConstant.GOODS_TYPE_MENU_NAME,
-            action = LogConstant.UPDATE,
-            operation = LogConstant.OPERATION_GOODS_TYPE_UPDATE)
+            action = LogConstant.DISABLE,
+            operation = LogConstant.OPERATION_GOODS_TYPE_DISABLE)
     @RsaAnnotation
     @RequestMapping(value = "/disable" , method = RequestMethod.POST)
     public JsonResult disable(@RequestBody @Validated(ShopGoodsTypeDTO.Disable.class) ShopGoodsTypeDTO shopGoodsTypeDTO , BindingResult br) {

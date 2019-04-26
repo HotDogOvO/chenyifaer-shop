@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopReturnOrdersDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopReturnOrdersPO">
+        <id column="return_orders_id" property="returnOrdersId" />
+        <result column="orders_id" property="ordersId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="user_id" property="userId" />
+        <result column="return_flow_number" property="returnFlowNumber" />
+        <result column="express_name" property="expressName" />
+        <result column="express_number" property="expressNumber" />
+        <result column="return_goods_price" property="returnGoodsPrice" />
+        <result column="express_price" property="expressPrice" />
+        <result column="return_orders_price" property="returnOrdersPrice" />
+        <result column="return_type" property="returnType" />
+        <result column="goods_type" property="goodsType" />
+        <result column="status" property="status" />
+        <result column="return_remark" property="returnRemark" />
+        <result column="check_fail_remark" property="checkFailRemark" />
+        <result column="create_time" property="createTime" />
+        <result column="check_time" property="checkTime" />
+        <result column="check_user_id" property="checkUserId" />
+        <result column="check_fail_time" property="checkFailTime" />
+        <result column="return_success_time" property="returnSuccessTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        return_orders_id, orders_id, goods_id, user_id, return_flow_number, express_name, express_number, return_goods_price, express_price, return_orders_price, return_type, goods_type, status, return_remark, check_fail_remark, create_time, check_time, check_fail_time, return_success_time
+    </sql>
+
+    <!-- 查询退货列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.ReturnOrdersVO">
+        SELECT
+            r.return_orders_id returnOrdersId,
+            r.return_flow_number returnFlowNumber,
+            r.return_orders_price returnOrdersPrice,
+            r.return_type returnType,
+            r.goods_type goodsType,
+            r.status status,
+            r.return_remark returnRemark,
+            r.check_fail_remark checkFailRemark,
+            r.create_time createTime,
+            r.check_time checkTime,
+            r.check_fail_time checkFailTime,
+            g.goods_name goodsName,
+            u.user_nick_name userNickName,
+            o.flow_number flowNumber,
+            au.admin_user_name checkUserName
+        FROM
+            t_shop_return_orders r
+            INNER JOIN t_shop_goods g ON r.goods_id = g.goods_id
+            INNER JOIN t_web_user u ON r.user_id = u.user_id
+            INNER JOIN t_shop_orders o ON r.orders_id = o.orders_id
+            LEFT JOIN t_admin_user au ON r.check_user_id = au.admin_user_id
+        <where>
+            <if test="returnFlowNumber != null and returnFlowNumber != ''">
+                r.return_flow_number LIKE CONCAT('%',#{returnFlowNumber},'%')
+            </if>
+            <if test="returnType != null">
+                r.return_type = #{returnType}
+            </if>
+            <if test="goodsType != null">
+                r.goods_type = #{goodsType}
+            </if>
+            <if test="status != null ">
+                r.status = #{status}
+            </if>
+            <if test="goodsName != null and goodsName != ''">
+                g.goods_name LIKE CONCAT('%',#{goodsName},'%')
+            </if>
+            <if test="userNickName != null and userNickName != ''">
+                u.user_nick_name LIKE CONCAT('%',#{userNickName},'%')
+            </if>
+            <if test="flowNumber != null and flowNumber != ''">
+                o.flow_number LIKE CONCAT('%',#{flowNumber},'%')
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(r.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY r.create_time DESC
+    </select>
+
+    <!-- 退单详情一对多返回值 -->
+    <resultMap id="returnOrdersDetailResultMap" type="com.chenyifaer.back.entity.vo.ReturnOrdersDetailVO">
+        <result column="returnFlowNumber" property="returnFlowNumber" />
+        <result column="expressName" property="expressName" />
+        <result column="expressNumber" property="expressNumber" />
+        <result column="returnGoodsPrice" property="returnGoodsPrice" />
+        <result column="expressPrice" property="expressPrice" />
+        <result column="returnOrdersPrice" property="returnOrdersPrice" />
+        <result column="returnType" property="returnType" />
+        <result column="goodsType" property="goodsType" />
+        <result column="status" property="status" />
+        <result column="retrunRemark" property="returnRemark" />
+        <result column="checkFailRemark" property="checkFailRemark" />
+        <result column="createTime" property="createTime" />
+        <result column="checkTime" property="checkTime" />
+        <result column="checkUserName" property="checkUserName" />
+        <result column="checkFailTime" property="checkFailTime" />
+        <result column="returnSuccessTime" property="returnSuccessTime" />
+        <result column="goodsName" property="goodsName" />
+        <result column="userNickName" property="userNickName" />
+        <result column="consigneeName" property="consigneeName" />
+        <result column="consigneePhone" property="consigneePhone" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="address" property="address" />
+        <result column="flowNumber" property="flowNumber" />
+        <collection property="returnOrdersUrlList" javaType="list" ofType="string">
+            <result column="url" property="url" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询退单详情 -->
+    <select id="getDetail" resultMap="returnOrdersDetailResultMap">
+        SELECT
+            r.return_flow_number returnFlowNumber,
+            r.express_name expressName,
+            r.express_number expressNumber,
+            r.return_goods_price returnGoodsPrice,
+            r.express_price expressPrice,
+            r.return_orders_price returnOrdersPrice,
+            r.return_type returnType,
+            r.goods_type goodsType,
+            r.status status,
+            r.return_remark returnRemark,
+            r.check_fail_remark checkFailRemark,
+            r.create_time createTime,
+            r.check_time checkTime,
+            r.check_fail_time checkFailTime,
+            r.return_success_time returnSuccessTime,
+            ri.url url,
+            g.goods_name goodsName,
+            u.user_nick_name userNickName,
+            oc.consignee_name consigneeName,
+            oc.consignee_phone consigneePhone,
+            oc.province province,
+            oc.city city,
+            oc.area area,
+            oc.address address,
+            o.flow_number flowNumber,
+            au.admin_user_name checkUserName
+        FROM
+            t_shop_return_orders r
+            INNER JOIN t_shop_goods g ON r.goods_id = g.goods_id
+            INNER JOIN t_web_user u ON r.user_id = u.user_id
+            INNER JOIN t_shop_orders o ON r.orders_id = o.orders_id
+            INNER JOIN t_shop_orders_consignee oc ON r.orders_id = oc.orders_id
+            LEFT JOIN t_shop_return_orders_images ri ON r.return_orders_id = ri.return_orders_id
+            LEFT JOIN t_admin_user au ON r.check_user_id = au.admin_user_id
+        WHERE
+            r.return_orders_id = #{returnOrdersId}
+    </select>
+</mapper>

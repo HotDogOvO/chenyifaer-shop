@@ -28,7 +28,7 @@ public class MysqlGenerator {
         int result = scanner();
 
         //需要生成的表
-        String[] tableList = {"t_shop_goods_type"};
+        String[] tableList = {"t_shop_return_orders"};
         final String projectPath = "E:\\JAVA\\Idea\\chenyifaer-shop\\back-service";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator().setGlobalConfig(
@@ -66,10 +66,10 @@ public class MysqlGenerator {
                             @Override
                             public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
                                 System.out.println("转换类型：" + fieldType);
-                                if ( fieldType.toLowerCase().contains( "date" ) ) {
-                                    System.out.println(fieldType+"转为:"+ DbColumnType.DATE.getType());
-                                    return DbColumnType.DATE;
-                                }
+//                                if ( fieldType.toLowerCase().contains( "date" ) ) {
+//                                    System.out.println(fieldType+"转为:"+ DbColumnType.DATE.getType());
+//                                    return DbColumnType.DATE;
+//                                }
                                 return super.processTypeConvert(globalConfig, fieldType);
                             }
                         })

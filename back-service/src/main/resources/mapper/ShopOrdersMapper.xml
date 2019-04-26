@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopOrdersDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopOrdersPO">
+        <id column="orders_id" property="ordersId" />
+        <result column="flow_number" property="flowNumber" />
+        <result column="user_id" property="userId" />
+        <result column="express_name" property="expressName" />
+        <result column="express_number" property="expressNumber" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="express_price" property="expressPrice" />
+        <result column="orders_price" property="ordersPrice" />
+        <result column="orders_count" property="ordersCount" />
+        <result column="status" property="status" />
+        <result column="integral_status" property="integralStatus" />
+        <result column="coupons_status" property="couponsStatus" />
+        <result column="orders_remark" property="ordersRemark" />
+        <result column="create_time" property="createTime" />
+        <result column="pay_time" property="payTime" />
+        <result column="deliver_time" property="deliverTime" />
+        <result column="collect_time" property="collectTime" />
+        <result column="close_time" property="closeTime" />
+        <result column="cancelled_time" property="cancelledTime" />
+        <result column="return_time" property="returnTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        orders_id, flow_number, user_id, express_name, express_number, goods_price, express_price, orders_price, orders_count, status, integral_status, coupons_status, orders_remark, create_time, pay_time, deliver_time, collect_time, close_time, cancelled_time, return_time
+    </sql>
+
+    <!-- 查询订单列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.OrdersVO">
+        SELECT
+            o.orders_id ordersId,
+            o.flow_number flowNumber,
+            o.express_number expressNumber,
+            o.goods_price goodsPrice,
+            o.express_price expressPrice,
+            o.orders_name ordersName,
+            o.orders_price ordersPrice,
+            o.orders_count ordersCount,
+            o.status status,
+            o.integral_status integralStatus,
+            o.coupons_status couponsStatus,
+            o.create_time createTime,
+            oc.consignee_name consigneeName,
+            p.pay_flow_number payFlowNumber
+        FROM
+            t_shop_orders o
+        INNER JOIN t_shop_orders_consignee oc ON o.orders_id = oc.orders_id
+        LEFT JOIN t_shop_pay p ON o.orders_id = p.orders_id
+        <where>
+            <if test="flowNumber != null and flowNumber != ''">
+                o.flow_number LIKE CONCAT('%',#{flowNumber},'%')
+            </if>
+            <if test="expressNumber != null and expressNumber != ''">
+                o.express_number LIKE CONCAT('%',#{expressNumber},'%')
+            </if>
+            <if test="payFlowNumber != null and payFlowNumber != ''">
+                p.pay_flow_number LIKE CONCAT('%',#{payFlowNumber},'%')
+            </if>
+            <if test="ordersPrice != null and ordersPrice != ''">
+                o.orders_price LIKE CONCAT('%',#{ordersPrice},'%')
+            </if>
+            <if test="status != null ">
+                o.status = #{status}
+            </if>
+            <if test="integralStatus != null ">
+                o.integral_status = #{integralStatus}
+            </if>
+            <if test="couponsStatus != null ">
+                o.coupons_status = #{couponsStatus}
+            </if>
+            <if test="ordersName != null and ordersName != ''">
+                o.orders_name LIKE CONCAT('%',#{ordersName},'%')
+            </if>
+            <if test="consigneeName != null and consigneeName != ''">
+                oc.consignee_name LIKE CONCAT('%',#{consigneeName},'%')
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(o.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY o.create_time DESC
+    </select>
+
+</mapper>

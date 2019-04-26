@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopGoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopGoodsPO">
+        <id column="goods_id" property="goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_text" property="goodsText" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="goods_discount" property="goodsDiscount" />
+        <result column="goods_discount_price" property="goodsDiscountPrice" />
+        <result column="goods_sales" property="goodsSales" />
+        <result column="goods_inventory" property="goodsInventory" />
+        <result column="status" property="status" />
+        <result column="recommended_status" property="recommendedStatus" />
+        <result column="integral_status" property="integralStatus" />
+        <result column="coupons_status" property="couponsStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        goods_id, goods_name, goods_text, goods_price, goods_discount, goods_discount_price, goods_sales, goods_inventory, status, recommended_status, integral_status, coupons_status, create_time, update_time
+    </sql>
+
+</mapper>

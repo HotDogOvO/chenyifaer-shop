@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopOrdersDetailsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopOrdersDetailsPO">
+        <id column="orders_detail_id" property="ordersDetailId" />
+        <result column="orders_id" property="ordersId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="goods_count" property="goodsCount" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="goods_total_price" property="goodsTotalPrice" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        orders_detail_id, orders_id, goods_id, goods_count, goods_price, goods_total_price, create_time
+    </sql>
+
+    <!-- 查询订单详情一对多返回值 -->
+    <resultMap id="OrdersResultMap" type="com.chenyifaer.back.entity.vo.OrdersDetailVO">
+        <id column="flowNumber" property="flowNumber" />
+        <result column="expressName" property="expressName" />
+        <result column="expressNumber" property="expressNumber" />
+        <result column="expressPrice" property="expressPrice" />
+        <result column="ordersPrice" property="ordersPrice" />
+        <result column="status" property="status" />
+        <result column="integralStatus" property="integralStatus" />
+        <result column="couponsStatus" property="couponsStatus" />
+        <result column="createTime" property="createTime" />
+        <result column="payTime" property="payTime" />
+        <result column="deliverTime" property="deliverTime" />
+        <result column="collectTime" property="collectTime" />
+        <result column="closeTime" property="closeTime" />
+        <result column="consigneeName" property="consigneeName" />
+        <result column="consigneePhone" property="consigneePhone" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="address" property="address" />
+        <result column="zip" property="zip" />
+        <result column="payFlowNumber" property="payFlowNumber" />
+        <result column="payType" property="payType" />
+        <collection property="ordersDetailList" javaType="list" ofType="com.chenyifaer.back.entity.vo.OrdersDetailListVO">
+            <result column="goodsCount" property="goodsCount" />
+            <result column="goodsPrice" property="goodsPrice" />
+            <result column="goodsTotalPrice" property="goodsTotalPrice" />
+            <result column="goodsName" property="goodsName" />
+        </collection>
+    </resultMap>
+
+    <select id="getOrdersDetail" resultMap="OrdersResultMap">
+        SELECT
+            o.flow_number flowNumber,
+            o.express_name expressName,
+            o.express_number expressNumber,
+            o.express_price expressPrice,
+            o.orders_price ordersPrice,
+            o.status status,
+            o.integral_status integralStatus,
+            o.coupons_status couponsStatus,
+            o.create_time createTime,
+            o.pay_time payTime,
+            o.deliver_time deliverTime,
+            o.collect_time collectTime,
+            o.close_time closeTime,
+            ol.goods_count goodsCount,
+            ol.goods_price goodsPrice,
+            ol.goods_total_price goodsTotalPrice,
+            g.goods_name goodsName,
+            oc.consignee_name consigneeName,
+            oc.consignee_phone consigneePhone,
+            oc.province province,
+            oc.city city,
+            oc.area area,
+            oc.address address,
+            oc.zip zip,
+            p.pay_flow_number payFlowNumber,
+            p.pay_type payType 
+        FROM
+            t_shop_orders o
+            INNER JOIN t_shop_orders_details ol ON o.orders_id = ol.orders_id
+            INNER JOIN t_shop_orders_consignee oc ON o.orders_id = oc.orders_id
+            INNER JOIN t_shop_goods g ON ol.goods_id = g.goods_id
+            LEFT JOIN t_shop_pay p ON o.orders_id = p.orders_id 
+        WHERE
+            o.orders_id = #{ordersId}
+    </select>
+
+</mapper>
