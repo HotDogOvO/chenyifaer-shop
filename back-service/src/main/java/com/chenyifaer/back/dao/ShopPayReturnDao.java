@@ -1,9 +1,9 @@
 package com.chenyifaer.back.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chenyifaer.back.entity.dto.PayDTO;
-import com.chenyifaer.back.entity.po.ShopPayPO;
-import com.chenyifaer.back.entity.vo.PayVO;
+import com.chenyifaer.back.entity.dto.PayReturnDTO;
+import com.chenyifaer.back.entity.po.ShopPayReturnPO;
+import com.chenyifaer.back.entity.vo.PayReturnVO;
 
 import java.util.List;
 
@@ -18,16 +18,17 @@ import java.util.List;
  */
 
 /**
- * 支付管理 - 支付表 Mapper 接口
+ * 支付管理 - 退款表 Mapper 接口
  * @author wudh
- * @since 2019-04-25
+ * @since 2019-04-27
  */
-public interface ShopPayDao extends BaseMapper<ShopPayPO> {
+public interface ShopPayReturnDao extends BaseMapper<ShopPayReturnPO> {
 
     /**
-     * 查询支付信息列表
+     * 查询退款列表
      * @Author:wudh
-     * @Date: 2019/4/27 20:34
+     * @Date: 2019/4/27 20:51
      */
-    List<PayVO> getList(PayDTO payDTO);
+    List<PayReturnVO> getList(PayReturnDTO payReturnDTO);
+
 }

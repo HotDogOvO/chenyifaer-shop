@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chenyifaer.back.dao.ShopPayDao">
+<mapper namespace="com.chenyifaer.back.dao.ShopPayReturnDao">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopPayPO">
-        <id column="pay_id" property="payId" />
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopPayReturnPO">
+        <id column="pay_return_id" property="payReturnId" />
         <result column="user_id" property="userId" />
         <result column="orders_id" property="ordersId" />
         <result column="pay_flow_number" property="payFlowNumber" />
-        <result column="pay_type" property="payType" />
-        <result column="pay_money" property="payMoney" />
+        <result column="return_flow_number" property="returnFlowNumber" />
+        <result column="return_type" property="returnType" />
+        <result column="return_money" property="returnMoney" />
         <result column="status" property="status" />
         <result column="create_time" property="createTime" />
         <result column="pay_success_time" property="paySuccessTime" />
@@ -19,27 +20,28 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        pay_id, user_id, orders_id, pay_flow_number, pay_type, pay_money, status, create_time, pay_success_time, pay_fail_time, pay_fail_remark
+        pay_return_id, user_id, orders_id, pay_flow_number, return_flow_number, return_type, return_money, status, create_time, pay_success_time, pay_fail_time, pay_fail_remark
     </sql>
 
-    <!-- 查询支付信息列表 -->
-    <select id="getList" resultType="com.chenyifaer.back.entity.vo.PayVO">
+    <!-- 查询退款列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.PayReturnVO">
         SELECT
             o.orders_name ordersName,
             u.user_nick_name userNickName,
             o.flow_number flowNumber,
-            p.pay_flow_number payFlowNumber,
-            p.pay_type payType,
-            p.pay_money payMoney,
-            p.status status,
-            p.create_time createTime,
-            p.pay_success_time paySuccessTime,
-            p.pay_fail_time payFailTime,
-            p.pay_fail_remark payFailRemark
+            pr.pay_flow_number payFlowNumber,
+            pr.return_flow_number returnFlowNumber,
+            pr.return_type returnType,
+            pr.return_money returnMoney,
+            pr.status status,
+            pr.create_time createTime,
+            pr.pay_success_time paySuccessTime,
+            pr.pay_fail_time payFailTime,
+            pr.pay_fail_remark payFailRemark
         FROM
-            t_shop_pay p
-        INNER JOIN t_shop_orders o ON p.orders_id = o.orders_id
-        INNER JOIN t_web_user u ON u.user_id = p.user_id
+            t_shop_pay_return pr
+            INNER JOIN t_shop_orders o ON pr.orders_id = o.orders_id
+            INNER JOIN t_web_user u ON u.user_id = pr.user_id
         <where>
             <if test="ordersName != null and ordersName != ''">
                 o.orders_name LIKE CONCAT('%',#{ordersName},'%')
@@ -50,22 +52,25 @@
             <if test="flowNumber != null and flowNumber != ''">
                 o.flow_number LIKE CONCAT('%',#{flowNumber},'%')
             </if>
-            <if test="payFlowNumber != null and payFlowNumber != ''">
-                p.pay_flow_number LIKE CONCAT('%',#{payFlowNumber},'%')
+            <if test="returnFlowNumber != null and returnFlowNumber != ''">
+                pr.return_flow_number LIKE CONCAT('%',#{returnFlowNumber},'%')
             </if>
-            <if test="payType != null and payType != ''">
-                p.pay_type = #{payType}
+            <if test="payFlowNumber != null and payFlowNumber != ''">
+                pr.pay_flow_number LIKE CONCAT('%',#{payFlowNumber},'%')
+            </if>
+            <if test="returnType != null and returnType != ''">
+                pr.return_type = #{returnType}
             </if>
             <if test="status != null and status != ''">
-                p.status = #{status}
+                pr.status = #{status}
             </if>
             <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
                 AND
-                DATE_FORMAT(p.create_time,'%Y-%m-%d')
+                DATE_FORMAT(pr.create_time,'%Y-%m-%d')
                 BETWEEN #{startTime} AND #{endTime}
             </if>
         </where>
-        ORDER BY p.create_time DESC
+        ORDER BY pr.create_time DESC
     </select>
 
 </mapper>

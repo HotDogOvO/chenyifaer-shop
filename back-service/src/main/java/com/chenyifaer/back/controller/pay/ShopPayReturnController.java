@@ -4,9 +4,9 @@ package com.chenyifaer.back.controller.pay;
 import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
-import com.chenyifaer.back.entity.dto.PayDTO;
-import com.chenyifaer.back.entity.vo.PayVO;
-import com.chenyifaer.back.service.ShopPayService;
+import com.chenyifaer.back.entity.dto.PayReturnDTO;
+import com.chenyifaer.back.entity.vo.PayReturnVO;
+import com.chenyifaer.back.service.ShopPayReturnService;
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
@@ -40,46 +40,46 @@ import java.util.List;
  */
 
 /**
- * 支付管理 - 支付表 前端控制器
+ * 支付管理 - 退款表 前端控制器
  * @author wudh
- * @since 2019-04-25
+ * @since 2019-04-27
  */
-
 @Slf4j
 @RestController
-@RequestMapping("/pay")
-@Api(value = "支付管理",tags = {"支付管理 - 支付管理"})
-public class ShopPayController {
+@RequestMapping("/payReturn")
+@Api(value = "退款管理",tags = {"退款管理 - 退款管理"})
+public class ShopPayReturnController {
 
     @Autowired
-    private ShopPayService shopPayService;
+    private ShopPayReturnService shopPayReturnService;
 
-    @ApiOperation(value = "查询支付列表")
+    @ApiOperation(value = "查询退款列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "flowNumber", value = "订单流水号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "payFlowNumber", value = "支付流水号", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "returnFlowNumber", value = "退款流水号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "ordersName", value = "订单名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "userNickName", value = "用户昵称", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "payType", value = "支付类型（1：支付宝支付 2：微信支付）", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "status", value = "状态（0：支付中 1：支付成功 8：支付超时关闭 9：支付失败）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "returnType", value = "退款类型（1：支付宝支付 2：微信支付）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "状态（0：退款中 1：退款成功 2：退款失败）", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startTime", value = "起始时间", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "query", dataType = "string"),
     })
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
-    public JsonResult list(@RequestBody @Validated PayDTO payDTO , BindingResult br){
-        log.debug("【START】 - function ShopPayController - list");
+    public JsonResult list(@RequestBody @Validated PayReturnDTO payReturnDTO , BindingResult br){
+        log.debug("【START】 - function ShopPayReturnController - list");
         JsonResult check = CheckUtil.check(br);
         if(check != null){
-            log.error("【ERROR】 - function ShopPayController - list 参数校验失败");
+            log.error("【ERROR】 - function ShopPayReturnController - list 参数校验失败");
             return check;
         }
-        PageHelper.startPage(payDTO.getPageIndex(),payDTO.getPageSize());
-        List<PayVO> list = this.shopPayService.getList(payDTO);
-        PageInfo<PayVO> pageList = new PageInfo<>(list);
-        log.debug("【END】 - function ShopPayController - list 查询的结果为：" + list);
+        PageHelper.startPage(payReturnDTO.getPageIndex(),payReturnDTO.getPageSize());
+        List<PayReturnVO> list = this.shopPayReturnService.getList(payReturnDTO);
+        PageInfo<PayReturnVO> pageList = new PageInfo<>(list);
+        log.debug("【END】 - function ShopPayReturnController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,pageList);
     }
 
@@ -87,23 +87,24 @@ public class ShopPayController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "flowNumber", value = "订单流水号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "payFlowNumber", value = "支付流水号", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "returnFlowNumber", value = "退款流水号", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "ordersName", value = "订单名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "userNickName", value = "用户昵称", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "payType", value = "支付类型（1：支付宝支付 2：微信支付）", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "status", value = "状态（0：支付中 1：支付成功 8：支付超时关闭 9：支付失败）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "returnType", value = "退款类型（1：支付宝支付 2：微信支付）", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "状态（0：退款中 1：退款成功 2：退款失败）", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startTime", value = "起始时间", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "query", dataType = "string"),
     })
     @LogAnnotation(
-            menuName = LogConstant.PAY_MENU_NAME,
+            menuName = LogConstant.PAY_RETURN_MENU_NAME,
             action = LogConstant.EXPORT,
-            operation = LogConstant.OPERATION_PAY_EXPORT)
+            operation = LogConstant.OPERATION_PAY_RETURN_EXPORT)
     @RsaAnnotation
     @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public void export(@RequestBody @Validated PayDTO payDTO, HttpServletResponse response) {
-        log.debug("【START】 - function ShopPayController - export");
-        this.shopPayService.export(payDTO, response);
-        log.debug("【END】 - function ShopPayController - export");
+    public void export(@RequestBody @Validated PayReturnDTO payReturnDTO, HttpServletResponse response) {
+        log.debug("【START】 - function ShopPayReturnController - export");
+        this.shopPayReturnService.export(payReturnDTO, response);
+        log.debug("【END】 - function ShopPayReturnController - export");
     }
 
 }

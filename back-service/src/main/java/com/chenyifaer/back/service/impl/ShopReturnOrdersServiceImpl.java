@@ -8,7 +8,7 @@ import com.chenyifaer.back.entity.vo.ReturnOrdersDetailVO;
 import com.chenyifaer.back.entity.vo.ReturnOrdersVO;
 import com.chenyifaer.back.enums.ReturnStatusEnum;
 import com.chenyifaer.back.enums.ReturnTypeEnum;
-import com.chenyifaer.back.enums.ReturngGoodsTypeEnum;
+import com.chenyifaer.back.enums.ReturnGoodsTypeEnum;
 import com.chenyifaer.back.service.ShopReturnOrdersService;
 import com.chenyifaer.back.util.ExportPOIUtils;
 import com.chenyifaer.basic.common.util.DateUtil;
@@ -79,12 +79,12 @@ public class ShopReturnOrdersServiceImpl extends ServiceImpl<ShopReturnOrdersDao
 
                 //退货商品类型
                 /** 替换1为已收到货 */
-                if (x.getGoodsType().equals(ReturngGoodsTypeEnum.RETURN_GOODS_TYPE_001.getCode())) {
-                    x.setGoodsType(ReturngGoodsTypeEnum.RETURN_GOODS_TYPE_001.getMsg());
+                if (x.getGoodsType().equals(ReturnGoodsTypeEnum.RETURN_GOODS_TYPE_001.getCode())) {
+                    x.setGoodsType(ReturnGoodsTypeEnum.RETURN_GOODS_TYPE_001.getMsg());
                 }
                 /** 替换2为未收到货 */
-                if (x.getGoodsType().equals(ReturngGoodsTypeEnum.RETURN_GOODS_TYPE_002.getCode())) {
-                    x.setGoodsType(ReturngGoodsTypeEnum.RETURN_GOODS_TYPE_002.getMsg());
+                if (x.getGoodsType().equals(ReturnGoodsTypeEnum.RETURN_GOODS_TYPE_002.getCode())) {
+                    x.setGoodsType(ReturnGoodsTypeEnum.RETURN_GOODS_TYPE_002.getMsg());
                 }
                 return x;
             }).collect(Collectors.toList());

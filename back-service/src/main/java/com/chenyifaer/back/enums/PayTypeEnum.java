@@ -1,12 +1,4 @@
-package com.chenyifaer.back.dao;
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.chenyifaer.back.entity.dto.PayDTO;
-import com.chenyifaer.back.entity.po.ShopPayPO;
-import com.chenyifaer.back.entity.vo.PayVO;
-
-import java.util.List;
-
+package com.chenyifaer.back.enums;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -18,16 +10,30 @@ import java.util.List;
  */
 
 /**
- * 支付管理 - 支付表 Mapper 接口
- * @author wudh
- * @since 2019-04-25
+ * 支付类型 - 枚举
+ * @Author:wudh
+ * @Date: 2019/4/27 21:17
  */
-public interface ShopPayDao extends BaseMapper<ShopPayPO> {
+public enum PayTypeEnum {
 
-    /**
-     * 查询支付信息列表
-     * @Author:wudh
-     * @Date: 2019/4/27 20:34
-     */
-    List<PayVO> getList(PayDTO payDTO);
+    /** 支付宝支付 */
+    APPLY("1", "支付宝支付"),
+    /** 微信支付 */
+    WECHAT("2", "微信支付");
+
+    private String code;
+    private String msg;
+
+    PayTypeEnum(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 }

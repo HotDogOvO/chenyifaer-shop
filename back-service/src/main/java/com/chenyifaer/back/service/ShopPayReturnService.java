@@ -1,9 +1,9 @@
 package com.chenyifaer.back.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.chenyifaer.back.entity.dto.PayDTO;
-import com.chenyifaer.back.entity.po.ShopPayPO;
-import com.chenyifaer.back.entity.vo.PayVO;
+import com.chenyifaer.back.entity.dto.PayReturnDTO;
+import com.chenyifaer.back.entity.po.ShopPayReturnPO;
+import com.chenyifaer.back.entity.vo.PayReturnVO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -19,24 +19,23 @@ import java.util.List;
  */
 
 /**
- * 支付管理 - 支付表 服务类
+ * 支付管理 - 退款表 服务类
  * @author wudh
- * @since 2019-04-25
+ * @since 2019-04-27
  */
-public interface ShopPayService extends IService<ShopPayPO> {
+public interface ShopPayReturnService extends IService<ShopPayReturnPO> {
 
     /**
-     * 查询支付信息列表
+     * 查询退款列表
      * @Author:wudh
-     * @Date: 2019/4/27 20:34
+     * @Date: 2019/4/27 20:51
      */
-    List<PayVO> getList(PayDTO payDTO);
+    List<PayReturnVO> getList(PayReturnDTO payReturnDTO);
 
     /**
-     * 导出支付信息列表
+     * 导出退款列表
      * @Author:wudh
-     * @Date: 2019/4/27 21:15
+     * @Date: 2019/4/27 21:26
      */
-    void export(PayDTO payDTO , HttpServletResponse response);
-
+    void export(PayReturnDTO payReturnDTO , HttpServletResponse response);
 }

@@ -10,21 +10,21 @@ package com.chenyifaer.back.enums;
  */
 
 /**
- * 退货商品类型 - 枚举
+ * 退款类型 - 枚举
  * @Author:wudh
- * @Date: 2019/4/27 13:32
+ * @Date: 2019/4/27 21:17
  */
-public enum ReturngGoodsTypeEnum {
+public enum PayReturnTypeEnum {
 
-    /** 已收到货 */
-    RETURN_GOODS_TYPE_001("1", "已收到货"),
-    /** 未收到货 */
-    RETURN_GOODS_TYPE_002("2", "未收到货");
+    /** 支付宝支付 */
+    APPLY("1", "支付宝支付"),
+    /** 微信支付 */
+    WECHAT("2", "微信支付");
 
     private String code;
     private String msg;
 
-    ReturngGoodsTypeEnum(String code, String msg) {
+    PayReturnTypeEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -36,5 +36,4 @@ public enum ReturngGoodsTypeEnum {
     public String getMsg() {
         return msg;
     }
-
 }

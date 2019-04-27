@@ -38,6 +38,10 @@ public class LogConstant {
 
     public static final String RETURN_ORDERS_MENU_NAME = "退单管理";
 
+    public static final String PAY_MENU_NAME = "支付管理";
+
+    public static final String PAY_RETURN_MENU_NAME = "退款管理";
+
     public static final String LOG_MENU_NAME = "日志管理";
 
     /**********************************************/
@@ -109,6 +113,12 @@ public class LogConstant {
     /** 退单管理 */
     public static final String OPERATION_RETURN_ORDERS_CHECK = "审核退单申请";
     public static final String OPERATION_RETURN_ORDERS_EXPORT = "导出退单列表";
+
+    /** 支付管理 */
+    public static final String OPERATION_PAY_EXPORT = "导出支付列表";
+
+    /** 退款管理 */
+    public static final String OPERATION_PAY_RETURN_EXPORT = "导出退款列表";
 
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";
