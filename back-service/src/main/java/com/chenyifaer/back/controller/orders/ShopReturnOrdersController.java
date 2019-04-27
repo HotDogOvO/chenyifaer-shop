@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -147,6 +148,30 @@ public class ShopReturnOrdersController extends BaseController {
 
         log.debug("【END】 - function ShopReturnOrdersController - check 审核失败");
         return ResponseResult.Success(ResultCodeEnums.FAIL_10007);
+    }
+
+    @ApiOperation(value = "导出退单列表")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "returnFlowNumber", value = "退单流水号", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "returnType", value = "退單類型（1：退貨退款 2：僅退款）", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "goodsType", value = "商品狀態（1：已收到貨 2：未收到貨）", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "状态（0：待审核 1：审核通过 2：退货中 3：退货成功 4：退货失败）", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "goodsName", value = "商品名稱", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "userNickName", value = "購買用戶名", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "flowNumber", value = "訂單流水號", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "startTime", value = "起始时间", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "endTime", value = "结束时间", required = false, paramType = "query", dataType = "string"),
+    })
+    @LogAnnotation(
+            menuName = LogConstant.RETURN_ORDERS_MENU_NAME,
+            action = LogConstant.EXPORT,
+            operation = LogConstant.OPERATION_RETURN_ORDERS_EXPORT)
+    @RsaAnnotation
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public void export(@RequestBody @Validated ReturnOrdersDTO returnOrdersDTO, HttpServletResponse response) {
+        log.debug("【START】 - function ShopReturnOrdersController - export");
+        this.shopReturnOrdersService.export(returnOrdersDTO, response);
+        log.debug("【END】 - function ShopReturnOrdersController - export");
     }
 
 }

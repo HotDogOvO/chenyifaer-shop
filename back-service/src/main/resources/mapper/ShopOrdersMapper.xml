@@ -65,13 +65,13 @@
             <if test="ordersPrice != null and ordersPrice != ''">
                 o.orders_price LIKE CONCAT('%',#{ordersPrice},'%')
             </if>
-            <if test="status != null ">
+            <if test="status != null and status != '' ">
                 o.status = #{status}
             </if>
-            <if test="integralStatus != null ">
+            <if test="integralStatus != null and integralStatus != '' ">
                 o.integral_status = #{integralStatus}
             </if>
-            <if test="couponsStatus != null ">
+            <if test="couponsStatus != null and couponsStatus != '' ">
                 o.coupons_status = #{couponsStatus}
             </if>
             <if test="ordersName != null and ordersName != ''">

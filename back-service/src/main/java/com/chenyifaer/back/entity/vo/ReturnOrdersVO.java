@@ -29,7 +29,7 @@ public class ReturnOrdersVO {
     private Integer returnOrdersId;
 
     /** 退单流水号 */
-    private String reutrnFlowNumber;
+    private String returnFlowNumber;
 
     /** 退單金額 */
     private BigDecimal returnOrdersPrice;

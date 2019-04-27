@@ -104,9 +104,11 @@ public class LogConstant {
 
     /** 订单管理 */
     public static final String OPERATION_ORDERS_UPDATE = "更新订单";
+    public static final String OPERATION_ORDERS_EXPORT = "导出订单列表";
 
     /** 退单管理 */
     public static final String OPERATION_RETURN_ORDERS_CHECK = "审核退单申请";
+    public static final String OPERATION_RETURN_ORDERS_EXPORT = "导出退单列表";
 
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";

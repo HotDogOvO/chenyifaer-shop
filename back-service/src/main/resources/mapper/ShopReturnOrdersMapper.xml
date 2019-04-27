@@ -59,13 +59,13 @@
             <if test="returnFlowNumber != null and returnFlowNumber != ''">
                 r.return_flow_number LIKE CONCAT('%',#{returnFlowNumber},'%')
             </if>
-            <if test="returnType != null">
+            <if test="returnType != null and returnType != ''">
                 r.return_type = #{returnType}
             </if>
-            <if test="goodsType != null">
+            <if test="goodsType != null and goodsType != ''">
                 r.goods_type = #{goodsType}
             </if>
-            <if test="status != null ">
+            <if test="status != null and status != ''">
                 r.status = #{status}
             </if>
             <if test="goodsName != null and goodsName != ''">

@@ -44,13 +44,13 @@ public class OrdersDTO extends PageDTO {
      * （0：待付款 1：付款完毕，待发货 2：已发货，待收货 3：已收货，待完成
      * 4：已完成，待评论 7：已取消
      * 8： 超时关闭 9：已关闭 99：退货） */
-    private Integer status;
+    private String status;
 
     /** 是否为积分付款（0：否 1：是） */
-    private Integer integralStatus;
+    private String integralStatus;
 
     /** 是否为优惠券付款（0：否 1：是） */
-    private Integer couponsStatus;
+    private String couponsStatus;
 
     /** 收货人姓名 */
     @Length(max = 30 , message = "收货人姓名不能超过30个字符")

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 账号管理 - 后台账号表 服务实现类
@@ -64,7 +65,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserDao, AdminUserPO>
                     x.setStatus(AdminUserStatusEnum.ENABLE.getMsg());
                 }
                 return x;
-            });
+            }).collect(Collectors.toList());
 
             String[] columnNames = {"姓名", "账号", "角色名", "手机号", "邮箱" , "状态" , "创建时间"};
             String[] keys = {"adminUserName", "adminUserAccount", "adminRoleName", "adminUserPhone", "adminUserEmail", "status", "createTime"};

@@ -5,6 +5,7 @@ import com.chenyifaer.back.entity.dto.OrdersDTO;
 import com.chenyifaer.back.entity.po.ShopOrdersPO;
 import com.chenyifaer.back.entity.vo.OrdersVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -20,4 +21,11 @@ public interface ShopOrdersService extends IService<ShopOrdersPO> {
      * @Date: 2019/4/25 20:16
      */
     List<OrdersVO> getList(OrdersDTO ordersDTO);
+
+    /**
+     * 导出订单列表
+     * @Author:wudh
+     * @Date: 2019/4/27 11:21
+     */
+    void export(OrdersDTO ordersDTO , HttpServletResponse response);
 }

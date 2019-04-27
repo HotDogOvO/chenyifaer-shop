@@ -6,6 +6,7 @@ import com.chenyifaer.back.entity.po.ShopReturnOrdersPO;
 import com.chenyifaer.back.entity.vo.ReturnOrdersDetailVO;
 import com.chenyifaer.back.entity.vo.ReturnOrdersVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -39,4 +40,10 @@ public interface ShopReturnOrdersService extends IService<ShopReturnOrdersPO> {
      */
     List<ReturnOrdersDetailVO> getDetail(ReturnOrdersDTO returnOrdersDTO);
 
+    /**
+     * 导出退单列表
+     * @Author:wudh
+     * @Date: 2019/4/27 13:28
+     */
+    void export(ReturnOrdersDTO returnOrdersDTO , HttpServletResponse response);
 }
