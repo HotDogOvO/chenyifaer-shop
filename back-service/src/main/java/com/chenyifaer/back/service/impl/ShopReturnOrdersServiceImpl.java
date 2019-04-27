@@ -90,7 +90,7 @@ public class ShopReturnOrdersServiceImpl extends ServiceImpl<ShopReturnOrdersDao
             }).collect(Collectors.toList());
 
             String[] columnNames = {"退货商品名", "退货用户名", "订单流水号", "退单流水号", "退款金额" , "状态" , "退货类型", "商品当前状态", "退货备注", "商家审核备注", "创建时间", "审核时间", "审核失败时间"};
-            String[] keys = {"goodsName", "userNickName", "flowNumber", "reutrnFlowNumber", "returnOrdersPrice", "status", "returnType", "goodsType", "retrunRemark", "checkFailRemark", "createTime", "checkTime", "checkFailTime"};
+            String[] keys = {"goodsName", "userNickName", "flowNumber", "returnFlowNumber", "returnOrdersPrice", "status", "returnType", "goodsType", "retrunRemark", "checkFailRemark", "createTime", "checkTime", "checkFailTime"};
             ExportPOIUtils.start_download(response, "订单列表" + DateUtil.getTime().toString(), list, columnNames, keys);
         } catch (IOException e) {
             e.printStackTrace();
