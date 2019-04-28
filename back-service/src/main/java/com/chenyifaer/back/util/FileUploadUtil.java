@@ -63,10 +63,10 @@ public class FileUploadUtil {
      * @Author:wudh
      * @Date: 2019/4/24 12:01
      */
-    public static String upload(MultipartFile file,String formalPath){
+    public static JsonResult upload(MultipartFile file,String formalPath){
+        JsonResult jsonResult ;
         InputStream in = null;
         FileOutputStream fs = null;
-        String filename = "";
 
         try {
             // 创建目录
@@ -89,10 +89,12 @@ public class FileUploadUtil {
             log.debug("【RUN】 - function upload - 保存文件 - {} - 完成 ", newFileName);
 
             // 去掉目录名，保留文件总体路径，通过该路径访问图片
-            filename = newFileName.substring(newFileName.lastIndexOf(formalPath)).replace(formalPath, "");
+            String filename = newFileName.substring(newFileName.lastIndexOf(formalPath)).replace(formalPath, "");
+            jsonResult = ResponseResult.Success(ResultCodeEnums.SUCCESS_006, filename);
         } catch (IOException e) {
             log.error("【ERROR】 - 文件上传失败 :" , e);
             e.printStackTrace();
+            jsonResult = ResponseResult.Fail(ResultCodeEnums.FAIL_10006);
         } finally {
             if (fs != null) {
                 try {
@@ -113,8 +115,7 @@ public class FileUploadUtil {
             }
 
         }
-        log.debug("【END】 - function upload");
-        return filename;
+        return jsonResult;
     }
 
 

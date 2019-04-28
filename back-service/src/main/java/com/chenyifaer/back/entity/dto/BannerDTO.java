@@ -13,6 +13,8 @@ import com.chenyifaer.basic.common.dto.PageDTO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 轮播图管理 - DTO
  * @Author:wudh
@@ -23,8 +25,19 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BannerDTO extends PageDTO {
 
+    public interface Add{};
+
     /** 轮播图名称 */
+    @NotNull(groups = {BannerDTO.Add.class} , message = "轮播图名称不能为空")
     private String bannerName;
+
+    /** 轮播图路径 */
+    @NotNull(groups = {BannerDTO.Add.class} , message = "轮播图路径不能为空")
+    private String bannerImageUrl;
+
+    /** 权重 */
+    @NotNull(groups = {BannerDTO.Add.class} , message = "权重不能为空")
+    private Integer weight;
 
     /** 状态 */
     private Integer status;

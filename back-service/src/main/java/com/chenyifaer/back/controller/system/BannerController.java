@@ -47,10 +47,10 @@ public class BannerController {
 
     @ApiOperation(value = "查询轮播图列表")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "bannerName", value = "轮播图名称", required = false, paramType = "query", dataType = "string"),
-        @ApiImplicitParam(name = "status", value = "轮播图状态（0：禁用 1：启用）", required = false, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
+            @ApiImplicitParam(name = "bannerName", value = "轮播图名称", required = false, paramType = "query", dataType = "string"),
+            @ApiImplicitParam(name = "status", value = "轮播图状态（0：禁用 1：启用）", required = false, paramType = "query", dataType = "int"),
     })
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
@@ -70,16 +70,42 @@ public class BannerController {
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
     }
 
+    @ApiOperation(value = "新增轮播图")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "file", value = "图片文件", required = true, paramType = "query", dataType = "file"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/add" , method = RequestMethod.POST)
+    public JsonResult add(@RequestBody @Validated(BannerDTO.Add.class) BannerDTO bannerDTO , BindingResult br){
+        log.debug("【START】 - function BannerController - add");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function BannerController - add 参数校验失败");
+            return check;
+        }
+        boolean flag = this.bannerService.save(new BannerPO()
+                .setBannerName(bannerDTO.getBannerName())
+                .setBannerImageUrl(bannerDTO.getBannerImageUrl())
+                .setWeight(bannerDTO.getWeight()));
+        if(flag){
+            log.debug("【END】 - function BannerController - add - 新增轮播图成功 - 新增的数据为：" + bannerDTO);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
+        }
+        log.debug("【END】 - function BannerController - add 新增轮播图失败");
+        return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
+    }
+
+    @ApiOperation(value = "上传轮播图图片")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "file", value = "图片文件", required = true, paramType = "query", dataType = "file"),
+    })
+    @RsaAnnotation
     @RequestMapping(value = "/upload" , method = RequestMethod.POST)
     public JsonResult upload(@RequestPart("file") MultipartFile file){
         log.debug("【START】 - function upload");
-        String fileName = FileUploadUtil.upload(file,filesConfig.getFormalPath());
-
-        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, fileName);
+        JsonResult jsonResult = FileUploadUtil.upload(file,filesConfig.getFormalPath());
+        log.debug("【END】 - function upload");
+        return jsonResult;
     }
 
-    @RequestMapping("/test")
-    public void test(){
-        System.out.println(filesConfig.getFormalPath());
-    }
 }
