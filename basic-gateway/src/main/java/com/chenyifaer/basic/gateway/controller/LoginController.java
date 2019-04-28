@@ -7,6 +7,7 @@ import com.chenyifaer.basic.common.emuns.OauthUserTypeEnum;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.basic.common.util.StringUtil;
+import com.chenyifaer.basic.gateway.annotation.RsaAnnotation;
 import com.chenyifaer.basic.gateway.entity.dto.AdminLoginDTO;
 import com.chenyifaer.basic.gateway.entity.dto.AdminUserMenuDTO;
 import com.chenyifaer.basic.gateway.feign.AdminUserFeign;
@@ -57,6 +58,7 @@ public class LoginController {
         @ApiImplicitParam(name = "adminUserAccount", value = "账号", required = true, dataType = "string"),
         @ApiImplicitParam(name = "adminUserPassword", value = "密码", required = true, dataType = "string"),
     })
+    @RsaAnnotation
     @RequestMapping(value = "/login" , method = RequestMethod.POST)
     public JsonResult login(@RequestBody AdminLoginDTO adminLoginDTO) {
         log.debug("[START] - function LoginController - login");

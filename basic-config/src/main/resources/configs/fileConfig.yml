@@ -1,0 +1,21 @@
+#文件上传Linux
+upload:
+  path:
+    #文件目录
+#    formal: /tmp/uploads/img/formal/catalog
+    formal: E:/chenyifaer-shop/images/
+  multipart:
+    #单个文件最大内存
+    maxFileSize: 10MB
+    #所有文件最大内存
+    maxRequestSize: 50MB
+  #文件访问
+  visit:
+    #文件目录
+    #formal: /tmp/uploads/img/formal/
+    formal: E:/chenyifaer-shop/
+
+spring:
+  resources:
+    #静态资源访问
+    static-locations: file:${upload.visit.temporary},file:${upload.visit.formal}

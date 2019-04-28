@@ -46,32 +46,31 @@ public class FileUploadUtil {
      *
      * @return
      */
-//    @Bean
-//    public MultipartConfigElement multipartConfigElement() {
-//        log.debug("【START】 - function multipartConfigElement");
-//        MultipartConfigFactory factory = new MultipartConfigFactory();
-//        // 单个文件最大
-//        factory.setMaxFileSize(filesConfig.getMaxFileSize());
-//        // 设置总上传数据总大小
-//        factory.setMaxRequestSize(filesConfig.getMaxRequestSize());
-//        log.debug("【END】 - function multipartConfigElement");
-//        return factory.createMultipartConfig();
-//    }
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        log.debug("【START】 - function multipartConfigElement");
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 单个文件最大
+        factory.setMaxFileSize(filesConfig.getMaxFileSize());
+        // 设置总上传数据总大小
+        factory.setMaxRequestSize(filesConfig.getMaxRequestSize());
+        log.debug("【END】 - function multipartConfigElement");
+        return factory.createMultipartConfig();
+    }
 
     /**
      * 文件上传
      * @Author:wudh
      * @Date: 2019/4/24 12:01
      */
-    public static JsonResult upload(MultipartFile file,String formalPath){
-        JsonResult result;
+    public static String upload(MultipartFile file,String formalPath){
         InputStream in = null;
         FileOutputStream fs = null;
+        String filename = "";
 
         try {
-            String defaultPath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + formalPath;
             // 创建目录
-            String filePath = FileUploadUtil.createPath(defaultPath);
+            String filePath = FileUploadUtil.createPath(formalPath);
             // 新的文件存放路径加上新的文件名
             String newFileName = filePath + FileUploadUtil.getFileName(file.getOriginalFilename());
             File newFile = new File(newFileName);
@@ -90,11 +89,10 @@ public class FileUploadUtil {
             log.debug("【RUN】 - function upload - 保存文件 - {} - 完成 ", newFileName);
 
             // 去掉目录名，保留文件总体路径，通过该路径访问图片
-            String filename = newFileName.substring(newFileName.lastIndexOf(defaultPath)).replace(defaultPath, "");
-            result = ResponseResult.Success(ResultCodeEnums.SUCCESS_006, filename);
+            filename = newFileName.substring(newFileName.lastIndexOf(formalPath)).replace(formalPath, "");
         } catch (IOException e) {
             log.error("【ERROR】 - 文件上传失败 :" , e);
-            result = ResponseResult.Fail(ResultCodeEnums.FAIL_10006);
+            e.printStackTrace();
         } finally {
             if (fs != null) {
                 try {
@@ -116,7 +114,7 @@ public class FileUploadUtil {
 
         }
         log.debug("【END】 - function upload");
-        return result;
+        return filename;
     }
 
 

@@ -11,7 +11,7 @@ spring:
     config:
       failFast: true
       #server端ip地址
-      uri: http://basic_config@127.0.0.1:7005/
+      uri: http://basic_config@47.101.58.198:7005/
 
 #eureka注册中心
 eureka:
@@ -39,6 +39,11 @@ zuul:
       serviceId: back-service
       url: http://127.0.0.1:7002
       strip-prefix: true
+    api-back-img:
+      path: /images/**
+      serviceId: back-service
+      url: http://127.0.0.1:7002
+      strip-prefix: false
     api-web:
       path: /api/web/**
       serviceId: web-service
