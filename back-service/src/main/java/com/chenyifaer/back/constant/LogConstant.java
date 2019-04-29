@@ -44,6 +44,8 @@ public class LogConstant {
 
     public static final String LOG_MENU_NAME = "日志管理";
 
+    public static final String BANNER_MENU_NAME = "轮播图管理";
+
     /**********************************************/
     /** 动作 */
     public static final String LOGIN = "登录";
@@ -68,7 +70,10 @@ public class LogConstant {
 
     public static final String EXPORT = "导出";
 
-    public static final String IMPORT = "上传";
+    public static final String IMPORT = "导入";
+
+    public static final String UPLOAD = "上传";
+
     /**********************************************/
     /** 操作 */
     /** 系统操作 */
@@ -123,5 +128,10 @@ public class LogConstant {
     /** 日志管理 */
     public static final String OPERATION_LOG_EXPORT = "导出日志列表";
 
+    /** 轮播图管理 */
+    public static final String OPERATION_BANNER_ADD = "新增轮播图";
+    public static final String OPERATION_BANNER_UPDATE = "更新轮播图";
+    public static final String OPERATION_BANNER_UPLOAD = "上传轮播图 - 图片";
+    public static final String OPERATION_BANNER_DISABLE = "启用/禁用轮播图";
 
 }

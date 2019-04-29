@@ -27,6 +27,14 @@ public class BannerDTO extends PageDTO {
 
     public interface Add{};
 
+    public interface Update{};
+
+    public interface Disable{};
+
+    /** 主键 */
+    @NotNull(groups = {BannerDTO.Update.class,BannerDTO.Disable.class} , message = "bannerId不能为空")
+    private Integer bannerId;
+
     /** 轮播图名称 */
     @NotNull(groups = {BannerDTO.Add.class} , message = "轮播图名称不能为空")
     private String bannerName;
@@ -39,7 +47,8 @@ public class BannerDTO extends PageDTO {
     @NotNull(groups = {BannerDTO.Add.class} , message = "权重不能为空")
     private Integer weight;
 
-    /** 状态 */
+    /** 状态（0：禁用 1：启用） */
+    @NotNull(groups = {BannerDTO.Disable.class} , message = "状态不能为空")
     private Integer status;
 
 }
