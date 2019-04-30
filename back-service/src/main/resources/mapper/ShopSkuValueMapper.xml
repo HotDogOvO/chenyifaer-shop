@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopSkuValueDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopSkuValuePO">
+        <id column="shop_sku_value_id" property="shopSkuValueId" />
+        <result column="shop_goods_type_id" property="shopGoodsTypeId" />
+        <result column="value_name" property="valueName" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_sku_value_id, shop_goods_type_id, value_name, create_time
+    </sql>
+
+    <!-- 查询属性列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.SkuValueVO">
+        SELECT
+            sv.shop_sku_value_id skuValueId,
+            sv.shop_goods_type_id shopGoodsTypeId,
+            sv.value_name valueName,
+            sv.create_time createTime,
+            t.type_name typeName
+        FROM
+            t_shop_sku_value sv
+        INNER JOIN t_shop_goods_type t ON sv.shop_goods_type_id = t.shop_goods_type_id
+        <where>
+            <if test="valueName != null and valueName != ''">
+                sv.value_name LIKE CONCAT('%',#{valueName},'%')
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(sv.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询分类树状图返回值 -->
+    <resultMap id="treeListResultMap" type="com.chenyifaer.back.entity.vo.SkuTypeTreeVO">
+        <result column="typeName" property="typeName" />
+        <collection property="valueTreeList" javaType="list" ofType="com.chenyifaer.back.entity.vo.SkuValueTreeVO">
+            <id column="shopSkuValueId" property="shopSkuValueId" />
+            <result column="valueName" property="valueName" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询分类树状图 -->
+    <select id="getTreeList" resultMap="treeListResultMap">
+        SELECT
+            sv.shop_sku_value_id shopSkuValueId,
+            sv.value_name valueName,
+            t.type_name typeName
+        FROM
+            t_shop_goods_type t
+        INNER JOIN t_shop_sku_value sv ON sv.shop_goods_type_id = t.shop_goods_type_id
+    </select>
+    
+</mapper>

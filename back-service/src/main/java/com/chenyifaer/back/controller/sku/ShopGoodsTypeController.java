@@ -53,7 +53,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("/goods/type")
-@Api(value = "商品管理",tags = {"商品管理 - 商品分类管理"})
+@Api(value = "SKU管理",tags = {"SKU管理 - 商品分类管理"})
 public class ShopGoodsTypeController {
     
     @Autowired

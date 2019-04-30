@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopSkuKeyDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopSkuKeyPO">
+        <id column="shop_sku_key_id" property="shopSkuKeyId" />
+        <result column="key_name" property="keyName" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_sku_key_id, key_name, create_time
+    </sql>
+
+    <!-- sku列表一对多返回值 -->
+    <resultMap id="SkuResultMap" type="com.chenyifaer.back.entity.vo.SkuKeyVO">
+        <id column="skuKeyId" property="skuKeyId" />
+        <result column="keyName" property="keyName" />
+        <result column="createTime" property="createTime" />
+        <collection property="valueList" javaType="list" ofType="com.chenyifaer.back.entity.vo.SkuKeyValueVO">
+            <id column="skuValueId" property="skuValueId" />
+            <result column="valueName" property="valueName" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询sku列表 -->
+    <select id="getList" resultMap="SkuResultMap">
+        SELECT
+            sk.shop_sku_key_id skuKeyId,
+            sk.key_name keyName,
+            sk.create_time createTime,
+            sv.shop_sku_value_id skuValueId,
+            sv.value_name valueName
+        FROM
+            t_shop_sku_key sk
+        INNER JOIN t_shop_sku s ON sk.shop_sku_key_id = s.sku_key_id
+        INNER JOIN t_shop_sku_value sv ON sv.shop_sku_value_id = s.sku_value_id
+        <where>
+            <if test="keyName != null and keyName != ''">
+                sk.key_name LIKE CONCAT('%',#{keyName},'%')
+            </if>
+            <if test="valueName != null and valueName != ''">
+                AND sv.value_name LIKE CONCAT('%',#{valueName},'%')
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(s.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>
