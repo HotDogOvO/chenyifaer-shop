@@ -1,16 +1,24 @@
 package com.chenyifaer.back.service;
 
-import com.chenyifaer.back.entity.po.ShopGoodsPO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chenyifaer.back.entity.dto.GoodsDTO;
+import com.chenyifaer.back.entity.po.ShopGoodsPO;
+import com.chenyifaer.back.entity.vo.GoodsVO;
+
+import java.util.List;
 
 /**
- * <p>
  * 商品管理 - 商品表 服务类
- * </p>
- *
  * @author wudh
  * @since 2019-04-25
  */
 public interface ShopGoodsService extends IService<ShopGoodsPO> {
+
+    /**
+     * 查询商品列表
+     * @Author:wudh
+     * @Date: 2019/5/4 19:35
+     */
+    List<GoodsVO> getList(GoodsDTO goodsDTO);
 
 }

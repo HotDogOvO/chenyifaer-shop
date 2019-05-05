@@ -1,11 +1,12 @@
 package com.chenyifaer.back.controller.login;
 
-import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.OauthUserDTO;
+import com.chenyifaer.back.entity.po.LogPO;
 import com.chenyifaer.back.entity.vo.OauthUserVO;
+import com.chenyifaer.back.enums.UserStatusEnum;
 import com.chenyifaer.back.service.AdminUserService;
-import com.chenyifaer.basic.common.emuns.UserStatusEnum;
+import com.chenyifaer.back.service.LogService;
 import com.chenyifaer.basic.common.entity.LoginAppUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class OauthUserController {
     @Autowired
     private AdminUserService adminUserService;
 
+    @Autowired
+    private LogService logService;
+
     /**
      * 查询Oauth认证 - 登录用户详细信息
      * @Author:wudh
@@ -54,7 +58,7 @@ public class OauthUserController {
             //為了防止惡意攻擊，設置用戶默認禁用
             boolean enabled = false;
             //如果當前用戶的狀態為啟用，則更改enabled的值為true
-            if(oauthUserVO.getStatus().equals(UserStatusEnum.ENABLE.getCode())){
+            if(oauthUserVO.getStatus().toString().equals(UserStatusEnum.ENABLE.getCode())){
                 enabled = true;
             }
 
@@ -68,7 +72,7 @@ public class OauthUserController {
             loginAppUser.setAdminUserPassword(new BCryptPasswordEncoder()
                     .encode(oauthUserVO.getAdminUserPassword()));
 
-            this.loginLog(loginAppUser.getAdminUserName());
+            this.loginLog(loginAppUser.getAdminUserName(),loginAppUser.getAdminUserId());
 
             log.debug("【END】 - function OauthUserController login return");
             return loginAppUser;
@@ -82,11 +86,12 @@ public class OauthUserController {
      * @Author:wudh
      * @Date: 2019/4/15 17:20
      */
-    @LogAnnotation(
-            menuName = LogConstant.SYSTEM_MENU_NAME,
-            action = LogConstant.LOGIN,
-            operation = LogConstant.OPERATION_SYSTEM_LOGIN)
-    public void loginLog(String username){
+    public void loginLog(String username,Integer userId){
+        logService.save(new LogPO()
+                .setMenuName(LogConstant.SYSTEM_MENU_NAME)
+                .setAction(LogConstant.LOGIN)
+                .setOperation(LogConstant.OPERATION_SYSTEM_LOGIN)
+                .setUserId(userId));
         log.debug("【RUN】 - function loginLog 登录日志记录，登录的用户为：{}",username);
     }
 

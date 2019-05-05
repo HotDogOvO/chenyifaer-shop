@@ -11,6 +11,7 @@ import com.chenyifaer.back.entity.po.BannerPO;
 import com.chenyifaer.back.service.BannerService;
 import com.chenyifaer.back.util.FileUploadUtil;
 import com.chenyifaer.basic.common.constant.JsonResult;
+import com.chenyifaer.basic.common.emuns.FileUploadUrlEnum;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.DateUtil;
@@ -50,10 +51,10 @@ public class BannerController {
 
     @ApiOperation(value = "查询轮播图列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "bannerName", value = "轮播图名称", required = false, paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "status", value = "轮播图状态（0：禁用 1：启用）", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "pageIndex", value = "当前页码", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "pageSize", value = "当前页条数", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "bannerName", value = "轮播图名称", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "status", value = "轮播图状态（0：禁用 1：启用）", required = false, paramType = "query", dataType = "int"),
     })
     @RsaAnnotation
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
@@ -180,7 +181,7 @@ public class BannerController {
     @RequestMapping(value = "/upload" , method = RequestMethod.POST)
     public JsonResult upload(@RequestPart("file") MultipartFile file){
         log.debug("【START】 - function upload");
-        JsonResult jsonResult = FileUploadUtil.upload(file,filesConfig.getFormalPath());
+        JsonResult jsonResult = FileUploadUtil.upload(file,filesConfig.getFormalPath(),FileUploadUrlEnum.BANNER_URL.getMsg());
         log.debug("【END】 - function upload");
         return jsonResult;
     }

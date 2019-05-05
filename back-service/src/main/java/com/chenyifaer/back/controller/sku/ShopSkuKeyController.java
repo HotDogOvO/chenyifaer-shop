@@ -2,7 +2,9 @@ package com.chenyifaer.back.controller.sku;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.chenyifaer.back.annotation.LogAnnotation;
 import com.chenyifaer.back.annotation.RsaAnnotation;
+import com.chenyifaer.back.constant.LogConstant;
 import com.chenyifaer.back.entity.dto.SkuKeyDTO;
 import com.chenyifaer.back.entity.po.ShopSkuKeyPO;
 import com.chenyifaer.back.entity.po.ShopSkuPO;
@@ -75,6 +77,10 @@ public class ShopSkuKeyController {
         @ApiImplicitParam(name = "valueIdList", value = "Value主键集合", required = true, dataType = "list"),
     })
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.GOODS_SKU_KEY_MENU_NAME,
+            action = LogConstant.ADD,
+            operation = LogConstant.OPERATION_SKU_KEY_ADD)
     @RequestMapping(value = "/add" , method = RequestMethod.POST)
     public JsonResult add(@RequestBody @Validated(SkuKeyDTO.Add.class) SkuKeyDTO skuKeyDTO , BindingResult br) {
         log.debug("【START】 - function ShopSkuController - add");
@@ -107,6 +113,10 @@ public class ShopSkuKeyController {
         @ApiImplicitParam(name = "valueIdList", value = "Value主键集合", required = false, dataType = "list"),
     })
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.GOODS_SKU_KEY_MENU_NAME,
+            action = LogConstant.UPDATE,
+            operation = LogConstant.OPERATION_SKU_KEY_UPDATE)
     @RequestMapping(value = "/update" , method = RequestMethod.POST)
     public JsonResult update(@RequestBody @Validated(SkuKeyDTO.Update.class) SkuKeyDTO skuKeyDTO , BindingResult br) {
         log.debug("【START】 - function ShopSkuController - update");
@@ -145,6 +155,10 @@ public class ShopSkuKeyController {
         @ApiImplicitParam(name = "skuKeyId", value = "主键", required = true, dataType = "int"),
     })
     @RsaAnnotation
+    @LogAnnotation(
+            menuName = LogConstant.GOODS_SKU_KEY_MENU_NAME,
+            action = LogConstant.DELETE,
+            operation = LogConstant.OPERATION_SKU_KEY_DELETE)
     @RequestMapping(value = "/delete" , method = RequestMethod.POST)
     public JsonResult delete(@RequestBody @Validated(SkuKeyDTO.Delete.class) SkuKeyDTO skuKeyDTO , BindingResult br) {
         log.debug("【START】 - function ShopSkuController - delete");

@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.emuns;
+package com.chenyifaer.back.entity.dto;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -9,29 +9,26 @@ package com.chenyifaer.basic.common.emuns;
  *
  */
 
+import com.chenyifaer.basic.common.dto.PageDTO;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 /**
- * 用户状态
+ * 商品审核 - DTO
  * @Author:wudh
- * @Date: 2019/4/13 18:33
+ * @Date: 2019/5/5 22:52
  */
-public enum UserStatusEnum {
+@Data
+@Accessors(chain = true)
+public class GoodsCheckDTO extends PageDTO {
 
-    DISABLE(0,"禁用"),
-    ENABLE(1,"启用");
+    private Integer goodsCheckId;
 
-    private int code;
-    private String val;
+    private Integer goodsId;
 
-    UserStatusEnum(int code, String val) {
-        this.code = code;
-        this.val = val;
-    }
+    private String goodsName;
 
-    public int getCode() {
-        return code;
-    }
+    private String status;
 
-    public String getVal() {
-        return val;
-    }
+    private String failRemark;
 }

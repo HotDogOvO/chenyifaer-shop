@@ -60,17 +60,20 @@ public class FileUploadUtil {
 
     /**
      * 文件上传
+     *      file - 文件
+     *      formalPath - 文件存储路径 - config取得
+     *      mkdirUrl - 各模块图片存储文件夹名
      * @Author:wudh
      * @Date: 2019/4/24 12:01
      */
-    public static JsonResult upload(MultipartFile file,String formalPath){
+    public static JsonResult upload(MultipartFile file,String formalPath,String mkdirUrl){
         JsonResult jsonResult ;
         InputStream in = null;
         FileOutputStream fs = null;
 
         try {
             // 创建目录
-            String filePath = FileUploadUtil.createPath(formalPath);
+            String filePath = FileUploadUtil.createPath(formalPath + mkdirUrl);
             // 新的文件存放路径加上新的文件名
             String newFileName = filePath + FileUploadUtil.getFileName(file.getOriginalFilename());
             File newFile = new File(newFileName);

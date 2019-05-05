@@ -1,23 +1,21 @@
 package com.chenyifaer.back.entity.po;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 /**
- * <p>
  * 商品管理 - 商品表
- * </p>
- *
  * @author wudh
  * @since 2019-04-25
  */
@@ -34,11 +32,17 @@ public class ShopGoodsPO extends Model<ShopGoodsPO> {
     @TableId(value = "goods_id", type = IdType.AUTO)
     private Integer goodsId;
 
+    @ApiModelProperty(value = "商品分类ID")
+    private Integer goodsTypeId;
+
     @ApiModelProperty(value = "商品名称")
     private String goodsName;
 
     @ApiModelProperty(value = "商品简介")
     private String goodsText;
+
+    @ApiModelProperty(value = "商品详情")
+    private String goodsContent;
 
     @ApiModelProperty(value = "商品价格")
     private BigDecimal goodsPrice;
@@ -55,17 +59,17 @@ public class ShopGoodsPO extends Model<ShopGoodsPO> {
     @ApiModelProperty(value = "库存")
     private Integer goodsInventory;
 
-    @ApiModelProperty(value = "状态（0：下架 1：上架）")
-    private Integer status;
+    @ApiModelProperty(value = "状态（0：待审核 1：上架 2：下架 9：审核失败）")
+    private String status;
 
     @ApiModelProperty(value = "是否推荐（0：否 1：是）")
-    private Integer recommendedStatus;
+    private String recommendedStatus;
 
     @ApiModelProperty(value = "是否支持积分（0：否 1：是）")
-    private Integer integralStatus;
+    private String integralStatus;
 
     @ApiModelProperty(value = "是否支持优惠券（0：否 1：是）")
-    private Integer couponsStatus;
+    private String couponsStatus;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

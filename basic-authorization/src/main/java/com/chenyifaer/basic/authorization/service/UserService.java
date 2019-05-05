@@ -2,7 +2,6 @@ package com.chenyifaer.basic.authorization.service;
 
 import com.chenyifaer.basic.authorization.feign.BackUserFeign;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
-import com.chenyifaer.basic.common.emuns.UserStatusEnum;
 import com.chenyifaer.basic.common.entity.LoginAppUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

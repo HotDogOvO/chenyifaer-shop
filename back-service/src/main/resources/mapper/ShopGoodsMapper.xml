@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopGoodsPO">
         <id column="goods_id" property="goodsId" />
+        <result column="goods_type_id" property="goodsTypeId" />
         <result column="goods_name" property="goodsName" />
         <result column="goods_text" property="goodsText" />
         <result column="goods_price" property="goodsPrice" />
@@ -22,7 +23,58 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        goods_id, goods_name, goods_text, goods_price, goods_discount, goods_discount_price, goods_sales, goods_inventory, status, recommended_status, integral_status, coupons_status, create_time, update_time
+        goods_id,goods_type_id, goods_name, goods_text, goods_price, goods_discount, goods_discount_price, goods_sales, goods_inventory, status, recommended_status, integral_status, coupons_status, create_time, update_time
     </sql>
+
+    <!-- 查询商品列表 -->
+    <select id="getList" resultType="com.chenyifaer.back.entity.vo.GoodsVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_type_id goodsTypeId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            g.goods_price goodsPrice,
+            g.goods_discount goodsDiscount,
+            g.goods_discount_price goodsDiscountPrice,
+            g.goods_sales goodsSales,
+            g.goods_inventory goodsInventory,
+            g.status status,
+            g.recommended_status recommendedStatus,
+            g.integral_status integralStatus,
+            g.coupons_status couponsStatus,
+            g.create_time createTime,
+            t.type_name typeName,
+            gi.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN t_shop_goods_images gi ON g.goods_id = gi.goods_id
+        INNER JOIN t_shop_goods_type t ON g.goods_type_id = t.shop_goods_type_id
+        <where>
+            <if test="goodsName != null and goodsName != ''">
+                g.goods_name LIKE CONCAT('%',#{goodsName},'%')
+            </if>
+            <if test="status != null and status != ''">
+                g.status = #{status}
+            </if>
+            <if test="recommendedStatus != null and recommendedStatus != ''">
+                g.recommended_status = #{recommendedStatus}
+            </if>
+            <if test="integralStatus != null and integralStatus != ''">
+                g.integral_status = #{integralStatus}
+            </if>
+            <if test="couponsStatus != null and couponsStatus != ''">
+                g.coupons_status = #{couponsStatus}
+            </if>
+            <if test="typeName != null and typeName != ''">
+                t.type_name LIKE CONCAT('%',#{typeName},'%')
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(g.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY g.create_time DESC
+    </select>
 
 </mapper>

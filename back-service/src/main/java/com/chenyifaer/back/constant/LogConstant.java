@@ -34,6 +34,14 @@ public class LogConstant {
 
     public static final String GOODS_TYPE_MENU_NAME = "商品分类管理";
 
+    public static final String GOODS_SKU_KEY_MENU_NAME = "SKU分类管理";
+
+    public static final String GOODS_SKU_VALUE_MENU_NAME = "SKU属性管理";
+
+    public static final String GOODS_MENU_NAME = "商品管理";
+
+    public static final String GOODS_CHECK_MENU_NAME = "商品审核管理";
+
     public static final String ORDERS_MENU_NAME = "订单管理";
 
     public static final String RETURN_ORDERS_MENU_NAME = "退单管理";
@@ -110,6 +118,24 @@ public class LogConstant {
     public static final String OPERATION_GOODS_TYPE_ADD = "新增商品分类";
     public static final String OPERATION_GOODS_TYPE_UPDATE = "更新商品分类";
     public static final String OPERATION_GOODS_TYPE_DISABLE = "禁用/启用商品分类";
+
+    /** SKU分类管理 */
+    public static final String OPERATION_SKU_KEY_ADD = "新增SKU分类";
+    public static final String OPERATION_SKU_KEY_UPDATE = "更新SKU分类";
+    public static final String OPERATION_SKU_KEY_DELETE = "删除SKU分类";
+
+    /** SKU属性管理 */
+    public static final String OPERATION_SKU_VALUE_ADD = "新增SKU分类";
+    public static final String OPERATION_SKU_VALUE_UPDATE = "更新SKU分类";
+    public static final String OPERATION_SKU_VALUE_DELETE = "删除SKU分类";
+
+    /** 商品管理 */
+    public static final String OPERATION_GOODS_ADD = "新增商品";
+    public static final String OPERATION_GOODS_UPDATE = "更新商品";
+    public static final String OPERATION_GOODS_UPLOAD = "上传商品图片";
+
+    /** 商品审核管理 */
+    public static final String OPERATION_GOODS_CHECK = "审核商品";
 
     /** 订单管理 */
     public static final String OPERATION_ORDERS_UPDATE = "更新订单";
