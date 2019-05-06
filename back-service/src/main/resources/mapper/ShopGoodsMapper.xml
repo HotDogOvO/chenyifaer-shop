@@ -77,4 +77,61 @@
         ORDER BY g.create_time DESC
     </select>
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="GoodsDetailResultMap" type="com.chenyifaer.back.entity.vo.GoodsDetailVO">
+        <result column="goodsName" property="goodsName" />
+        <result column="goodsText" property="goodsText" />
+        <result column="goodsContent" property="goodsContent" />
+        <result column="goodsPrice" property="goodsPrice" />
+        <result column="goodsDiscount" property="goodsDiscount" />
+        <result column="goodsDiscountPrice" property="goodsDiscountPrice" />
+        <result column="goodsSales" property="goodsSales" />
+        <result column="goodsInventory" property="goodsInventory" />
+        <result column="status" property="status" />
+        <result column="recommendedStatus" property="recommendedStatus" />
+        <result column="integralStatus" property="integralStatus" />
+        <result column="couponsStatus" property="couponsStatus" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="url" property="url" />
+        <result column="typeName" property="typeName" />
+        <result column="keyName" property="keyName" />
+        <collection property="valueNameList" javaType="list" ofType="string">
+            <result column="valueName" property="valueName" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询商品详情 -->
+    <select id="getDetail" resultMap="GoodsDetailResultMap">
+        SELECT
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            g.goods_content goodsContent,
+            g.goods_price goodsPrice,
+            g.goods_discount goodsDiscount,
+            g.goods_discount_price goodsDiscountPrice,
+            g.goods_sales goodsSales,
+            g.goods_inventory goodsInventory,
+            g.status status,
+            g.recommended_status recommendedStatus,
+            g.integral_status integralStatus,
+            g.coupons_status couponsStatus,
+            g.create_time createTime,
+            g.update_time updateTime,
+            gm.url url,
+            k.key_name keyName,
+            v.value_name valueName,
+            t.type_name typeName
+        FROM
+            t_shop_goods g
+            INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+            INNER JOIN t_shop_goods_type t ON g.goods_type_id = t.shop_goods_type_id
+            LEFT JOIN t_shop_goods_sku gs ON g.goods_id = gs.goods_id
+            LEFT JOIN t_shop_sku s ON gs.shop_sku_id = s.shop_sku_id
+            LEFT JOIN t_shop_sku_key k ON s.sku_key_id = k.shop_sku_key_id
+            LEFT JOIN t_shop_sku_value v ON s.sku_value_id = v.shop_sku_value_id
+        WHERE
+            g.goods_id = #{goodsId}
+    </select>
+
 </mapper>

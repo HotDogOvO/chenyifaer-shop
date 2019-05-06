@@ -31,8 +31,10 @@ public class GoodsDTO extends PageDTO {
 
     public interface Update{};
 
+    public interface GetDetail{};
+
     /** 主键 */
-    @NotNull(groups = {GoodsDTO.Update.class} , message = "商品名不能为空")
+    @NotNull(groups = {GoodsDTO.Update.class,GoodsDTO.GetDetail.class} , message = "商品名不能为空")
     private Integer goodsId;
 
     /** 商品名 */

@@ -3,6 +3,7 @@ package com.chenyifaer.back.service.impl;
 import com.chenyifaer.back.entity.dto.GoodsDTO;
 import com.chenyifaer.back.entity.po.ShopGoodsPO;
 import com.chenyifaer.back.dao.ShopGoodsDao;
+import com.chenyifaer.back.entity.vo.GoodsDetailVO;
 import com.chenyifaer.back.entity.vo.GoodsVO;
 import com.chenyifaer.back.service.ShopGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -25,5 +26,10 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
     @Override
     public List<GoodsVO> getList(GoodsDTO goodsDTO) {
         return this.shopGoodsDao.getList(goodsDTO);
+    }
+
+    @Override
+    public List<GoodsDetailVO> getDetail(GoodsDTO goodsDTO) {
+        return this.shopGoodsDao.getDetail(goodsDTO);
     }
 }

@@ -15,4 +15,25 @@
         shop_sku_id, sku_key_id, sku_value_id, create_time
     </sql>
 
+    <!-- 查询商品模块SKU树状图返回值 -->
+    <resultMap id="SkuTreeResultMap" type="com.chenyifaer.back.entity.vo.GoodsSkuTreeVO">
+        <result column="keyName" property="keyName" />
+        <collection property="valueList" javaType="list" ofType="com.chenyifaer.back.entity.vo.GoodsSkuValueTreeVO">
+            <result column="shopSkuId" property="shopSkuId" />
+            <result column="valueName" property="valueName" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询商品模块SKU树状图 -->
+    <select id="getGoodsSkuTree" resultMap="SkuTreeResultMap">
+        SELECT
+            s.shop_sku_id shopSkuId,
+            k.key_name keyName,
+            v.value_name valueName
+        FROM
+            t_shop_sku s
+            INNER JOIN t_shop_sku_key k ON s.sku_key_id = k.shop_sku_key_id
+            INNER JOIN t_shop_sku_value v ON s.sku_value_id = v.shop_sku_value_id
+    </select>
+
 </mapper>

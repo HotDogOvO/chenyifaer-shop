@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.ShopGoodsSkuDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.ShopGoodsSkuPO">
+        <id column="shop_goods_sku_id" property="shopGoodsSkuId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="shop_sku_id" property="shopSkuId" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_goods_sku_id, goods_id, shop_sku_id, create_time
+    </sql>
+
+</mapper>

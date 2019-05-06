@@ -10,6 +10,7 @@ import com.chenyifaer.back.entity.dto.GoodsDTO;
 import com.chenyifaer.back.entity.po.ShopGoodsCheckPO;
 import com.chenyifaer.back.entity.po.ShopGoodsImagesPO;
 import com.chenyifaer.back.entity.po.ShopGoodsPO;
+import com.chenyifaer.back.entity.vo.GoodsDetailVO;
 import com.chenyifaer.back.entity.vo.GoodsVO;
 import com.chenyifaer.back.service.ShopGoodsCheckService;
 import com.chenyifaer.back.service.ShopGoodsImagesService;
@@ -97,6 +98,24 @@ public class ShopGoodsController {
         PageInfo<GoodsVO> pageList = new PageInfo<>(list);
         log.debug("【END】 - function end ShopGoodsController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
+    }
+
+    @ApiOperation(value = "查询商品详情")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "goodsId", value = "主键", required = true, dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getDetail" , method = RequestMethod.POST)
+    public JsonResult getDetail(@RequestBody @Validated(GoodsDTO.GetDetail.class) GoodsDTO goodsDTO , BindingResult br) {
+        log.debug("【START】 - function ShopGoodsController - getDetail");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsController - getDetail 参数校验失败");
+            return check;
+        }
+        List<GoodsDetailVO> list = this.shopGoodsService.getDetail(goodsDTO);
+        log.debug("【END】 - function end ShopGoodsController - getDetail 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
 
     @ApiOperation(value = "新增商品")
@@ -255,6 +274,7 @@ public class ShopGoodsController {
 
         ShopGoodsPO shopGoodsPO = new ShopGoodsPO()
                 .setGoodsId(goodsDTO.getGoodsId())
+                .setStatus(goodsDTO.getStatus())
                 .setRecommendedStatus(goodsDTO.getRecommendedStatus())
                 .setIntegralStatus(goodsDTO.getIntegralStatus())
                 .setCouponsStatus(goodsDTO.getCouponsStatus())
