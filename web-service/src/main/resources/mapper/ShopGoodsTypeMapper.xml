@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.web.dao.ShopGoodsTypeDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.ShopGoodsTypePO">
+        <id column="shop_goods_type_id" property="shopGoodsTypeId" />
+        <result column="type_name" property="typeName" />
+        <result column="parent_type_id" property="parentTypeId" />
+        <result column="rank" property="rank" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        shop_goods_type_id, type_name, parent_type_id, rank, status, create_time, update_time
+    </sql>
+
+    <!-- 商城首页分类选项卡返回值 -->
+    <resultMap id="ListResultMap" type="com.chenyifaer.web.entity.vo.GoodsTypeVO">
+        <id column="oneShopGoodsTypeId" property="oneShopGoodsTypeId" />
+        <result column="oneTypeName" property="oneTypeName" />
+        <collection property="twoTypeList" javaType="list" ofType="com.chenyifaer.web.entity.vo.GoodsTypeTwoVO">
+            <id column="twoShopGoodsTypeId" property="twoShopGoodsTypeId" />
+            <result column="twoTypeName" property="twoTypeName" />
+            <collection property="threeTypeList" javaType="list" ofType="com.chenyifaer.web.entity.vo.GoodsTypeThreeVO">
+                <id column="threeShopGoodsTypeId" property="threeShopGoodsTypeId" />
+                <result column="threeTypeName" property="threeTypeName" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <!-- 查询商城首页分类选项卡 -->
+    <select id="getList" resultMap="ListResultMap">
+        SELECT
+            one.shopGoodsTypeId oneShopGoodsTypeId,
+            one.typeName oneTypeName,
+            two.shopGoodsTypeId twoShopGoodsTypeId,
+            two.typeName twoTypeName,
+            three.shopGoodsTypeId threeShopGoodsTypeId,
+            three.typeName threeTypeName
+        FROM
+            ( SELECT
+                shop_goods_type_id shopGoodsTypeId,
+                type_name typeName
+              FROM
+                t_shop_goods_type
+              WHERE rank = 1 ) one,
+            ( SELECT
+                shop_goods_type_id shopGoodsTypeId,
+                type_name typeName,
+                parent_type_id parentTypeId
+              FROM
+                t_shop_goods_type
+              WHERE rank = 2 ) two,
+            ( SELECT
+                shop_goods_type_id shopGoodsTypeId,
+                type_name typeName,
+                parent_type_id parentTypeId
+              FROM
+                t_shop_goods_type
+              WHERE rank = 3 ) three
+        WHERE
+            one.shopGoodsTypeId = two.parentTypeId
+        AND
+            two.shopGoodsTypeId = three.parentTypeId
+    </select>
+
+</mapper>
