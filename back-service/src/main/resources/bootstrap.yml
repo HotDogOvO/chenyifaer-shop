@@ -13,7 +13,7 @@ spring:
   cloud:
     config:
       failFast: true
-      uri: http://basic_config@127.0.0.1:7005/
+      uri: http://basic_config@47.101.58.198:7005/
 
 #Oauth2.0认证
 security:
@@ -21,7 +21,7 @@ security:
     client:
       clientAuthenticationScheme: form
     resource:
-      user-info-uri: http://127.0.0.1:7004/userme
+      user-info-uri: http://47.101.58.198:7004/userme
       prefer-token-info: false
 
 

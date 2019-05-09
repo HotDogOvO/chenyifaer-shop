@@ -11,6 +11,7 @@ import com.chenyifaer.back.entity.po.BannerPO;
 import com.chenyifaer.back.service.BannerService;
 import com.chenyifaer.back.util.FileUploadUtil;
 import com.chenyifaer.basic.common.constant.JsonResult;
+import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.emuns.FileUploadUrlEnum;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
@@ -76,9 +77,10 @@ public class BannerController {
 
     @ApiOperation(value = "新增轮播图")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "bannerName", value = "轮播图名", required = true, paramType = "query", dataType = "file"),
-        @ApiImplicitParam(name = "bannerImageUrl", value = "轮播图路径", required = true, paramType = "query", dataType = "file"),
-        @ApiImplicitParam(name = "weight", value = "权重", required = true, paramType = "query", dataType = "file"),
+        @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "bannerName", value = "轮播图名", required = true, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "bannerImageUrl", value = "轮播图路径", required = true, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "weight", value = "权重", required = true, paramType = "query", dataType = "int"),
     })
     @RsaAnnotation
     @LogAnnotation(
@@ -93,7 +95,13 @@ public class BannerController {
             log.error("【ERROR】 - function BannerController - add 参数校验失败");
             return check;
         }
+        int count = this.bannerService.count();
+        if(count > SystemConstant.BANNER_SIZE){
+            log.debug("【END】 - function BannerController - add 新增轮播图失败，原因是：超过最大数量");
+            return ResponseResult.Fail(ResultCodeEnums.CHECK_007);
+        }
         boolean flag = this.bannerService.save(new BannerPO()
+                .setGoodsId(bannerDTO.getGoodsId())
                 .setBannerName(bannerDTO.getBannerName())
                 .setBannerImageUrl(bannerDTO.getBannerImageUrl())
                 .setWeight(bannerDTO.getWeight()));
@@ -108,6 +116,7 @@ public class BannerController {
     @ApiOperation(value = "更新轮播图")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "bannerId", value = "主键", required = true, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "bannerName", value = "轮播图名", required = false, paramType = "query", dataType = "string"),
         @ApiImplicitParam(name = "bannerImageUrl", value = "轮播图路径", required = false, paramType = "query", dataType = "string"),
         @ApiImplicitParam(name = "weight", value = "权重", required = false, paramType = "query", dataType = "int"),
@@ -127,6 +136,7 @@ public class BannerController {
         }
         boolean flag = this.bannerService.updateById(new BannerPO()
                 .setBannerId(bannerDTO.getBannerId())
+                .setGoodsId(bannerDTO.getGoodsId())
                 .setBannerName(bannerDTO.getBannerName())
                 .setBannerImageUrl(bannerDTO.getBannerImageUrl())
                 .setWeight(bannerDTO.getWeight())

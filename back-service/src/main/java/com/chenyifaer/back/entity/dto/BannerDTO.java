@@ -35,6 +35,10 @@ public class BannerDTO extends PageDTO {
     @NotNull(groups = {BannerDTO.Update.class,BannerDTO.Disable.class} , message = "bannerId不能为空")
     private Integer bannerId;
 
+    /** 商品ID */
+    @NotNull(groups = {BannerDTO.Add.class} , message = "商品ID不能为空")
+    private Integer goodsId;
+
     /** 轮播图名称 */
     @NotNull(groups = {BannerDTO.Add.class} , message = "轮播图名称不能为空")
     private String bannerName;

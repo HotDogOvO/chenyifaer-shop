@@ -10,6 +10,7 @@ import com.chenyifaer.back.entity.dto.GoodsDTO;
 import com.chenyifaer.back.entity.po.ShopGoodsCheckPO;
 import com.chenyifaer.back.entity.po.ShopGoodsImagesPO;
 import com.chenyifaer.back.entity.po.ShopGoodsPO;
+import com.chenyifaer.back.entity.vo.BannerGoodsVO;
 import com.chenyifaer.back.entity.vo.GoodsDetailVO;
 import com.chenyifaer.back.entity.vo.GoodsVO;
 import com.chenyifaer.back.service.ShopGoodsCheckService;
@@ -35,7 +36,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -98,6 +101,22 @@ public class ShopGoodsController {
         PageInfo<GoodsVO> pageList = new PageInfo<>(list);
         log.debug("【END】 - function end ShopGoodsController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
+    }
+
+    @ApiOperation(value = "查询商品下拉框")
+    @RsaAnnotation
+    @RequestMapping(value = "/getGoodsName" , method = RequestMethod.POST)
+    public JsonResult getGoodsName() {
+        log.debug("【START】 - function ShopGoodsController - getGoodsName");
+        List<ShopGoodsPO> list = this.shopGoodsService.list();
+        List<BannerGoodsVO> goodsList = new ArrayList<>();
+        list.stream().filter(x ->
+            goodsList.add(new BannerGoodsVO()
+                    .setGoodsId(x.getGoodsId())
+                    .setGoodsName(x.getGoodsName()))
+        ).collect(Collectors.toList());
+        log.debug("【END】 - function end ShopGoodsController - getGoodsName 查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, goodsList);
     }
 
     @ApiOperation(value = "查询商品详情")

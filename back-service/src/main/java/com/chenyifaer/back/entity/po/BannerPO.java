@@ -35,6 +35,9 @@ public class BannerPO extends Model<BannerPO> {
     @TableId(value = "banner_id", type = IdType.AUTO)
     private Integer bannerId;
 
+    @ApiModelProperty(value = "商品ID")
+    private Integer goodsId;
+
     @ApiModelProperty(value = "轮播图名称")
     private String bannerName;
 
