@@ -54,7 +54,9 @@ public class SysBannerController {
         List<BannerVO> bannerList = new ArrayList<>();
 
         list.stream().filter(x ->
-            bannerList.add(new BannerVO().setUrl(x.getBannerImageUrl()))
+            bannerList.add(new BannerVO()
+                    .setGoodsId(x.getGoodsId())
+                    .setUrl(x.getBannerImageUrl()))
         ).collect(Collectors.toList());
 
         log.debug("【END】 - function end SysBannerController - list 查询的结果为：" + list);

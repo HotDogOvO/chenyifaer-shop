@@ -27,6 +27,42 @@
         goods_id, goods_type_id, goods_name, goods_text, goods_content, goods_price, goods_discount, goods_discount_price, goods_sales, goods_inventory, status, recommended_status, integral_status, coupons_status, create_time, update_time
     </sql>
 
+    <!-- 查询商品分类对应的商品 -->
+    <select id="getGoodsByType" resultType="com.chenyifaer.web.entity.vo.GoodsByTypeVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_price goodsPrice,
+            g.goods_discount_price goodsDiscountPrice,
+            gm.url url
+        FROM
+            t_shop_goods_type t
+        LEFT JOIN t_shop_goods g ON g.goods_type_id = t.shop_goods_type_id
+        INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        and g.goods_type_id in (
+            SELECT
+                shop_goods_type_id
+            FROM
+                t_shop_goods_type
+            WHERE
+                parent_type_id in  (
+                    SELECT
+                        shop_goods_type_id
+                    FROM
+                        t_shop_goods_type
+                    WHERE
+                        parent_type_id = #{parentTypeId}
+                )
+            )
+        <where>
+            <if test="recommendedStatus != null and recommendedStatus != ''">
+                g.recommended_status = #{recommendedStatus}
+            </if>
+        </where>
+        ORDER BY g.update_time DESC
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
     <!-- 查询首页推荐商品 -->
     <select id="getRecommendedList" resultType="com.chenyifaer.web.entity.vo.GoodsRecommendedVO">
         SELECT
@@ -39,6 +75,42 @@
         INNER JOIN t_shop_goods_images gm on g.goods_id = gm.goods_id
         WHERE
             g.recommended_status = #{recommendedStatus}
+        AND
+            g.status = #{status}
+        ORDER BY g.update_time DESC
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
+    <!-- 查询首页支持优惠券商品 -->
+    <select id="getCouponsList" resultType="com.chenyifaer.web.entity.vo.GoodsCouponsVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN t_shop_goods_images gm on g.goods_id = gm.goods_id
+        WHERE
+            g.coupons_status = #{couponsStatus}
+        AND
+            g.status = #{status}
+        ORDER BY g.update_time DESC
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
+    <!-- 查询首页支持积分商品 -->
+    <select id="getIntegralList" resultType="com.chenyifaer.web.entity.vo.GoodsIntegralVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN t_shop_goods_images gm on g.goods_id = gm.goods_id
+        WHERE
+            g.integral_status = #{integralStatus}
         AND
             g.status = #{status}
         ORDER BY g.update_time DESC

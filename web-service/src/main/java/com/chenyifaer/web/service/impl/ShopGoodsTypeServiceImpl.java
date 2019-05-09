@@ -1,7 +1,10 @@
 package com.chenyifaer.web.service.impl;
 
+import com.chenyifaer.basic.common.constant.SystemConstant;
+import com.chenyifaer.web.entity.dto.GoodsTypeDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsTypePO;
 import com.chenyifaer.web.dao.ShopGoodsTypeDao;
+import com.chenyifaer.web.entity.vo.GoodsTypeThreeRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeVO;
 import com.chenyifaer.web.service.ShopGoodsTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,5 +37,11 @@ public class ShopGoodsTypeServiceImpl extends ServiceImpl<ShopGoodsTypeDao, Shop
     @Override
     public List<GoodsTypeVO> getList() {
         return this.shopGoodsTypeDao.getList();
+    }
+
+    @Override
+    public List<GoodsTypeThreeRankVO> getThreeRankTypeByTypeId(GoodsTypeDTO goodsTypeDTO) {
+        goodsTypeDTO.setStartSize(SystemConstant.LIMIT_START_SIZE).setEndSize(SystemConstant.GOODS_TYPE_SIZE);
+        return this.shopGoodsTypeDao.getThreeRankTypeByTypeId(goodsTypeDTO);
     }
 }

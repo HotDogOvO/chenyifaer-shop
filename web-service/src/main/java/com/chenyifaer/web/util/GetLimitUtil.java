@@ -26,30 +26,46 @@ public class GetLimitUtil {
      * @Date: 2019/5/7 22:29
      */
     public static int getRecommendStartSize(int num){
-        int startSize;
-        //如果当前num小于3，则让startSize等于0，否则让startSize等于num - 3
-        if(num < SystemConstant.GOODS_RECOMMENDED_SIZE){
+        Random random = new Random();
+        //取得随机数 num+1为了可以获取num本身
+        int startSize = random.nextInt(num-1);
+        //如果计算结果小于3，则让结果等于0
+        if(startSize < SystemConstant.GOODS_RECOMMENDED_SIZE){
             startSize = SystemConstant.LIMIT_START_SIZE;
-        }else{
-            startSize = num - SystemConstant.GOODS_RECOMMENDED_SIZE;
         }
         return startSize;
     }
 
     /**
-     * 计算推荐商品结束数值
+     * 计算支持优惠券商品起始数值
      * @Author:wudh
-     * @Date: 2019/5/7 22:19
+     * @Date: 2019/5/7 22:29
      */
-    public static int getRecommendEndSize(int num){
+    public static int getCouponsStartSize(int num){
         Random random = new Random();
         //取得随机数 num+1为了可以获取num本身
-        int endSize = random.nextInt(num+1);
-        //如果计算结果小于3，则让结果等于3
-        if(endSize < SystemConstant.GOODS_RECOMMENDED_SIZE){
-            endSize = SystemConstant.GOODS_RECOMMENDED_SIZE;
+        int startSize = random.nextInt(num-1);
+        //如果计算结果小于2，则让结果等于0
+        if(startSize < SystemConstant.GOODS_COUPONS_SIZE){
+            startSize = SystemConstant.LIMIT_START_SIZE;
         }
-        return endSize;
+        return startSize;
+    }
+
+    /**
+     * 计算支持积分商品起始数值
+     * @Author:wudh
+     * @Date: 2019/5/7 22:29
+     */
+    public static int getIntegralStartSize(int num){
+        Random random = new Random();
+        //取得随机数 num+1为了可以获取num本身
+        int startSize = random.nextInt(num-1);
+        //如果计算结果小于2，则让结果等于0
+        if(startSize < SystemConstant.GOODS_INTEGRAL_SIZE){
+            startSize = SystemConstant.LIMIT_START_SIZE;
+        }
+        return startSize;
     }
 
 }

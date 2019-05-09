@@ -22,6 +22,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class BannerVO {
 
+    /** 商品ID */
+    private Integer goodsId;
+
     /** 轮播图图片url */
     private String url;
 }

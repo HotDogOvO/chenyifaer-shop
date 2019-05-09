@@ -20,4 +20,21 @@
         user_id, user_account, user_password, user_nick_name, user_type, status, create_time, update_time, cancelled_time
     </sql>
 
+    <!-- 用户登录返回内容 -->
+    <select id="getLoginUser" resultType="com.chenyifaer.web.entity.vo.LoginUserVO">
+        SELECT
+            u.user_id userId,
+            u.user_nick_name userNickName,
+            u.STATUS STATUS,
+            r.role_name roleName,
+            ud.user_head_image userHeadImage
+        FROM
+            t_web_user u
+            INNER JOIN t_web_user_detail ud ON u.user_id = ud.user_id
+            INNER JOIN t_web_user_role ur ON u.user_id = ur.user_id
+            INNER JOIN t_web_role r ON ur.role_id = r.role_id
+        WHERE
+            u.user_account = #{userAccount}
+    </select>
+
 </mapper>

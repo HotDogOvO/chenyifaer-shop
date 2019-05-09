@@ -5,6 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.SysBannerPO">
         <id column="banner_id" property="bannerId" />
+        <result column="goods_id" property="goodsId" />
         <result column="banner_name" property="bannerName" />
         <result column="banner_image_url" property="bannerImageUrl" />
         <result column="weight" property="weight" />
@@ -15,7 +16,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        banner_id, banner_name, banner_image_url, weight, status, create_time, update_time
+        banner_id, goods_id, banner_name, banner_image_url, weight, status, create_time, update_time
     </sql>
 
 </mapper>

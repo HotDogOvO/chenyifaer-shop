@@ -1,16 +1,17 @@
 package com.chenyifaer.web.entity.po;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -32,6 +33,9 @@ public class SysBannerPO extends Model<SysBannerPO> {
     @ApiModelProperty(value = "主键")
     @TableId(value = "banner_id", type = IdType.AUTO)
     private Integer bannerId;
+
+    @ApiModelProperty(value = "商品ID")
+    private Integer goodsId;
 
     @ApiModelProperty(value = "轮播图名称")
     private String bannerName;

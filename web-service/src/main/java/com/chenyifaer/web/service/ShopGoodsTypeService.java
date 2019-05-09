@@ -1,7 +1,9 @@
 package com.chenyifaer.web.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.chenyifaer.web.entity.dto.GoodsTypeDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsTypePO;
+import com.chenyifaer.web.entity.vo.GoodsTypeThreeRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeVO;
 
 import java.util.List;
@@ -29,5 +31,12 @@ public interface ShopGoodsTypeService extends IService<ShopGoodsTypePO> {
      * @Date: 2019/5/7 21:38
      */
     List<GoodsTypeVO> getList();
+
+    /**
+     * 查询商品三级分类
+     * @Author:wudh
+     * @Date: 2019/5/8 17:37
+     */
+    List<GoodsTypeThreeRankVO> getThreeRankTypeByTypeId(GoodsTypeDTO goodsTypeDTO);
 
 }

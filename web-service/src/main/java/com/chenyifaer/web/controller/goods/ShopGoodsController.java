@@ -3,14 +3,24 @@ package com.chenyifaer.web.controller.goods;
 
 import com.chenyifaer.basic.common.constant.JsonResult;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
+import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.web.annotation.RsaAnnotation;
+import com.chenyifaer.web.entity.dto.GoodsDTO;
+import com.chenyifaer.web.entity.vo.GoodsByTypeVO;
+import com.chenyifaer.web.entity.vo.GoodsCouponsVO;
+import com.chenyifaer.web.entity.vo.GoodsIntegralVO;
 import com.chenyifaer.web.entity.vo.GoodsRecommendedVO;
 import com.chenyifaer.web.service.ShopGoodsService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +52,42 @@ public class ShopGoodsController {
     @Autowired
     private ShopGoodsService shopGoodsService;
 
+    @ApiOperation(value = "根据分类查询商品")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "parentTypeId", value = "分类ID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getGoodsByType" , method = RequestMethod.POST)
+    public JsonResult getGoodsByType(@RequestBody @Validated(GoodsDTO.getGoodsByType.class) GoodsDTO goodsDTO, BindingResult br) {
+        log.debug("【START】 - function ShopGoodsController - getGoodsByType");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsController - getGoodsByType 参数校验失败");
+            return check;
+        }
+        List<GoodsByTypeVO> list = this.shopGoodsService.getGoodsByType(goodsDTO);
+        log.debug("【END】 - function end ShopGoodsController - getGoodsByType，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
+    @ApiOperation(value = "根据分类查询推荐商品")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "parentTypeId", value = "分类ID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getRecommendGoodsByType" , method = RequestMethod.POST)
+    public JsonResult getRecommendGoodsByType(@RequestBody @Validated(GoodsDTO.getGoodsByType.class) GoodsDTO goodsDTO, BindingResult br) {
+        log.debug("【START】 - function ShopGoodsController - getRecommendGoodsByType");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsController - getRecommendGoodsByType 参数校验失败");
+            return check;
+        }
+        List<GoodsByTypeVO> list = this.shopGoodsService.getRecommendGoodsByType(goodsDTO);
+        log.debug("【END】 - function end ShopGoodsController - getRecommendGoodsByType，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
     @ApiOperation(value = "查询首页推荐商品")
     @RsaAnnotation
     @RequestMapping(value = "/getRecommendGoods" , method = RequestMethod.POST)
@@ -53,5 +99,28 @@ public class ShopGoodsController {
         log.debug("【END】 - function end ShopGoodsController - getRecommendGoods");
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
-    
+
+    @ApiOperation(value = "查询首页支持积分商品")
+    @RsaAnnotation
+    @RequestMapping(value = "/getIntegralGoods" , method = RequestMethod.POST)
+    public JsonResult getIntegralGoods() {
+        log.debug("【START】 - function ShopGoodsController - getIntegralGoods");
+
+        List<GoodsIntegralVO> list = this.shopGoodsService.getIntegralList();
+
+        log.debug("【END】 - function end ShopGoodsController - getIntegralGoods");
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
+    @ApiOperation(value = "查询首页支持优惠券商品")
+    @RsaAnnotation
+    @RequestMapping(value = "/getCouponsGoods" , method = RequestMethod.POST)
+    public JsonResult getCouponsGoods() {
+        log.debug("【START】 - function ShopGoodsController - getCouponsGoods");
+
+        List<GoodsCouponsVO> list = this.shopGoodsService.getCouponsList();
+
+        log.debug("【END】 - function end ShopGoodsController - getCouponsGoods");
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
 }

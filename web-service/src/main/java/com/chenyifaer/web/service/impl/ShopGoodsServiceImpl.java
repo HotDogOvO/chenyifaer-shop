@@ -1,10 +1,16 @@
 package com.chenyifaer.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.chenyifaer.web.entity.dto.GoodsRecommendedDTO;
+import com.chenyifaer.basic.common.constant.SystemConstant;
+import com.chenyifaer.web.entity.dto.GoodsDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsPO;
 import com.chenyifaer.web.dao.ShopGoodsDao;
+import com.chenyifaer.web.entity.vo.GoodsByTypeVO;
+import com.chenyifaer.web.entity.vo.GoodsCouponsVO;
+import com.chenyifaer.web.entity.vo.GoodsIntegralVO;
 import com.chenyifaer.web.entity.vo.GoodsRecommendedVO;
+import com.chenyifaer.web.enums.GoodsCouponsEnum;
+import com.chenyifaer.web.enums.GoodsIntegralEnum;
 import com.chenyifaer.web.enums.GoodsRecommendedEnum;
 import com.chenyifaer.web.enums.GoodsStatusEnum;
 import com.chenyifaer.web.service.ShopGoodsService;
@@ -39,6 +45,30 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
     private ShopGoodsDao shopGoodsDao;
 
     @Override
+    public List<GoodsByTypeVO> getGoodsByType(GoodsDTO goodsDTO) {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getGoodsByType");
+        //查询6条
+        goodsDTO.setStartSize(SystemConstant.LIMIT_START_SIZE).setEndSize(SystemConstant.GOODS_TYPE_SIZE);
+
+        List<GoodsByTypeVO> list = this.shopGoodsDao.getGoodsByType(goodsDTO);
+        log.debug("【END】 - function ShopGoodsServiceImpl - getGoodsByType");
+        return list;
+    }
+
+    @Override
+    public List<GoodsByTypeVO> getRecommendGoodsByType(GoodsDTO goodsDTO) {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getRecommendGoodsByType");
+        //查询1条推荐商品
+        goodsDTO.setStartSize(SystemConstant.LIMIT_START_SIZE)
+                .setEndSize(SystemConstant.GOODS_RECOMMENDED_TYPE_SIZE)
+                .setRecommendedStatus(GoodsRecommendedEnum.TRUE.getCode());
+
+        List<GoodsByTypeVO> list = this.shopGoodsDao.getGoodsByType(goodsDTO);
+        log.debug("【END】 - function ShopGoodsServiceImpl - getRecommendGoodsByType");
+        return list;
+    }
+
+    @Override
     public List<GoodsRecommendedVO> getRecommendedList() {
         log.debug("【START】 - function ShopGoodsServiceImpl - getRecommendedList");
 
@@ -50,17 +80,71 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
 
         //计算limit数值
         int startSize = GetLimitUtil.getRecommendStartSize(count);
-        int endSize = GetLimitUtil.getRecommendEndSize(startSize);
+        int endSize = SystemConstant.GOODS_RECOMMENDED_SIZE;
         log.debug("【RUN】 - function ShopGoodsServiceImpl - getRecommendedList - 计算出的limit起始数值为：{}，结束数值为：{}" , startSize,endSize);
 
         //插入查询条件
-        GoodsRecommendedDTO goodsRecommendedDTO = new GoodsRecommendedDTO()
+        GoodsDTO goodsDTO = new GoodsDTO()
                 .setRecommendedStatus(GoodsRecommendedEnum.TRUE.getCode())
                 .setStatus(GoodsStatusEnum.STATUS_001.getCode())
                 .setStartSize(startSize)
                 .setEndSize(endSize);
-        List<GoodsRecommendedVO> list = this.shopGoodsDao.getRecommendedList(goodsRecommendedDTO);
+        List<GoodsRecommendedVO> list = this.shopGoodsDao.getRecommendedList(goodsDTO);
         log.debug("【END】 - function ShopGoodsServiceImpl - getRecommendedList - 查询的结果为：" + list);
+
+        return list;
+    }
+
+    @Override
+    public List<GoodsCouponsVO> getCouponsList() {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getCouponsList");
+
+        //查询商品状态为上架且为支持优惠券的商品数量
+        int count = this.shopGoodsDao.selectCount(new QueryWrapper<>(new ShopGoodsPO()
+                .setCouponsStatus(GoodsCouponsEnum.TRUE.getCode())
+                .setStatus(GoodsStatusEnum.STATUS_001.getCode())));
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getCouponsList - 查询出符合条件的商品个数为：{}个" , count);
+
+        //计算limit数值
+        int startSize = GetLimitUtil.getCouponsStartSize(count);
+        int endSize = SystemConstant.GOODS_COUPONS_SIZE;
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getCouponsList - 计算出的limit起始数值为：{}，结束数值为：{}" , startSize,endSize);
+
+        //插入查询条件
+        GoodsDTO goodsDTO = new GoodsDTO()
+                .setCouponsStatus(GoodsCouponsEnum.TRUE.getCode())
+                .setStatus(GoodsStatusEnum.STATUS_001.getCode())
+                .setStartSize(startSize)
+                .setEndSize(endSize);
+        List<GoodsCouponsVO> list = this.shopGoodsDao.getCouponsList(goodsDTO);
+        log.debug("【END】 - function ShopGoodsServiceImpl - getCouponsList - 查询的结果为：" + list);
+
+        return list;
+    }
+
+    @Override
+    public List<GoodsIntegralVO> getIntegralList() {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getIntegralList");
+
+        //查询商品状态为上架且为支持积分的商品数量
+        int count = this.shopGoodsDao.selectCount(new QueryWrapper<>(new ShopGoodsPO()
+                .setIntegralStatus(GoodsCouponsEnum.TRUE.getCode())
+                .setStatus(GoodsStatusEnum.STATUS_001.getCode())));
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getIntegralList - 查询出符合条件的商品个数为：{}个" , count);
+
+        //计算limit数值
+        int startSize = GetLimitUtil.getIntegralStartSize(count);
+        int endSize = SystemConstant.GOODS_INTEGRAL_SIZE;
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getIntegralList - 计算出的limit起始数值为：{}，结束数值为：{}" , startSize,endSize);
+
+        //插入查询条件
+        GoodsDTO goodsDTO = new GoodsDTO()
+                .setIntegralStatus(GoodsIntegralEnum.TRUE.getCode())
+                .setStatus(GoodsStatusEnum.STATUS_001.getCode())
+                .setStartSize(startSize)
+                .setEndSize(endSize);
+        List<GoodsIntegralVO> list = this.shopGoodsDao.getIntegralList(goodsDTO);
+        log.debug("【END】 - function ShopGoodsServiceImpl - getIntegralList - 查询的结果为：" + list);
 
         return list;
     }
