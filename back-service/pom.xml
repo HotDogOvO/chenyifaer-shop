@@ -52,12 +52,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatisplus.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jsqlparser</artifactId>
-                    <groupId>com.github.jsqlparser</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- mybatisPlus 生成模板 -->
         <dependency>
@@ -77,12 +71,6 @@
             <groupId>com.chenyifaer</groupId>
             <artifactId>basic-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>easypoi-base</artifactId>
-                    <groupId>cn.afterturn</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- mybatis分页插件 -->

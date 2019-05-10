@@ -13,6 +13,7 @@ import com.chenyifaer.back.entity.po.ShopGoodsPO;
 import com.chenyifaer.back.entity.vo.BannerGoodsVO;
 import com.chenyifaer.back.entity.vo.GoodsDetailVO;
 import com.chenyifaer.back.entity.vo.GoodsVO;
+import com.chenyifaer.back.enums.GoodsImgEnum;
 import com.chenyifaer.back.service.ShopGoodsCheckService;
 import com.chenyifaer.back.service.ShopGoodsImagesService;
 import com.chenyifaer.back.service.ShopGoodsService;
@@ -97,7 +98,7 @@ public class ShopGoodsController {
             return check;
         }
         PageHelper.startPage(goodsDTO.getPageIndex(), goodsDTO.getPageSize());
-        List<GoodsVO> list = this.shopGoodsService.getList(goodsDTO);
+        List<GoodsVO> list = this.shopGoodsService.getList(goodsDTO.setImgType(GoodsImgEnum.IMG_TYPE_001.getCode().toString()));
         PageInfo<GoodsVO> pageList = new PageInfo<>(list);
         log.debug("【END】 - function end ShopGoodsController - list 查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, pageList);
@@ -170,7 +171,6 @@ public class ShopGoodsController {
                 .setGoodsTypeId(goodsDTO.getGoodsTypeId())
                 .setGoodsName(goodsDTO.getGoodsName())
                 .setGoodsText(goodsDTO.getGoodsText())
-                .setGoodsContent(goodsDTO.getGoodsContent())
                 .setGoodsPrice(goodsDTO.getGoodsPrice())
                 .setGoodsDiscount(goodsDTO.getGoodsDiscount())
                 .setGoodsDiscountPrice(goodsDTO.getGoodsDiscountPrice())
@@ -182,24 +182,22 @@ public class ShopGoodsController {
         boolean flag = this.shopGoodsService.save(shopGoodsPO);
 
         if(flag){
-            //插入商品图片表
-            flag = this.shopGoodsImagesService.save(new ShopGoodsImagesPO()
+            goodsDTO.getImgList().forEach(x -> {
+                //插入商品图片表
+                this.shopGoodsImagesService.save(new ShopGoodsImagesPO()
                     .setGoodsId(shopGoodsPO.getGoodsId())
-                    .setUrl(goodsDTO.getUrl())
-                    //TODO 商品图片类型待修改
-                    .setType(1));
+                    .setUrl(x.getUrl())
+                    .setType(x.getType()));
+            });
+
+            //插入商品审核表
+            flag = this.shopGoodsCheckService.save(new ShopGoodsCheckPO()
+                    .setGoodsId(shopGoodsPO.getGoodsId()));
             if(flag){
-                //插入商品审核表
-                flag = this.shopGoodsCheckService.save(new ShopGoodsCheckPO()
-                        .setGoodsId(shopGoodsPO.getGoodsId()));
-                if(flag){
-                    log.debug("【END】 - function end ShopGoodsController - add 新增商品成功，新增的商品为：" + goodsDTO);
-                    return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
-                }
-                log.error("【END】 - function end ShopGoodsController - add 新增商品审核失败");
-                return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
+                log.debug("【END】 - function end ShopGoodsController - add 新增商品成功，新增的商品为：" + goodsDTO);
+                return ResponseResult.Success(ResultCodeEnums.SUCCESS_002);
             }
-            log.error("【END】 - function end ShopGoodsController - add 新增商品图片失败");
+            log.error("【END】 - function end ShopGoodsController - add 新增商品审核失败");
             return ResponseResult.Fail(ResultCodeEnums.FAIL_10002);
         }
         log.error("【END】 - function end ShopGoodsController - add 新增商品失败");
@@ -241,7 +239,6 @@ public class ShopGoodsController {
                 .setGoodsTypeId(goodsDTO.getGoodsTypeId())
                 .setGoodsName(goodsDTO.getGoodsName())
                 .setGoodsText(goodsDTO.getGoodsText())
-                .setGoodsContent(goodsDTO.getGoodsContent())
                 .setGoodsPrice(goodsDTO.getGoodsPrice())
                 .setGoodsDiscount(goodsDTO.getGoodsDiscount())
                 .setGoodsDiscountPrice(goodsDTO.getGoodsDiscountPrice())
@@ -254,28 +251,38 @@ public class ShopGoodsController {
         boolean flag = this.shopGoodsService.updateById(shopGoodsPO);
 
         if(flag){
-            flag = this.shopGoodsImagesService.update(new ShopGoodsImagesPO().setUrl(goodsDTO.getUrl()),
-                    //更新条件
-                    new QueryWrapper<>(new ShopGoodsImagesPO().setGoodsId(goodsDTO.getGoodsId())));
-            if(flag){
-                log.debug("【END】 - function end ShopGoodsController - update 更新商品成功，更新内容为："+ goodsDTO);
-                return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
+            if(goodsDTO.getImgList() != null){
+                goodsDTO.getImgList().forEach(x -> {
+                    //如果修改的是封面图，则直接更新
+                    if(x.getType().equals(GoodsImgEnum.IMG_TYPE_001.getCode())){
+                        this.shopGoodsImagesService.update(new ShopGoodsImagesPO().setUrl(x.getUrl()),
+                                new QueryWrapper<>(new ShopGoodsImagesPO().setGoodsId(goodsDTO.getGoodsId())));
+                    }
+                    if(x.getType().equals(GoodsImgEnum.IMG_TYPE_002.getCode())){
+                        this.shopGoodsImagesService.remove(new QueryWrapper<>(new ShopGoodsImagesPO()
+                                .setGoodsId(goodsDTO.getGoodsId())
+                                .setType(GoodsImgEnum.IMG_TYPE_002.getCode())));
+                        this.shopGoodsImagesService.save(new ShopGoodsImagesPO()
+                                .setUrl(x.getUrl())
+                                .setType(x.getType())
+                                .setGoodsId(goodsDTO.getGoodsId()));
+                    }
+                });
             }
-            log.debug("【END】 - function end ShopGoodsController - update 更新商品失败");
-            return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
+            log.debug("【END】 - function end ShopGoodsController - update 更新商品成功，更新内容为："+ goodsDTO);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS_003);
         }
-
         log.debug("【END】 - function end ShopGoodsController - update 更新商品失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL_10003);
     }
 
     @ApiOperation(value = "更新状态")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "status", value = "状态（0：待审核 1：上架  2：下架 9：审核失败）", required = false, dataType = "int"),
-            @ApiImplicitParam(name = "recommendedStatus", value = "是否推荐（0：否 1：是）", required = false, dataType = "int"),
-            @ApiImplicitParam(name = "integralStatus", value = "是否支持积分（0：否 1：是）", required = false, dataType = "int"),
-            @ApiImplicitParam(name = "couponsStatus", value = "是否支持优惠券（0：否 1：是）", required = false, dataType = "int"),
+        @ApiImplicitParam(name = "goodsId", value = "商品ID", required = true, dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "状态（0：待审核 1：上架  2：下架 9：审核失败）", required = false, dataType = "int"),
+        @ApiImplicitParam(name = "recommendedStatus", value = "是否推荐（0：否 1：是）", required = false, dataType = "int"),
+        @ApiImplicitParam(name = "integralStatus", value = "是否支持积分（0：否 1：是）", required = false, dataType = "int"),
+        @ApiImplicitParam(name = "couponsStatus", value = "是否支持优惠券（0：否 1：是）", required = false, dataType = "int"),
     })
     @RsaAnnotation
     @LogAnnotation(

@@ -49,31 +49,30 @@
             t_shop_goods g
         INNER JOIN t_shop_goods_images gi ON g.goods_id = gi.goods_id
         INNER JOIN t_shop_goods_type t ON g.goods_type_id = t.shop_goods_type_id
-        <where>
-            <if test="goodsName != null and goodsName != ''">
-                g.goods_name LIKE CONCAT('%',#{goodsName},'%')
-            </if>
-            <if test="status != null and status != ''">
-                g.status = #{status}
-            </if>
-            <if test="recommendedStatus != null and recommendedStatus != ''">
-                g.recommended_status = #{recommendedStatus}
-            </if>
-            <if test="integralStatus != null and integralStatus != ''">
-                g.integral_status = #{integralStatus}
-            </if>
-            <if test="couponsStatus != null and couponsStatus != ''">
-                g.coupons_status = #{couponsStatus}
-            </if>
-            <if test="typeName != null and typeName != ''">
-                t.type_name LIKE CONCAT('%',#{typeName},'%')
-            </if>
-            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
-                AND
-                DATE_FORMAT(g.create_time,'%Y-%m-%d')
-                BETWEEN #{startTime} AND #{endTime}
-            </if>
-        </where>
+        AND gi.type = #{imgType}
+        <if test="goodsName != null and goodsName != ''">
+            AND g.goods_name LIKE CONCAT('%',#{goodsName},'%')
+        </if>
+        <if test="status != null and status != ''">
+            AND g.status = #{status}
+        </if>
+        <if test="recommendedStatus != null and recommendedStatus != ''">
+            AND g.recommended_status = #{recommendedStatus}
+        </if>
+        <if test="integralStatus != null and integralStatus != ''">
+            AND g.integral_status = #{integralStatus}
+        </if>
+        <if test="couponsStatus != null and couponsStatus != ''">
+            AND g.coupons_status = #{couponsStatus}
+        </if>
+        <if test="typeName != null and typeName != ''">
+            AND t.type_name LIKE CONCAT('%',#{typeName},'%')
+        </if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+            AND
+            DATE_FORMAT(g.create_time,'%Y-%m-%d')
+            BETWEEN #{startTime} AND #{endTime}
+        </if>
         ORDER BY g.create_time DESC
     </select>
 
@@ -81,7 +80,6 @@
     <resultMap id="GoodsDetailResultMap" type="com.chenyifaer.back.entity.vo.GoodsDetailVO">
         <result column="goodsName" property="goodsName" />
         <result column="goodsText" property="goodsText" />
-        <result column="goodsContent" property="goodsContent" />
         <result column="goodsPrice" property="goodsPrice" />
         <result column="goodsDiscount" property="goodsDiscount" />
         <result column="goodsDiscountPrice" property="goodsDiscountPrice" />
@@ -106,7 +104,6 @@
         SELECT
             g.goods_name goodsName,
             g.goods_text goodsText,
-            g.goods_content goodsContent,
             g.goods_price goodsPrice,
             g.goods_discount goodsDiscount,
             g.goods_discount_price goodsDiscountPrice,

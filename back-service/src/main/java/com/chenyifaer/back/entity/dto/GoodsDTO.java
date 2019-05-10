@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -80,11 +81,14 @@ public class GoodsDTO extends PageDTO {
 
     /** 商品图片URL */
     @NotNull(groups = {GoodsDTO.Add.class} , message = "商品图片不能为空")
-    private String url;
+    private List<GoodsImageDTO> imgList;
 
     /** 商品类别 */
     @Length(max = 30 , message = "商品类别不能超过30个字符")
     private String typeName;
+
+    /** 图片类型 */
+    private String imgType;
 
     /** 起始时间 */
     private String startTime;

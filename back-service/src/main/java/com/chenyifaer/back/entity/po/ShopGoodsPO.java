@@ -41,8 +41,11 @@ public class ShopGoodsPO extends Model<ShopGoodsPO> {
     @ApiModelProperty(value = "商品简介")
     private String goodsText;
 
-    @ApiModelProperty(value = "商品详情")
-    private String goodsContent;
+    @ApiModelProperty(value = "商品图片详情")
+    private String goodsImgContent;
+
+    @ApiModelProperty(value = "商品SKU详情")
+    private String goodsSkuContent;
 
     @ApiModelProperty(value = "商品价格")
     private BigDecimal goodsPrice;

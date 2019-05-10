@@ -30,8 +30,6 @@ public class GoodsDetailVO {
 
     private String goodsText;
 
-    private String goodsContent;
-
     private BigDecimal goodsPrice;
 
     private String goodsDiscount;
