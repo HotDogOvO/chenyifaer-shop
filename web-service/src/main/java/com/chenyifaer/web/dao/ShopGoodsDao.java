@@ -3,10 +3,7 @@ package com.chenyifaer.web.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.chenyifaer.web.entity.dto.GoodsDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsPO;
-import com.chenyifaer.web.entity.vo.GoodsByTypeVO;
-import com.chenyifaer.web.entity.vo.GoodsCouponsVO;
-import com.chenyifaer.web.entity.vo.GoodsIntegralVO;
-import com.chenyifaer.web.entity.vo.GoodsRecommendedVO;
+import com.chenyifaer.web.entity.vo.*;
 
 import java.util.List;
 
@@ -54,4 +51,18 @@ public interface ShopGoodsDao extends BaseMapper<ShopGoodsPO> {
      * @Date: 2019/5/8 15:34
      */
     List<GoodsIntegralVO> getIntegralList(GoodsDTO goodsDTO);
+
+    /**
+     * 根据商品ID查询商品详情
+     * @Author:wudh
+     * @Date: 2019/5/10 16:30
+     */
+    List<GoodsDetailVO> getDetail(GoodsDTO goodsDTO);
+
+    /**
+     * 根据销量查询商品
+     * @Author:wudh
+     * @Date: 2019/5/10 17:08
+     */
+    List<GoodsSalesVO> getGoodsBySales(GoodsDTO goodsDTO);
 }

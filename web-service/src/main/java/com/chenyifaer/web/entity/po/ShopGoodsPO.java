@@ -1,17 +1,18 @@
 package com.chenyifaer.web.entity.po;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -43,8 +44,11 @@ public class ShopGoodsPO extends Model<ShopGoodsPO> {
     @ApiModelProperty(value = "商品简介")
     private String goodsText;
 
-    @ApiModelProperty(value = "商品详情")
-    private String goodsContent;
+    @ApiModelProperty(value = "商品图片详情")
+    private String goodsImgContent;
+
+    @ApiModelProperty(value = "商品SKU详情")
+    private String goodsSkuContent;
 
     @ApiModelProperty(value = "商品价格")
     private BigDecimal goodsPrice;

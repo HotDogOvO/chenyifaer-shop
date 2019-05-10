@@ -2,17 +2,12 @@ package com.chenyifaer.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenyifaer.basic.common.constant.SystemConstant;
+import com.chenyifaer.web.dao.ShopGoodsSkuDao;
 import com.chenyifaer.web.entity.dto.GoodsDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsPO;
 import com.chenyifaer.web.dao.ShopGoodsDao;
-import com.chenyifaer.web.entity.vo.GoodsByTypeVO;
-import com.chenyifaer.web.entity.vo.GoodsCouponsVO;
-import com.chenyifaer.web.entity.vo.GoodsIntegralVO;
-import com.chenyifaer.web.entity.vo.GoodsRecommendedVO;
-import com.chenyifaer.web.enums.GoodsCouponsEnum;
-import com.chenyifaer.web.enums.GoodsIntegralEnum;
-import com.chenyifaer.web.enums.GoodsRecommendedEnum;
-import com.chenyifaer.web.enums.GoodsStatusEnum;
+import com.chenyifaer.web.entity.vo.*;
+import com.chenyifaer.web.enums.*;
 import com.chenyifaer.web.service.ShopGoodsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chenyifaer.web.util.GetLimitUtil;
@@ -20,7 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
@@ -43,6 +41,9 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
 
     @Autowired
     private ShopGoodsDao shopGoodsDao;
+
+    @Autowired
+    private ShopGoodsSkuDao shopGoodsSkuDao;
 
     @Override
     public List<GoodsByTypeVO> getGoodsByType(GoodsDTO goodsDTO) {
@@ -148,4 +149,37 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
 
         return list;
     }
+
+    @Override
+    public List<GoodsDetailReturnVO> getDetail(GoodsDTO goodsDTO) {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getDetail");
+        List<GoodsDetailReturnVO> list = new ArrayList<>();
+        List<GoodsDetailVO> goodsList = this.shopGoodsDao.getDetail(goodsDTO);
+        List<GoodsSkuVO> skuList = this.shopGoodsSkuDao.getSkuByGoodsId(goodsDTO);
+
+        list.add(new GoodsDetailReturnVO().setGoodsList(goodsList).setSkuList(skuList));
+        log.debug("【END】 - function ShopGoodsServiceImpl - getDetail");
+        return list;
+    }
+
+    @Override
+    public List<GoodsSalesVO> getGoodsBySales() {
+        log.debug("【START】 - function ShopGoodsServiceImpl - getGoodsBySales");
+
+        int count = this.shopGoodsDao.selectCount(new QueryWrapper<>());
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getGoodsBySales，查询出的商品数量为【{}】", count);
+
+        int startSize = GetLimitUtil.getSalesGoodsStartSize(count);
+        int endSize = SystemConstant.GOODS_SALES_SIZE;
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getGoodsBySales，计算出的起始数值是：【{}】，结束数值是：【{}】", startSize , endSize);
+
+        List<GoodsSalesVO> list = this.shopGoodsDao.getGoodsBySales(new GoodsDTO()
+                .setType(GoodsImgEnum.IMG_TYPE_001.getCode())
+                .setStartSize(startSize)
+                .setEndSize(endSize));
+
+        log.debug("【END】 - function ShopGoodsServiceImpl - getGoodsBySales");
+        return list;
+    }
+
 }

@@ -8,7 +8,8 @@
         <result column="goods_type_id" property="goodsTypeId" />
         <result column="goods_name" property="goodsName" />
         <result column="goods_text" property="goodsText" />
-        <result column="goods_content" property="goodsContent" />
+        <result column="goods_sku_content" property="goodsSkuContent" />
+        <result column="goods_img_content" property="goodsImgContent" />
         <result column="goods_price" property="goodsPrice" />
         <result column="goods_discount" property="goodsDiscount" />
         <result column="goods_discount_price" property="goodsDiscountPrice" />
@@ -114,6 +115,60 @@
         AND
             g.status = #{status}
         ORDER BY g.update_time DESC
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
+    <!-- 商品详情一对多返回值 -->
+    <resultMap id="GoodsDetailResultMap" type="com.chenyifaer.web.entity.vo.GoodsDetailVO">
+        <id column="goodsId" property="goodsId" />
+        <result column="goodsName" property="goodsName" />
+        <result column="goodsText" property="goodsText" />
+        <result column="goodsSkuContent" property="goodsSkuContent" />
+        <result column="goodsImgContent" property="goodsImgContent" />
+        <result column="goodsPrice" property="goodsPrice" />
+        <result column="goodsDiscountPrice" property="goodsDiscountPrice" />
+        <result column="goodsSales" property="goodsSales" />
+        <result column="goodsInventory" property="goodsInventory" />
+        <collection property="imgList" javaType="list" ofType="string">
+            <result column="url" property="url" />
+        </collection>
+    </resultMap>
+
+    <!-- 根据商品ID查询商品详情 -->
+    <select id="getDetail" resultMap="GoodsDetailResultMap">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            g.goods_sku_content goodsSkuContent,
+            g.goods_img_content goodsImgContent,
+            g.goods_price goodsPrice,
+            g.goods_discount_price goodsDiscountPrice,
+            g.goods_sales goodsSales,
+            g.goods_inventory goodsInventory,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        AND g.goods_id = #{goodsId}
+    </select>
+
+    <!-- 根据销量查询商品 -->
+    <select id="getGoodsBySales" resultType="com.chenyifaer.web.entity.vo.GoodsSalesVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            g.goods_price goodsPrice,
+            g.goods_discount_price goodsDiscountPrice,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN
+            t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        AND
+            gm.type = #{type}
+        ORDER BY g.goods_sales DESC
         LIMIT #{startSize} , #{endSize}
     </select>
 

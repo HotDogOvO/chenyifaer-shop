@@ -27,8 +27,8 @@ public class GetLimitUtil {
      */
     public static int getRecommendStartSize(int num){
         Random random = new Random();
-        //取得随机数 num+1为了可以获取num本身
-        int startSize = random.nextInt(num-1);
+        //取得随机数 num-2为了保证最少获取3条
+        int startSize = random.nextInt(num-2);
         //如果计算结果小于3，则让结果等于0
         if(startSize < SystemConstant.GOODS_RECOMMENDED_SIZE){
             startSize = SystemConstant.LIMIT_START_SIZE;
@@ -63,6 +63,22 @@ public class GetLimitUtil {
         int startSize = random.nextInt(num-1);
         //如果计算结果小于2，则让结果等于0
         if(startSize < SystemConstant.GOODS_INTEGRAL_SIZE){
+            startSize = SystemConstant.LIMIT_START_SIZE;
+        }
+        return startSize;
+    }
+
+    /**
+     * 计算根据销量查询商品的起始数值
+     * @Author:wudh
+     * @Date: 2019/5/10 17:11
+     */
+    public static int getSalesGoodsStartSize(int num){
+        Random random = new Random();
+        //取得随机数 num-2为了保证最少获取3条
+        int startSize = random.nextInt(num-2);
+        //如果计算结果小于3，则让结果等于0
+        if(startSize < SystemConstant.GOODS_SALES_SIZE){
             startSize = SystemConstant.LIMIT_START_SIZE;
         }
         return startSize;
