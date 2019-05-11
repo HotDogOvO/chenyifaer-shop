@@ -172,4 +172,33 @@
         LIMIT #{startSize} , #{endSize}
     </select>
 
+    <!-- 根据SKU查询商品 -->
+    <select id="getGoodsBySku" resultType="com.chenyifaer.web.entity.vo.GoodsBySkuVO">
+        SELECT DISTINCT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_text goodsText,
+            g.goods_price goodsPrice,
+            g.goods_discount_price goodsDiscountPrice,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        INNER JOIN t_shop_goods_sku ON shop_sku_id IN (
+            SELECT
+                sku_value_id
+            FROM
+                t_shop_sku
+            WHERE sku_key_id = (
+                SELECT
+                    sku_key_id
+                FROM
+                    t_shop_sku
+                WHERE shop_sku_id = #{shopSkuId}
+            )
+        )
+        AND gm.type = #{type}
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
 </mapper>

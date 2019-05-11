@@ -149,4 +149,21 @@ public class ShopGoodsController {
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
 
+    @ApiOperation(value = "商品详情页 - 根据SKU查询商品")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "shopSkuId", value = "SKUID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getGoodsBySku" , method = RequestMethod.POST)
+    public JsonResult getGoodsBySku(@RequestBody @Validated(GoodsDTO.getGoodsBySku.class) GoodsDTO goodsDTO,BindingResult br) {
+        log.debug("【START】 - function ShopGoodsController - getGoodsBySku");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsController - getGoodsBySku 参数校验失败");
+            return check;
+        }
+        List<GoodsBySkuVO> list = this.shopGoodsService.getGoodsBySku(goodsDTO);
+        log.debug("【END】 - function end ShopGoodsController - getGoodsBySku，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
 }

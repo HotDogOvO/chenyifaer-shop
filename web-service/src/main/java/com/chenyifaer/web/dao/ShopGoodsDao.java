@@ -65,4 +65,11 @@ public interface ShopGoodsDao extends BaseMapper<ShopGoodsPO> {
      * @Date: 2019/5/10 17:08
      */
     List<GoodsSalesVO> getGoodsBySales(GoodsDTO goodsDTO);
+
+    /**
+     * 根据SKU查询商品
+     * @Author:wudh
+     * @Date: 2019/5/11 20:55
+     */
+    List<GoodsBySkuVO> getGoodsBySku(GoodsDTO goodsDTO);
 }

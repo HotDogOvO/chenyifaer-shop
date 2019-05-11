@@ -26,10 +26,15 @@ public class GoodsDTO {
 
     public interface getGoodsByType{};
 
+    public interface getGoodsBySku{};
+
     public interface getDetail{};
 
+    public interface getSkuByGoods{};
+
+
     /** 主键 */
-    @NotNull(groups = {GoodsDTO.getDetail.class} , message = "主键不能为空")
+    @NotNull(groups = {GoodsDTO.getDetail.class,GoodsDTO.getSkuByGoods.class} , message = "主键不能为空")
     private Integer goodsId;
 
     /** 商品分类父ID */
@@ -50,6 +55,10 @@ public class GoodsDTO {
 
     /** 商品图片类型（1：封面图 2：内容图） */
     private Integer type;
+
+    /** 商品SKUID */
+    @NotNull(groups = {GoodsDTO.getGoodsBySku.class} , message = "参数不能为空")
+    private Integer shopSkuId;
 
     /** 获取商品起始位置 */
     private Integer startSize;

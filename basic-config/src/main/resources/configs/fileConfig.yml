@@ -2,8 +2,8 @@
 upload:
   path:
     #文件目录
-#    formal: /tmp/uploads/img/formal/catalog
-    formal: E:/chenyifaer-shop/images/
+    formal: /usr/java/chenyifaer-shop/img/images/
+#    formal: E:/chenyifaer-shop/images/
   multipart:
     #单个文件最大内存
     maxFileSize: 10MB
@@ -12,8 +12,8 @@ upload:
   #文件访问
   visit:
     #文件目录
-    #formal: /tmp/uploads/img/formal/
-    formal: E:/chenyifaer-shop/
+    formal: /usr/java/chenyifaer-shop/img/
+#    formal: E:/chenyifaer-shop/
 
 spring:
   resources:

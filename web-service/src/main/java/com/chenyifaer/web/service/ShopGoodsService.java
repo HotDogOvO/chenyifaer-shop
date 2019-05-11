@@ -73,4 +73,11 @@ public interface ShopGoodsService extends IService<ShopGoodsPO> {
      */
     List<GoodsSalesVO> getGoodsBySales();
 
+    /**
+     * 根据SKU查询商品
+     * @Author:wudh
+     * @Date: 2019/5/11 20:55
+     */
+    List<GoodsBySkuVO> getGoodsBySku(GoodsDTO goodsDTO);
+
 }

@@ -182,4 +182,20 @@ public class ShopGoodsServiceImpl extends ServiceImpl<ShopGoodsDao, ShopGoodsPO>
         return list;
     }
 
+    @Override
+    public List<GoodsBySkuVO> getGoodsBySku(GoodsDTO goodsDTO) {
+        int startSize = SystemConstant.LIMIT_START_SIZE;
+        int endSize = SystemConstant.GOODS_SKU_SIZE;
+        log.debug("【RUN】 - function ShopGoodsServiceImpl - getGoodsBySku，计算出的起始数值是：【{}】，结束数值是：【{}】", startSize , endSize);
+
+        List<GoodsBySkuVO> list = this.shopGoodsDao.getGoodsBySku(new GoodsDTO()
+                .setShopSkuId(goodsDTO.getShopSkuId())
+                .setType(GoodsImgEnum.IMG_TYPE_001.getCode())
+                .setStartSize(startSize)
+                .setEndSize(endSize));
+
+        log.debug("【END】 - function ShopGoodsServiceImpl - getGoodsBySku");
+        return list;
+    }
+
 }
