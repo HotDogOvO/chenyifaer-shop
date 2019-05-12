@@ -48,4 +48,17 @@ public class SystemConstant {
     /** 根据SKU查询商品最大数量 */
     public static final Integer GOODS_SKU_SIZE = 16;
 
+    /** 商品搜索页 - 分页起始页数 */
+    public static final Integer GOODS_SEARCH_PAGE_INDED = 1;
+
+    /** 商品搜索页 - 分页商品搜索数量 */
+    public static final Integer GOODS_SEARCH_PAGE_SIZE = 12;
+
+    /** 商品搜索页 - 查询二级分类最大数量 */
+    public static final Integer GOODS_TWO_TYPE_SIZE = 10;
+
+    /** 商品搜索页 - 随机查询SKU - KEY最大数量 */
+    public static final Integer SKU_KEY_SIZE = 10;
+
+
 }

@@ -86,4 +86,19 @@
             )
         LIMIT #{startSize} , #{endSize}
     </select>
+
+    <!-- 根据父分类查询二级分类 -->
+    <select id="getTwoRankType" resultType="com.chenyifaer.web.entity.vo.GoodsTypeTwoRankVO">
+        SELECT
+            shop_goods_type_id goodsTypeId,
+            type_name typeName
+        FROM
+            t_shop_goods_type
+        WHERE
+            rank = 2
+            <if test="parentTypeId != null">
+              AND parent_type_id = #{parentTypeId}
+            </if>
+        LIMIT #{startSize} , #{endSize}
+    </select>
 </mapper>

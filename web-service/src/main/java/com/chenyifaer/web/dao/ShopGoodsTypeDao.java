@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.chenyifaer.web.entity.dto.GoodsTypeDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsTypePO;
 import com.chenyifaer.web.entity.vo.GoodsTypeThreeRankVO;
+import com.chenyifaer.web.entity.vo.GoodsTypeTwoRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeVO;
 
 import java.util.List;
@@ -39,4 +40,10 @@ public interface ShopGoodsTypeDao extends BaseMapper<ShopGoodsTypePO> {
      */
     List<GoodsTypeThreeRankVO> getThreeRankTypeByTypeId(GoodsTypeDTO goodsTypeDTO);
 
+    /**
+     * 查询商品二级分类
+     * @Author:wudh
+     * @Date: 2019/5/12 21:19
+     */
+    List<GoodsTypeTwoRankVO> getTwoRankType(GoodsTypeDTO goodsTypeDTO);
 }

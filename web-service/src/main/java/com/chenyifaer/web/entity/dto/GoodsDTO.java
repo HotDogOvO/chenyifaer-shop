@@ -1,5 +1,6 @@
 package com.chenyifaer.web.entity.dto;
 
+import com.chenyifaer.basic.common.dto.PageDTO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -22,7 +23,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Accessors(chain = true)
-public class GoodsDTO {
+public class GoodsDTO extends PageDTO {
 
     public interface getGoodsByType{};
 

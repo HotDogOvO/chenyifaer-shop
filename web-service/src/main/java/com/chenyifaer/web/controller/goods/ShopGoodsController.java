@@ -2,12 +2,14 @@ package com.chenyifaer.web.controller.goods;
 
 
 import com.chenyifaer.basic.common.constant.JsonResult;
+import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.emuns.ResultCodeEnums;
 import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.web.annotation.RsaAnnotation;
 import com.chenyifaer.web.entity.dto.GoodsDTO;
 import com.chenyifaer.web.entity.vo.*;
+import com.chenyifaer.web.redis.RedisService;
 import com.chenyifaer.web.service.ShopGoodsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +51,9 @@ public class ShopGoodsController {
 
     @Autowired
     private ShopGoodsService shopGoodsService;
+
+    @Autowired
+    private RedisService redisService;
 
     @ApiOperation(value = "首页 - 根据分类查询商品")
     @ApiImplicitParams({
@@ -166,4 +172,30 @@ public class ShopGoodsController {
         log.debug("【END】 - function end ShopGoodsController - getGoodsBySku，查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
+
+    @ApiOperation(value = "商品搜索页 - 查询商品信息")
+    @RsaAnnotation
+    @RequestMapping(value = "/getGoodsList" , method = RequestMethod.POST)
+    public JsonResult getGoodsList(@RequestBody GoodsDTO goodsDTO) {
+        log.debug("【START】 - function ShopGoodsController - getGoodsList");
+        List<GoodsVO> list = this.redisService.getGoodsList(goodsDTO.getPageIndex());
+        log.debug("【END】 - function end ShopGoodsController - getGoodsList，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
+    @ApiOperation(value = "商品搜索页 - 查询商品总数量")
+    @RsaAnnotation
+    @RequestMapping(value = "/getCount" , method = RequestMethod.POST)
+    public JsonResult getCount() {
+        log.debug("【START】 - function ShopGoodsController - getCount");
+        int count = this.shopGoodsService.count();
+        List<GoodsSearchCountVO> list = new ArrayList<>();
+        //插入商品数量和分页数量
+        list.add(new GoodsSearchCountVO()
+                .setCount(count)
+                .setPageSize(SystemConstant.GOODS_SEARCH_PAGE_SIZE));
+        log.debug("【END】 - function end ShopGoodsController - getCount，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001,list);
+    }
+
 }

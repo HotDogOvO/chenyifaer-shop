@@ -23,13 +23,12 @@ public class RedisConstant {
     /************************后台****************************/
 
     /************************前台****************************/
-    /** 保存时间 */
-    /** 购物车保存时间 */
-    public static final Long REDIS_SHOPCART_TIME = 1000 * 60 * 60 * 24L;
+    /** 商品信息 */
+    public static final String REDIS_GOODS_R01 = "CYFE:67373:R01:";
 
-    /** KEY */
-    /** 用户购物车 */
-    public static final String REDIS_SHOPCART_R01 = "CYFE:67373:R01:";
 
+
+    /** 商品ID集合 */
+    public static final String REDIS_GOODS_S01 = "CYFE:67373:S01:";
 
 }

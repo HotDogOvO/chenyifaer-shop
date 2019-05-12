@@ -11,6 +11,7 @@ import com.chenyifaer.web.entity.dto.GoodsTypeDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsTypePO;
 import com.chenyifaer.web.entity.vo.GoodsTypeOneRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeThreeRankVO;
+import com.chenyifaer.web.entity.vo.GoodsTypeTwoRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeVO;
 import com.chenyifaer.web.service.ShopGoodsTypeService;
 import io.swagger.annotations.Api;
@@ -100,6 +101,19 @@ public class ShopGoodsTypeController {
         }
         List<GoodsTypeThreeRankVO> list = this.shopGoodsTypeService.getThreeRankTypeByTypeId(goodsTypeDTO);
         log.debug("【END】 - function end ShopGoodsTypeController - getTypeByParent，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
+    @ApiOperation(value = "商品搜索页 - 根据一级分类查询二级分类")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "parentTypeId", value = "分类ID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getTwoTypeByParent" , method = RequestMethod.POST)
+    public JsonResult getTwoTypeByParent(@RequestBody GoodsTypeDTO goodsTypeDTO) {
+        log.debug("【START】 - function ShopGoodsTypeController - getTwoTypeByParent");
+        List<GoodsTypeTwoRankVO> list = this.shopGoodsTypeService.getTwoRankType(goodsTypeDTO);
+        log.debug("【END】 - function end ShopGoodsTypeController - getTwoTypeByParent，查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
     

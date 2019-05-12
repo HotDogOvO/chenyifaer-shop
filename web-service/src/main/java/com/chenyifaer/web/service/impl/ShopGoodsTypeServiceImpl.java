@@ -1,13 +1,16 @@
 package com.chenyifaer.web.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.web.entity.dto.GoodsTypeDTO;
 import com.chenyifaer.web.entity.po.ShopGoodsTypePO;
 import com.chenyifaer.web.dao.ShopGoodsTypeDao;
 import com.chenyifaer.web.entity.vo.GoodsTypeThreeRankVO;
+import com.chenyifaer.web.entity.vo.GoodsTypeTwoRankVO;
 import com.chenyifaer.web.entity.vo.GoodsTypeVO;
 import com.chenyifaer.web.service.ShopGoodsTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.chenyifaer.web.util.GetLimitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +46,21 @@ public class ShopGoodsTypeServiceImpl extends ServiceImpl<ShopGoodsTypeDao, Shop
     public List<GoodsTypeThreeRankVO> getThreeRankTypeByTypeId(GoodsTypeDTO goodsTypeDTO) {
         goodsTypeDTO.setStartSize(SystemConstant.LIMIT_START_SIZE).setEndSize(SystemConstant.GOODS_TYPE_SIZE);
         return this.shopGoodsTypeDao.getThreeRankTypeByTypeId(goodsTypeDTO);
+    }
+
+    @Override
+    public List<GoodsTypeTwoRankVO> getTwoRankType(GoodsTypeDTO goodsTypeDTO) {
+        int count = 0;
+        //如果父ID不等于空，则根据父ID查询数量
+        if(goodsTypeDTO.getParentTypeId() != null){
+            count = this.shopGoodsTypeDao.selectCount(new QueryWrapper<>(
+                    new ShopGoodsTypePO().setParentTypeId(goodsTypeDTO.getParentTypeId())));
+        }else{
+            //否则查询所有数量
+            count = this.shopGoodsTypeDao.selectCount(new QueryWrapper<>());
+        }
+        int startSize = GetLimitUtil.getTwoRankTypeStartSize(count);
+        goodsTypeDTO.setStartSize(startSize).setEndSize(SystemConstant.GOODS_TWO_TYPE_SIZE);
+        return this.shopGoodsTypeDao.getTwoRankType(goodsTypeDTO);
     }
 }

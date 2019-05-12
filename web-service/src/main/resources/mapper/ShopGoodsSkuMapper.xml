@@ -27,4 +27,25 @@
         AND gs.goods_id = #{goodsId}
     </select>
 
+    <!-- 随机查询10条SkuKey -->
+    <select id="getKeyName" resultType="com.chenyifaer.web.entity.vo.SkuKeyVO">
+        SELECT
+            shop_sku_key_id skuKeyId,
+            key_name keyName
+        FROM
+            t_shop_sku_key
+        LIMIT #{startSize} , #{endSize}
+    </select>
+
+    <!-- 根据SkuKeyId查询SkuValue -->
+    <select id="getSkuValueBySkuKey" resultType="com.chenyifaer.web.entity.vo.SkuValueVO">
+        SELECT
+            s.shop_sku_id shopSkuId,
+            v.value_name valueName
+        FROM
+            t_shop_sku s
+            INNER JOIN t_shop_sku_value v ON s.sku_value_id = v.shop_sku_value_id
+        WHERE
+            s.sku_key_id = #{skuKeyId}
+    </select>
 </mapper>

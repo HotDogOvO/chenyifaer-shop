@@ -201,4 +201,20 @@
         LIMIT #{startSize} , #{endSize}
     </select>
 
+    <!-- 查询全部商品 -->
+    <select id="getList" resultType="com.chenyifaer.web.entity.vo.GoodsVO">
+        SELECT
+            g.goods_id goodsId,
+            g.goods_name goodsName,
+            g.goods_price goodsPrice,
+            g.goods_discount_price goodsDiscountPrice,
+            g.goods_sales goodsSales,
+            gm.url url
+        FROM
+            t_shop_goods g
+        INNER JOIN
+            t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        AND
+            gm.type = #{type}
+    </select>
 </mapper>

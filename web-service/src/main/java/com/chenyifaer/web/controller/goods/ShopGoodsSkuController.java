@@ -7,7 +7,10 @@ import com.chenyifaer.basic.common.util.CheckUtil;
 import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.web.annotation.RsaAnnotation;
 import com.chenyifaer.web.entity.dto.GoodsDTO;
+import com.chenyifaer.web.entity.dto.SkuDTO;
 import com.chenyifaer.web.entity.vo.GoodsSkuVO;
+import com.chenyifaer.web.entity.vo.SkuKeyVO;
+import com.chenyifaer.web.entity.vo.SkuValueVO;
 import com.chenyifaer.web.service.ShopGoodsSkuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -56,5 +59,33 @@ public class ShopGoodsSkuController {
         log.debug("【END】 - function end ShopGoodsSkuController - getSkuByGoodsId，查询的结果为：" + list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
     }
-    
+
+    @ApiOperation(value = "商品搜索页 - 获取SkuKey")
+    @RsaAnnotation
+    @RequestMapping(value = "/getSkuKey" , method = RequestMethod.POST)
+    public JsonResult getSkuKey() {
+        log.debug("【START】 - function ShopGoodsSkuController - getSkuKey");
+        List<SkuKeyVO> list = this.shopGoodsSkuService.getKeyName();
+        log.debug("【END】 - function end ShopGoodsSkuController - getSkuKey，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
+    @ApiOperation(value = "商品搜索页 - 根据SkuKey查询SkuValue")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "skuKeyId", value = "主键", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getValueByKey" , method = RequestMethod.POST)
+    public JsonResult getValueByKey(@RequestBody @Validated(SkuDTO.getSkuValue.class) SkuDTO skuDTO, BindingResult br) {
+        log.debug("【START】 - function ShopGoodsSkuController - getValueByKey");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopGoodsSkuController - getValueByKey 商品详情参数校验失败");
+            return check;
+        }
+        List<SkuValueVO> list = this.shopGoodsSkuService.getSkuValueBySkuKey(skuDTO);
+        log.debug("【END】 - function end ShopGoodsSkuController - getValueByKey，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS_001, list);
+    }
+
 }
