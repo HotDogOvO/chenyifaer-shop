@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.web.dao.WebUserAddressDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.WebUserAddressPO">
+        <id column="address_id" property="addressId" />
+        <result column="user_id" property="userId" />
+        <result column="consignee_name" property="consigneeName" />
+        <result column="consignee_phone" property="consigneePhone" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="address" property="address" />
+        <result column="longitude" property="longitude" />
+        <result column="latitude" property="latitude" />
+        <result column="zip" property="zip" />
+        <result column="default_status" property="defaultStatus" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        address_id, user_id, consignee_name, consignee_phone, province, city, area, address, longitude, latitude, zip, default_status, create_time, update_time
+    </sql>
+
+</mapper>

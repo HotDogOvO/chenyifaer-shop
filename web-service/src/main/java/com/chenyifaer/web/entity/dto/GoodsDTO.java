@@ -35,11 +35,11 @@ public class GoodsDTO extends PageDTO {
 
 
     /** 主键 */
-    @NotNull(groups = {GoodsDTO.getDetail.class,GoodsDTO.getSkuByGoods.class} , message = "主键不能为空")
+    @NotNull(groups = {GoodsDTO.getDetail.class,GoodsDTO.getSkuByGoods.class} , message = "参数不能为空")
     private Integer goodsId;
 
     /** 商品分类父ID */
-    @NotNull(groups = {GoodsDTO.getGoodsByType.class} , message = "分类ID不能为空")
+    @NotNull(groups = {GoodsDTO.getGoodsByType.class} , message = "参数不能为空")
     private Integer parentTypeId;
 
     /** 是否推荐 */

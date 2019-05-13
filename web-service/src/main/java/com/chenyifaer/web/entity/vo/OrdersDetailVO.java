@@ -1,4 +1,4 @@
-package com.chenyifaer.web.entity.dto;
+package com.chenyifaer.web.entity.vo;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -12,27 +12,37 @@ package com.chenyifaer.web.entity.dto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
- * 商品分类 - DTO
+ * 订单详情 - VO
  * @Author:wudh
- * @Date: 2019/5/8 17:38
+ * @Date: 2019/5/13 13:45
  */
+
 @Data
 @Accessors(chain = true)
-public class GoodsTypeDTO {
+public class OrdersDetailVO {
 
-    public interface getTypeById{};
+    /** 订单详情ID */
+    private Integer ordersDetailId;
 
-    /** 商品分类父ID */
-    @NotNull(groups = {GoodsTypeDTO.getTypeById.class} , message = "参数不能为空")
-    private Integer parentTypeId;
+    /** 商品名 */
+    private String goodsName;
 
-    /** 获取起始位置 */
-    private Integer startSize;
+    /** 商品单价 */
+    private BigDecimal goodsPrice;
 
-    /** 获取结束位置 */
-    private Integer endSize;
+    /** 商品数量 */
+    private Integer goodsCount;
+
+    /** 商品总价 */
+    private BigDecimal goodsTotalPrice;
+
+    /** 商品封面图 */
+    private String url;
+
+    /** SkuValue */
+    private String valueName;
 
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.web.dao.ShopOrdersDetailsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.ShopOrdersDetailsPO">
+        <id column="orders_detail_id" property="ordersDetailId" />
+        <result column="orders_id" property="ordersId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="goods_sku_id" property="goodsSkuId" />
+        <result column="goods_count" property="goodsCount" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="goods_total_price" property="goodsTotalPrice" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        orders_detail_id, orders_id, goods_id, goods_sku_id, goods_count, goods_price, goods_total_price, create_time
+    </sql>
+
+    <select id="getOrdersDetail" resultType="com.chenyifaer.web.entity.vo.OrdersDetailVO">
+        SELECT
+            od.orders_detail_id ordersDetailId,
+            g.goods_name goodsName,
+            od.goods_price goodsPrice,
+            od.goods_count goodsCount,
+            od.goods_total_price goodsTotalPrice,
+            gm.url url,
+            v.value_name valueName
+        FROM
+            t_shop_orders_details od
+        INNER JOIN t_shop_orders o ON od.orders_id = o.orders_id
+        INNER JOIN t_shop_goods g ON od.goods_id = g.goods_id
+        INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        INNER JOIN t_shop_sku s ON s.shop_sku_id = od.goods_sku_id
+        INNER JOIN t_shop_sku_value v ON s.sku_value_id = v.shop_sku_value_id
+        AND gm.type = #{type}
+        AND o.flow_number = #{flowNumber}
+    </select>
+
+</mapper>

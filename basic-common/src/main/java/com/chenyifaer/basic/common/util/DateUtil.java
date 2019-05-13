@@ -49,13 +49,20 @@ public class DateUtil {
      */
     public static String getHHmmssDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-        String sdate = sdf.format(date);
-        return sdate;
+        String time = sdf.format(date);
+        return time;
     }
 
-
-    public static void main(String[] args){
-     System.out.println(getYYYYMMDDBySprit(new Date()));
+    /**
+     * 获取时间 yyyyMMddHHmmss格式
+     * @Author:wudh
+     * @Date: 2019/5/13 12:42
+     */
+    public static String getYYYYMMddHHmmssDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String time = sdf.format(date);
+        return time;
     }
+
 
 }

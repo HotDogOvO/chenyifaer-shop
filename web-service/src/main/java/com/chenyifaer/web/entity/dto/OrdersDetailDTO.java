@@ -1,4 +1,10 @@
 package com.chenyifaer.web.entity.dto;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotNull;
+
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -9,30 +15,22 @@ package com.chenyifaer.web.entity.dto;
  *
  */
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-import javax.validation.constraints.NotNull;
-
 /**
- * 商品分类 - DTO
+ * 订单详情模块 - DTO
  * @Author:wudh
- * @Date: 2019/5/8 17:38
+ * @Date: 2019/5/13 12:30
  */
 @Data
 @Accessors(chain = true)
-public class GoodsTypeDTO {
+public class OrdersDetailDTO {
 
-    public interface getTypeById{};
+    public interface GetOrdersDetail{};
 
-    /** 商品分类父ID */
-    @NotNull(groups = {GoodsTypeDTO.getTypeById.class} , message = "参数不能为空")
-    private Integer parentTypeId;
+    /** 订单流水号 */
+    @NotNull(groups = {OrdersDetailDTO.GetOrdersDetail.class} , message = "参数不能为空")
+    private String flowNumber;
 
-    /** 获取起始位置 */
-    private Integer startSize;
-
-    /** 获取结束位置 */
-    private Integer endSize;
+    /** 商品图片类型 */
+    private Integer type;
 
 }

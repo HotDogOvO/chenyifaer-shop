@@ -60,5 +60,7 @@ public class SystemConstant {
     /** 商品搜索页 - 随机查询SKU - KEY最大数量 */
     public static final Integer SKU_KEY_SIZE = 10;
 
+    /** 订单 - 生成的流水号最小随机数 */
+    public static final Integer ORDERS_FLOWNUMBER_SIZE = 100000;
 
 }
