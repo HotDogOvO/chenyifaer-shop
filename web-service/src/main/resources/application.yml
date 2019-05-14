@@ -2,4 +2,4 @@
 spring:
   cloud:
     config:
-      name: dbConfig, ribbonConfig ,logConfig ,redisConfig ,rabbitmqConfig, druidConfig ,rsaConfig, fileConfig
+      name: dbConfig, ribbonConfig ,logConfig ,redisConfig ,rabbitmqConfig, druidConfig ,rsaConfig, fileConfig, alipayConfig
