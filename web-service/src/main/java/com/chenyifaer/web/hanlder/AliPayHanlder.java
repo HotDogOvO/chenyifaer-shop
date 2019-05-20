@@ -17,8 +17,10 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.chenyifaer.basic.common.constant.AlipayConstant;
 import com.chenyifaer.web.config.AlipayConfig;
+import com.chenyifaer.web.entity.dto.AlipayPayDTO;
 import com.chenyifaer.web.enums.AlipayPayStatusEnum;
 import com.chenyifaer.web.enums.PayStatusEnum;
+import com.chenyifaer.web.rabbitMq.send.SendService;
 import com.chenyifaer.web.service.ShopPayService;
 import com.chenyifaer.web.util.AlipayUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,9 @@ public class AliPayHanlder {
 
     @Autowired
     private ShopPayService shopPayService;
+
+    @Autowired
+    private SendService sendService;
 
     /** AppId */
     public final String appId = AlipayConfig.appid;
@@ -128,23 +133,26 @@ public class AliPayHanlder {
         //判断支付是否成功
         String tradeStatus = map.get("trade_status");
         //系统内流水号
-        String flowNUmber = map.get("out_trade_no");
+        String flowNumber = map.get("out_trade_no");
         //支付宝流水号
         String payFlowNumber = map.get("trade_no");
-
+        Integer status;
         //支付成功
         if(tradeStatus.equals(AlipayPayStatusEnum.TRADE_SUCCESS.getMsg())){
             log.debug("【RUN】 - function AliPayHanlder - notifyReturn - 支付成功");
-            //更新数据表
-            Integer status = PayStatusEnum.PAY_STATUS_001.getCode();
-            this.shopPayService.addPay(flowNUmber,payFlowNumber,status);
+            status = PayStatusEnum.PAY_STATUS_001.getCode();
         }else{
             //支付失败
             log.debug("【RUN】 - function AliPayHanlder - notifyReturn - 支付失败");
-            //更新数据表
-            Integer status = PayStatusEnum.PAY_STATUS_009.getCode();
-            this.shopPayService.addPay(flowNUmber,payFlowNumber,status);
+            status = PayStatusEnum.PAY_STATUS_009.getCode();
         }
+
+        //发送MQ请求
+        this.sendService.payNotify(new AlipayPayDTO()
+                .setFlowNumber(flowNumber)
+                .setPayFlowNumber(payFlowNumber)
+                .setStatus(status));
+
         log.debug("【END】 - function end AliPayHanlder - aliPayPay");
     }
 

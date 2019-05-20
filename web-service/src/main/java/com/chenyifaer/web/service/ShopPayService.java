@@ -10,10 +10,4 @@ import com.chenyifaer.web.entity.po.ShopPayPO;
  */
 public interface ShopPayService extends IService<ShopPayPO> {
 
-    /**
-     * 新增支付信息
-     * @Author:wudh
-     * @Date: 2019/5/20 22:59
-     */
-    int addPay(String flowNumber, String payFlowNumber,Integer status);
 }
