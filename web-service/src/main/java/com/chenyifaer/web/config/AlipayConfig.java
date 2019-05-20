@@ -69,4 +69,20 @@ public class AlipayConfig {
     public void setAlipayPublicKey(String alipayPublicKey) {
         AlipayConfig.alipayPublicKey = alipayPublicKey;
     }
+
+    /** 同步回调地址 */
+    public static String returnUrl;
+    @Value("${alipay.returnUrl}")
+    public void setReturnUrl(String returnUrl) {
+        AlipayConfig.returnUrl = returnUrl;
+    }
+
+    /** 异步回调地址 */
+    public static String notifyUrl;
+    @Value("${alipay.notifyUrl}")
+    public void setNotifyUrl(String notifyUrl) {
+        AlipayConfig.notifyUrl = notifyUrl;
+    }
+
+
 }

@@ -5,6 +5,10 @@ spring:
   #服务名
   application:
     name: web-service
+  #时间格式转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   #config配置中心
   cloud:
     config:

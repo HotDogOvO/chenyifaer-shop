@@ -31,6 +31,8 @@ public class OrdersDTO {
 
     public interface ConfirmOrders{};
 
+    public interface GetConsignee{};
+
     /** 用户ID */
     @NotNull(groups = {OrdersDTO.AddOrders.class} , message = "参数不能为空")
     private Integer userId;
@@ -40,7 +42,7 @@ public class OrdersDTO {
     private List<OrdersGoodsDTO> goodsList;
 
     /** 订单流水号 */
-    @NotNull(groups = {OrdersDTO.GetOrdersDetail.class,OrdersDTO.ConfirmOrders.class} , message = "参数不能为空")
+    @NotNull(groups = {OrdersDTO.GetOrdersDetail.class,OrdersDTO.ConfirmOrders.class,OrdersDTO.GetConsignee.class} , message = "参数不能为空")
     private String flowNumber;
 
     /** 收货地址ID */

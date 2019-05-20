@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -71,8 +73,18 @@ public class AliPayController {
             e.printStackTrace();
             return ResponseResult.Fail(ResultCodeEnums.FAIL);
         }
-        log.error("【END】 - function AliPayController - pay 支付请求成功");
+        log.debug("【END】 - function AliPayController - pay 支付请求成功");
         return ResponseResult.Success(ResultCodeEnums.SUCCESS,responseFrom);
+    }
+
+    @ApiOperation(value = "支付宝支付异步回调")
+    @RsaAnnotation
+    @RequestMapping(value = "/notifyReturn", method = RequestMethod.POST)
+    public JsonResult notifyReturn(HttpServletRequest request, HttpServletResponse response) {
+        log.debug("【START】 - function AliPayController - notifyReturn");
+        alipayHanlder.notifyReturn(request);
+        log.debug("【END】 - function AliPayController - notifyReturn");
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS);
     }
 
 }

@@ -64,5 +64,16 @@ public class DateUtil {
         return time;
     }
 
+    /**
+     * 获取时间 yyyy-MM-dd HH:mm:ss格式
+     * @Author:wudh
+     * @Date: 2019/5/14 0:02
+     */
+    public static String getDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = sdf.format(date);
+        return time;
+    }
+
 
 }

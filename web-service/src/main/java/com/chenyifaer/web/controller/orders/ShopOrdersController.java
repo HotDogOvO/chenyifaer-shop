@@ -9,15 +9,10 @@ import com.chenyifaer.basic.common.util.ResponseResult;
 import com.chenyifaer.web.annotation.RsaAnnotation;
 import com.chenyifaer.web.entity.dto.OrdersDTO;
 import com.chenyifaer.web.entity.dto.OrdersGoodsDTO;
-import com.chenyifaer.web.entity.po.ShopOrdersConsigneePO;
-import com.chenyifaer.web.entity.po.ShopOrdersDetailsPO;
-import com.chenyifaer.web.entity.po.ShopOrdersPO;
-import com.chenyifaer.web.entity.po.WebUserAddressPO;
+import com.chenyifaer.web.entity.po.*;
 import com.chenyifaer.web.entity.vo.ConfirmOrdersReturnVO;
-import com.chenyifaer.web.service.ShopOrdersConsigneeService;
-import com.chenyifaer.web.service.ShopOrdersDetailsService;
-import com.chenyifaer.web.service.ShopOrdersService;
-import com.chenyifaer.web.service.WebUserAddressService;
+import com.chenyifaer.web.enums.PayTypeEnum;
+import com.chenyifaer.web.service.*;
 import com.chenyifaer.web.util.SystemUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -69,6 +64,12 @@ public class ShopOrdersController {
     @Autowired
     private ShopOrdersConsigneeService shopOrdersConsigneeService;
 
+    @Autowired
+    private ShopPayService shopPayService;
+
+    @Autowired
+    private ShopGoodsService shopGoodsService;
+
     @ApiOperation(value = "商品下单")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "int"),
@@ -101,20 +102,24 @@ public class ShopOrdersController {
             BigDecimal expressPrice = BigDecimal.valueOf(12);
             //订单商品总数量
             int ordersCount = 0;
+            //商品总金额
+            BigDecimal goodsTotalPrice = BigDecimal.valueOf(0);
             //新增订单详情
             for(int i=0;i<ordersDTO.getGoodsList().size();i++){
                 OrdersGoodsDTO x = ordersDTO.getGoodsList().get(i);
-                //计算商品总价格
+                //计算商品单价
                 goodsPrice = goodsPrice.add(x.getGoodsPrice());
                 //计算商品总数量
                 ordersCount += x.getGoodsCount();
+                //计算商品总价
+                goodsTotalPrice = goodsPrice.multiply(BigDecimal.valueOf(ordersCount));
                 boolean detailFlag = this.shopOrdersDetailsService.save(new ShopOrdersDetailsPO()
                         .setOrdersId(shopOrdersPO.getOrdersId())
                         .setGoodsId(x.getGoodsId())
                         .setGoodsSkuId(x.getGoodsSkuId())
                         .setGoodsPrice(x.getGoodsPrice())
                         .setGoodsCount(x.getGoodsCount())
-                        .setGoodsTotalPrice(x.getGoodsPrice().multiply(BigDecimal.valueOf(x.getGoodsCount()))));
+                        .setGoodsTotalPrice(goodsTotalPrice));
                 if(detailFlag == false){
                     log.error("【ERROR】 - function error ShopOrdersController - addOrders，新增订单失败，原因是：新增订单详情失败");
                     //如果新增失败，结束循环
@@ -127,8 +132,14 @@ public class ShopOrdersController {
                     .setGoodsPrice(goodsPrice)
                     .setExpressPrice(expressPrice)
                     .setOrdersCount(ordersCount)
-                    //订单价格为商品价格 + 快递价格
-                    .setOrdersPrice(goodsPrice.add(expressPrice)));
+                    //订单价格为商品总价格 + 快递价格
+                    .setOrdersPrice(goodsTotalPrice.add(expressPrice)));
+            //新增支付信息
+            this.shopPayService.save(new ShopPayPO()
+                    .setOrdersId(shopOrdersPO.getOrdersId())
+                    .setUserId(ordersDTO.getUserId())
+                    .setPayMoney(goodsTotalPrice.add(expressPrice))
+                    .setPayType(PayTypeEnum.APPLY.getCode()));
             if(flag){
                 log.debug("【END】 - function end ShopOrdersController - addOrders，新增订单成功");
                 return ResponseResult.Success(ResultCodeEnums.SUCCESS,shopOrdersPO.getFlowNumber());
@@ -180,6 +191,16 @@ public class ShopOrdersController {
             ordersId = list.get(0).getOrdersId();
             //判断订单信息是否改变
             list.forEach(k -> {
+                //获取商品信息
+                List<ShopGoodsPO> goodsList = this.shopGoodsService.list(new QueryWrapper<>(
+                        new ShopGoodsPO().setGoodsId(k.getGoodsId())));
+                //更新商品信息 库存-1 销量+1
+                this.shopGoodsService.updateById(new ShopGoodsPO()
+                        .setGoodsId(k.getGoodsId())
+                        //销量+1
+                        .setGoodsSales(goodsList.get(0).getGoodsSales() + 1)
+                        //库存-1
+                        .setGoodsInventory(goodsList.get(0).getGoodsInventory() -1));
                 if(!x.getGoodsCount().equals(k.getGoodsCount())){
                     //更新订单详情
                     this.shopOrdersDetailsService.updateById(new ShopOrdersDetailsPO()

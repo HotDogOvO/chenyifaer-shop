@@ -17,12 +17,19 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.chenyifaer.basic.common.constant.AlipayConstant;
 import com.chenyifaer.web.config.AlipayConfig;
+import com.chenyifaer.web.enums.AlipayPayStatusEnum;
+import com.chenyifaer.web.enums.PayStatusEnum;
+import com.chenyifaer.web.service.ShopPayService;
+import com.chenyifaer.web.util.AlipayUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * 支付宝对接 - 工具类
@@ -33,6 +40,9 @@ import java.math.BigDecimal;
 @Slf4j
 @Service
 public class AliPayHanlder {
+
+    @Autowired
+    private ShopPayService shopPayService;
 
     /** AppId */
     public final String appId = AlipayConfig.appid;
@@ -48,6 +58,10 @@ public class AliPayHanlder {
     public final String privateKey = AlipayConfig.privateKey;
     /** 支付宝公钥 */
     public final String aliPayPublicKey = AlipayConfig.alipayPublicKey;
+    /** 同步回调地址 */
+    public final String returnUrl = AlipayConfig.returnUrl;
+    /** 异步回调地址 */
+    public final String notifyUrl = AlipayConfig.notifyUrl;
 
     /**
      * 支付宝下单 - 进入支付
@@ -76,9 +90,9 @@ public class AliPayHanlder {
         //支付宝请求体
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
         //回调地址
-        request.setReturnUrl("http://www.chenyifaer67373.com");
+        request.setReturnUrl("http://22808683ef.iask.in:17128/success.html");
         //异步回调地址
-        request.setNotifyUrl("http://www.chenyifaer67373.com");
+        request.setNotifyUrl("http://22808683ef.iask.in:18231/api/web/aliPay/notifyReturn");
         //请求参数
         request.setBizModel(model);
         log.debug("【RUN】 - function AliPayHanlder - aliPayPay - 支付宝请求体 - 【AlipayTradePagePayRequest】 - 创建成功");
@@ -100,6 +114,38 @@ public class AliPayHanlder {
         }
         log.debug("【END】 - function end AliPayHanlder - aliPayPay");
         return form;
+    }
+
+    /**
+     * 支付异步回调
+     * @Author:wudh
+     * @Date: 2019/5/20 22:35
+     */
+    public void notifyReturn(HttpServletRequest request){
+        log.debug("【START】 - function AliPayHanlder - notifyReturn - 接收异步回调请求");
+        Map<String,String> map = AlipayUtil.getParams(request);
+        log.debug("【RUN】 - function AliPayHanlder - notifyReturn - 异步回调数据为：" + map);
+        //判断支付是否成功
+        String tradeStatus = map.get("trade_status");
+        //系统内流水号
+        String flowNUmber = map.get("out_trade_no");
+        //支付宝流水号
+        String payFlowNumber = map.get("trade_no");
+
+        //支付成功
+        if(tradeStatus.equals(AlipayPayStatusEnum.TRADE_SUCCESS.getMsg())){
+            log.debug("【RUN】 - function AliPayHanlder - notifyReturn - 支付成功");
+            //更新数据表
+            Integer status = PayStatusEnum.PAY_STATUS_001.getCode();
+            this.shopPayService.addPay(flowNUmber,payFlowNumber,status);
+        }else{
+            //支付失败
+            log.debug("【RUN】 - function AliPayHanlder - notifyReturn - 支付失败");
+            //更新数据表
+            Integer status = PayStatusEnum.PAY_STATUS_009.getCode();
+            this.shopPayService.addPay(flowNUmber,payFlowNumber,status);
+        }
+        log.debug("【END】 - function end AliPayHanlder - aliPayPay");
     }
 
 
