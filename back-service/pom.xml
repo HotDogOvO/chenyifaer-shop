@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.chenyifaer</groupId>
     <artifactId>back-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>back-service</name>
 
     <properties>
@@ -19,6 +19,7 @@
         <redis.version>2.0.6.RELEASE</redis.version>
         <druid.version>1.1.10</druid.version>
         <guava.version>20.0</guava.version>
+        <easypoi.version>3.0.1</easypoi.version>
         <swagger.version>2.9.2</swagger.version>
     </properties>
 
@@ -104,10 +105,12 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
+            <version>${easypoi.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-annotation</artifactId>
+            <version>${easypoi.version}</version>
         </dependency>
 
         <!-- 解决easyPoi和eureka 版本冲突问题 -->

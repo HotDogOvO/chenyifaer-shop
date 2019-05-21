@@ -42,6 +42,7 @@
             INNER JOIN t_shop_goods g ON gc.goods_id = g.goods_id
             INNER JOIN t_shop_goods_images gm ON gm.goods_id = g.goods_id
             INNER JOIN t_shop_goods_type t ON g.goods_type_id = t.shop_goods_type_id
+            AND gm.type = 1
         <where>
             <if test="goodsName != null and goodsName != ''">
                 g.goods_name LIKE CONCAT('%',#{goodsName},'%')
