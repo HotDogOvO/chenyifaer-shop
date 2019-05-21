@@ -11,6 +11,8 @@ import com.chenyifaer.web.entity.dto.OrdersDTO;
 import com.chenyifaer.web.entity.dto.OrdersGoodsDTO;
 import com.chenyifaer.web.entity.po.*;
 import com.chenyifaer.web.entity.vo.ConfirmOrdersReturnVO;
+import com.chenyifaer.web.entity.vo.UserOrdersVO;
+import com.chenyifaer.web.enums.OrdersDeleteStatusEnum;
 import com.chenyifaer.web.enums.PayTypeEnum;
 import com.chenyifaer.web.service.*;
 import com.chenyifaer.web.util.SystemUtil;
@@ -246,6 +248,49 @@ public class ShopOrdersController {
                     .setOrdersPrice(goodsPrice.add(expressPrice)));
         }
         log.error("【ERROR】 - function error ShopOrdersController - confirmOrders，确认订单失败，原因是：更新订单主表失败");
+        return ResponseResult.Fail(ResultCodeEnums.FAIL);
+    }
+
+    @ApiOperation(value = "个人信息 - 查询用户訂單信息")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/getUserOrders" , method = RequestMethod.POST)
+    public JsonResult getUserOrders(@RequestBody @Validated(OrdersDTO.GetUserOrders.class) OrdersDTO ordersDTO, BindingResult br) {
+        log.debug("【START】 - function ShopOrdersController - getUserOrders");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopOrdersController - getUserOrders 参数校验失败");
+            return check;
+        }
+        List<UserOrdersVO> list = this.shopOrdersService.getList(ordersDTO);
+
+        log.debug("【END】 - function end ShopOrdersController - getUserOrders，查询用户訂單成功，查询的结果为：" + list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS, list);
+    }
+
+    @ApiOperation(value = "个人信息 - 删除订单")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "ordersId", value = "订单ID", dataType = "int"),
+    })
+    @RsaAnnotation
+    @RequestMapping(value = "/delete" , method = RequestMethod.POST)
+    public JsonResult delete(@RequestBody @Validated(OrdersDTO.Delete.class) OrdersDTO ordersDTO, BindingResult br) {
+        log.debug("【START】 - function ShopOrdersController - delete");
+        JsonResult check = CheckUtil.check(br);
+        if (check != null) {
+            log.error("【ERROR】 - function ShopOrdersController - delete 参数校验失败");
+            return check;
+        }
+        boolean flag = this.shopOrdersService.updateById(new ShopOrdersPO()
+                .setOrdersId(ordersDTO.getOrdersId())
+                .setDeleteStatus(OrdersDeleteStatusEnum.STATUS_002.getCode()));
+        if(flag){
+            log.debug("【END】 - function end ShopOrdersController - delete，删除订单成功，删除的数据为：" + ordersDTO.getOrdersId());
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS);
+        }
+        log.debug("【END】 - function end ShopOrdersController - delete，查询用户訂單失败");
         return ResponseResult.Fail(ResultCodeEnums.FAIL);
     }
 

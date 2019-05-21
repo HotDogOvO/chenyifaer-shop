@@ -1,17 +1,18 @@
 package com.chenyifaer.web.entity.po;
 
-import java.math.BigDecimal;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -69,6 +70,9 @@ public class ShopOrdersPO extends Model<ShopOrdersPO> {
 
     @ApiModelProperty(value = "是否为优惠券付款（0：否 1：是）")
     private Integer couponsStatus;
+
+    @ApiModelProperty(value = "订单删除状态（0：否 1：是）")
+    private Integer deleteStatus;
 
     @ApiModelProperty(value = "订单备注")
     private String ordersRemark;

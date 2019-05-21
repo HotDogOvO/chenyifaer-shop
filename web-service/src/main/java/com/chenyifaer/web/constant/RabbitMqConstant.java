@@ -24,9 +24,13 @@ public class RabbitMqConstant {
     /*****************Queue******************/
     /** 支付宝异步回调队列 */
     public static final String PAY_NOTIFY_QUEUE = "payNotify-queue";
+    /** 邮件发送队列 */
+    public static final String EMAIL_QUEUE = "Email-queue";
 
     /*****************Routing-Key******************/
     /** 支付宝异步回调口令 */
     public static final String PAY_NOTIFY_ROUTING_KEY = "payNotify.*";
+    /** 发送邮件口令 */
+    public static final String EMAIL_ROUTING_KEY = "email.*";
 
 }

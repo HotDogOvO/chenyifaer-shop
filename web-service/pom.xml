@@ -118,6 +118,17 @@
             <version>3.7.26.ALL</version>
         </dependency>
 
+        <!-- 发送邮件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
         <!-- Swagger支持 -->
         <dependency>
             <groupId>io.springfox</groupId>

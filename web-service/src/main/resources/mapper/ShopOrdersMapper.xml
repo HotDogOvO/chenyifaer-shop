@@ -32,4 +32,54 @@
         orders_id, flow_number, user_id, express_name, express_number, goods_price, express_price, orders_name, orders_price, orders_count, status, integral_status, coupons_status, orders_remark, create_time, pay_time, deliver_time, collect_time, close_time, cancelled_time, return_time
     </sql>
 
+    <!-- 用户拥有的订单一对多返回值 -->
+    <resultMap id="OrdersResultMap" type="com.chenyifaer.web.entity.vo.UserOrdersVO">
+        <id column="ordersId" property="ordersId" />
+        <result column="flowNumber" property="flowNumber" />
+        <result column="expressPrice" property="expressPrice" />
+        <result column="ordersPrice" property="ordersPrice" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <collection property="ordersDetailList" javaType="list" ofType="com.chenyifaer.web.entity.vo.UserOrdersDetailVO">
+            <result column="goodsCount" property="goodsCount" />
+            <result column="goodsPrice" property="goodsPrice" />
+            <result column="goodsName" property="goodsName" />
+            <result column="url" property="url" />
+            <result column="keyName" property="keyName" />
+            <result column="valueName" property="valueName" />
+        </collection>
+    </resultMap>
+
+    <!-- 查询用户拥有的订单 -->
+    <select id="getList" resultMap="OrdersResultMap">
+        SELECT
+            o.orders_id ordersId,
+            o.flow_number flowNumber,
+            o.orders_price ordersPrice,
+            o.express_price expressPrice,
+            o.status status,
+            o.create_time createTime,
+            od.goods_count goodsCount,
+            od.goods_price goodsPrice,
+            g.goods_name goodsName,
+            gm.url url,
+            k.key_name keyName,
+            v.value_name valueName
+        FROM
+            t_shop_orders o
+        INNER JOIN t_shop_orders_details od ON o.orders_id = od.orders_id
+        INNER JOIN t_shop_goods g ON od.goods_id = g.goods_id
+        INNER JOIN t_shop_goods_images gm ON g.goods_id = gm.goods_id
+        INNER JOIN t_shop_sku s ON od.goods_sku_id = s.shop_sku_id
+        INNER JOIN t_shop_sku_key k ON s.sku_key_id = k.shop_sku_key_id
+        INNER JOIN t_shop_sku_value v ON s.sku_value_id = v.shop_sku_value_id
+        AND o.user_id = #{userId}
+        AND gm.type = #{type}
+        AND o.delete_status = #{deleteStatus}
+        <if test="status != null">
+            AND o.status = #{status}
+        </if>
+        ORDER BY o.create_time DESC
+    </select>
+
 </mapper>

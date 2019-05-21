@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.chenyifaer.web.entity.dto.UserDTO;
 import com.chenyifaer.web.entity.po.WebUserPO;
 import com.chenyifaer.web.entity.vo.LoginUserVO;
+import com.chenyifaer.web.entity.vo.UserVO;
 
 import java.util.List;
 
@@ -21,4 +22,10 @@ public interface WebUserService extends IService<WebUserPO> {
      */
     List<LoginUserVO> getLoginUser(UserDTO userDTO);
 
+    /**
+     * 查询用户个人信息
+     * @Author:wudh
+     * @Date: 2019/5/21 11:24
+     */
+    List<UserVO> getUser(UserDTO userDTO);
 }

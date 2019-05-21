@@ -38,4 +38,15 @@ public class SystemUtil {
         return flowNumber;
     }
 
+    /**
+     * 生成6位随机码
+     * @Author:wudh
+     * @Date: 2019/5/21 16:29
+     */
+    public static Integer getCode(){
+        Random r = new Random();
+        int flag = r.nextInt(999999);
+        return flag;
+    }
+
 }

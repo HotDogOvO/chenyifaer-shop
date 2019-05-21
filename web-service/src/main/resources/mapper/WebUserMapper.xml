@@ -37,4 +37,23 @@
             u.user_account = #{userAccount}
     </select>
 
+    <!-- 查询用户个人信息 -->
+    <select id="getUser" resultType="com.chenyifaer.web.entity.vo.UserVO">
+        SELECT
+            u.user_account userAccount,
+            u.user_nick_name userNickName,
+            ud.user_name userName,
+            ud.user_sex userSex,
+            ud.user_phone userPhone,
+            ud.user_email userEmail,
+            ud.user_head_image userHeadImage,
+            r.role_name roleName
+        FROM
+            t_web_user u
+            INNER JOIN t_web_user_detail ud ON u.user_id = ud.user_id
+            INNER JOIN t_web_user_role ur ON u.user_id = ur.user_id
+            INNER JOIN t_web_role r ON ur.role_id = r.role_id
+            AND u.user_id = #{userId}
+    </select>
+
 </mapper>

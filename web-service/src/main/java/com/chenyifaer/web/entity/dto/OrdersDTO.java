@@ -33,16 +33,31 @@ public class OrdersDTO {
 
     public interface GetConsignee{};
 
+    public interface GetUserOrders{};
+
+    public interface Delete{};
+
     /** 用户ID */
-    @NotNull(groups = {OrdersDTO.AddOrders.class} , message = "参数不能为空")
+    @NotNull(groups = {
+                OrdersDTO.AddOrders.class,
+                OrdersDTO.GetUserOrders.class} , message = "参数不能为空")
     private Integer userId;
 
+    /** 主键 */
+    @NotNull(groups = {OrdersDTO.Delete.class} , message = "参数不能为空")
+    private Integer ordersId;
+
     /** 订单商品集合 */
-    @NotNull(groups = {OrdersDTO.AddOrders.class,OrdersDTO.ConfirmOrders.class} , message = "参数不能为空")
+    @NotNull(groups = {
+                OrdersDTO.AddOrders.class,
+                OrdersDTO.ConfirmOrders.class} , message = "参数不能为空")
     private List<OrdersGoodsDTO> goodsList;
 
     /** 订单流水号 */
-    @NotNull(groups = {OrdersDTO.GetOrdersDetail.class,OrdersDTO.ConfirmOrders.class,OrdersDTO.GetConsignee.class} , message = "参数不能为空")
+    @NotNull(groups = {
+                OrdersDTO.GetOrdersDetail.class,
+                OrdersDTO.ConfirmOrders.class,
+                OrdersDTO.GetConsignee.class} , message = "参数不能为空")
     private String flowNumber;
 
     /** 收货地址ID */
@@ -52,6 +67,9 @@ public class OrdersDTO {
     /** 备注 */
     private String remark;
 
+    /** 订单状态 */
+    private Integer status;
+
     /** 是否支持积分 */
     @NotNull(groups = {OrdersDTO.ConfirmOrders.class} , message = "参数不能为空")
     private Integer integralStatus;
@@ -60,4 +78,9 @@ public class OrdersDTO {
     @NotNull(groups = {OrdersDTO.ConfirmOrders.class} , message = "参数不能为空")
     private Integer couponsStatus;
 
+    /** 商品圖片類型 */
+    private Integer type;
+
+    /** 订单删除状态 */
+    private Integer deleteStatus;
 }

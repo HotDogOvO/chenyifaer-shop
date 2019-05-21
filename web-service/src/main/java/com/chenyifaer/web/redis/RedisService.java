@@ -90,4 +90,42 @@ public class RedisService {
         return list;
     }
 
+    /**
+     * 邮箱验证码存入Redis
+     * @Author:wudh
+     * @Date: 2019/5/21 16:36
+     */
+    public void addEmailCode(int code,String email){
+        log.debug("【START】 - function start RedisService - addEmailCode，新增邮箱验证码");
+        //获取所有商品ID
+        StringBuffer sbfRedisKey = new StringBuffer(RedisConstant.REDIS_EMAIL_CODE_R02);
+        sbfRedisKey.append(email);
+
+        //存入Redis，Key格式为：CYFE:67373:R02:Email地址，存储时间5分钟
+        redisUtil.set(sbfRedisKey.toString(), code , RedisConstant.EMAIL_CODE_TIME);
+
+        log.debug("【END】 - function end RedisService - addEmailCode");
+    }
+
+    /**
+     * 获取邮箱验证码
+     * @Author:wudh
+     * @Date: 2019/5/21 19:35
+     */
+    public Integer getEmailCode(String email){
+        log.debug("【START】 - function start RedisService - getEmailCode，获取邮箱验证码");
+        //获取所有商品ID
+        StringBuffer sbfRedisKey = new StringBuffer(RedisConstant.REDIS_EMAIL_CODE_R02);
+        sbfRedisKey.append(email);
+
+        //存入Redis，Key格式为：CYFE:67373:R02:Email地址，存储时间5分钟
+        Integer code = 0;
+        //验证码过期，返回0
+        if(redisUtil.get(sbfRedisKey.toString()) != null){
+            code = (int) redisUtil.get(sbfRedisKey.toString());
+        }
+        log.debug("【END】 - function end RedisService - getEmailCode");
+        return code;
+    }
+
 }

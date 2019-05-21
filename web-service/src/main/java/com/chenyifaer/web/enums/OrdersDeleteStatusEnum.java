@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.emuns;
+package com.chenyifaer.web.enums;
 
 /**
  * _____ _            __     ___ ______                ________ ____ ______ ____
@@ -10,35 +10,30 @@ package com.chenyifaer.basic.common.emuns;
  */
 
 /**
- * 文件上传路径后缀设置
+ * 訂單刪除狀態
  * @Author:wudh
- * @Date: 2019/5/5 10:40
+ * @Date: 2019/5/21 12:31
  */
-public enum FileUploadUrlEnum {
+public enum OrdersDeleteStatusEnum {
 
-    /** 轮播图 */
-    BANNER_URL("1","banner/"),
-    /** 商品 */
-    GOODS_URL("2","goods/"),
-    /** 用户头像 */
-    USER_HEAD_URL("3","userHead/")
-    ;
+    /** 未刪除 */
+    STATUS_001(0,"未删除"),
+    /** 已刪除 */
+    STATUS_002(1,"已删除");
 
-
-    private String code;
+    private Integer code;
     private String msg;
 
-    FileUploadUrlEnum(String code, String msg) {
+    OrdersDeleteStatusEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
     public String getMsg() {
         return msg;
     }
-
 }

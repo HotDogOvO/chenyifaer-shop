@@ -18,6 +18,7 @@ import com.chenyifaer.web.dao.ShopPayDao;
 import com.chenyifaer.web.entity.dto.AlipayPayDTO;
 import com.chenyifaer.web.entity.po.ShopOrdersPO;
 import com.chenyifaer.web.entity.po.ShopPayPO;
+import com.chenyifaer.web.enums.OrdersStatusEnum;
 import com.chenyifaer.web.enums.PayStatusEnum;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,6 @@ import java.util.Map;
  * @Author:wudh
  * @Date: 2019/5/21 0:10
  */
-
 @Slf4j
 @Service
 public class PayNotifyListener {
@@ -74,18 +74,25 @@ public class PayNotifyListener {
             log.debug("【RUN】 - function payNotifyListener，查询出的订单ID为：" + ordersId);
 
             ShopPayPO shopPayPO = new ShopPayPO().setPayFlowNumber(alipayPayDTO.getPayFlowNumber());
+            ShopOrdersPO shopOrdersPO = new ShopOrdersPO().setOrdersId(ordersId).setPayTime(DateUtil.getTime());
             //判断支付状态
             if(alipayPayDTO.getStatus().equals(PayStatusEnum.PAY_STATUS_001.getCode())){
                 shopPayPO.setStatus(PayStatusEnum.PAY_STATUS_001.getCode());
                 shopPayPO.setPaySuccessTime(DateUtil.getTime());
+                //如果支付成功，修改订单状态为已支付
+                shopOrdersPO.setStatus(OrdersStatusEnum.STATUS_001.getCode());
             }
             if (alipayPayDTO.getStatus().equals(PayStatusEnum.PAY_STATUS_009.getCode())) {
                 shopPayPO.setStatus(PayStatusEnum.PAY_STATUS_009.getCode());
                 shopPayPO.setPayFailTime(DateUtil.getTime());
+                //如果支付失败，修改订单状态为已取消
+                shopOrdersPO.setStatus(OrdersStatusEnum.STATUS_007.getCode());
             }
             //根据订单ID更新
             this.shopPayDao.update(shopPayPO,new QueryWrapper<>(new ShopPayPO().setOrdersId(ordersId)));
-            log.debug("【RUN】 - function payNotifyListener，更新的订单信息为：" + shopPayPO);
+            log.debug("【RUN】 - function payNotifyListener，更新的支付信息为：" + shopPayPO);
+            //更新订单信息
+            this.shopOrdersDao.updateById(shopOrdersPO);
 
             Long deliveryTag = (Long) headers.get(AmqpHeaders.DELIVERY_TAG);
             //ACK - 确认签收

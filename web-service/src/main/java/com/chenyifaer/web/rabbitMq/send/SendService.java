@@ -12,6 +12,7 @@ package com.chenyifaer.web.rabbitMq.send;
 import com.alibaba.fastjson.JSONObject;
 import com.chenyifaer.web.constant.RabbitMqConstant;
 import com.chenyifaer.web.entity.dto.AlipayPayDTO;
+import com.chenyifaer.web.entity.dto.EmailDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -55,5 +56,30 @@ public class SendService {
             log.error("【ERROR】 - function payNotify:{}", e);
         }
         log.debug("【END】 - function payNotify");
+    }
+
+    /**
+     * 邮件发送
+     * @Author:wudh
+     * @Date: 2019/5/21 16:19
+     */
+    public void email(EmailDTO emailDTO){
+        log.debug("【START】 - function email");
+        //MQ请求唯一标识
+        CorrelationData correlationData = new CorrelationData(emailDTO.getEmail());
+
+        try {
+            rabbitTemplate.convertAndSend(
+                    //交换机
+                    RabbitMqConstant.EXCHANGE,
+                    //交换口令
+                    RabbitMqConstant.EMAIL_ROUTING_KEY,
+                    //传递JSON数据
+                    JSONObject.toJSONString(emailDTO),
+                    correlationData);
+        } catch (AmqpException e) {
+            log.error("【ERROR】 - function email:{}", e);
+        }
+        log.debug("【END】 - function email");
     }
 }

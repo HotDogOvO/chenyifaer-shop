@@ -4,6 +4,7 @@ import com.chenyifaer.web.entity.dto.UserDTO;
 import com.chenyifaer.web.entity.po.WebUserPO;
 import com.chenyifaer.web.dao.WebUserDao;
 import com.chenyifaer.web.entity.vo.LoginUserVO;
+import com.chenyifaer.web.entity.vo.UserVO;
 import com.chenyifaer.web.service.WebUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class WebUserServiceImpl extends ServiceImpl<WebUserDao, WebUserPO> imple
     @Override
     public List<LoginUserVO> getLoginUser(UserDTO userDTO) {
         return this.webUserDao.getLoginUser(userDTO);
+    }
+
+    @Override
+    public List<UserVO> getUser(UserDTO userDTO) {
+        return this.webUserDao.getUser(userDTO);
     }
 }
