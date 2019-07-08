@@ -1,0 +1,7 @@
+wechat:
+  #AppId
+  appid: wx51a07aa5fad27565
+  #AppSecret
+  appSecret: 69f4715f0b215ab9e6e5a079da077bfd
+  #grant_type
+  grant_type: authorization_code

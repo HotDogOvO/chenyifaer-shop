@@ -16,4 +16,4 @@ alipay:
   #同步回调地址
   returnUrl: https://www.chenyifaer67373.com/success.html
   #异步回调地址
-  notifyUrl: http://22808683ef.iask.in:18231/api/web
+  notifyUrl: https://www.chenyifaer67373.com:7001/api/web/aliPay/notifyReturn

@@ -5,4 +5,5 @@ logging:
     com.chenyifaer.basic.gateway: debug
     com.chenyifaer.back: debug
     com.chenyifaer.web: debug
+    com.chenyifaer.app: debug
   file: logs/${spring.application.name}.log
