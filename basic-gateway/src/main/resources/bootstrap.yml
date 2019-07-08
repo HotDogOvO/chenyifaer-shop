@@ -1,5 +1,9 @@
 server:
   port: 7001
+#  ssl:
+#    key-store: classpath:1902704_www.chenyifaer67373.com.pfx
+#    key-store-password: 8urrJEf2
+#    key-store-type: PKCS12
   use-forward-headers: true
 
 #服务名
@@ -42,12 +46,17 @@ zuul:
     api-back-img:
       path: /images/**
       serviceId: back-service
-      url: http://127.0.0.1:7002
+      url: http://47.101.58.198:7002
       strip-prefix: false
     api-web:
       path: /api/web/**
       serviceId: web-service
       url: http://127.0.0.1:7003
+      strip-prefix: true
+    api-app:
+      path: /api/app/**
+      serviceId: app-service
+      url: http://127.0.0.1:7006
       strip-prefix: true
   host:
     connect-timeout-millis: 10000
