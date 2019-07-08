@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.app.dao.AppNewsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.app.entity.po.AppNewsPO">
+        <id column="news_id" property="newsId"/>
+        <result column="news_name" property="newsName"/>
+        <result column="news_content" property="newsContent"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        news_id, news_name, news_content, create_time, update_time
+    </sql>
+
+    <!-- 查询最新动态列表 -->
+    <select id="getList" resultType="com.chenyifaer.app.entity.vo.NewsVO">
+        SELECT
+            n.news_id newsId,
+            n.news_name newsName,
+            n.create_time createTime,
+            ni.url url
+        FROM
+            t_app_news n,
+            t_app_news_images ni
+        WHERE
+            n.news_id = ni.news_id
+        AND
+            ni.img_type = #{imgType}
+        ORDER BY
+            n.create_time DESC
+    </select>
+
+    <!-- 根据主键获取最新动态详情 - 返回值 -->
+    <resultMap id="DetailResultMap" type="com.chenyifaer.app.entity.vo.NewsDetailVO">
+        <result column="newsContent" property="newsContent"/>
+        <collection property="urlList" ofType="string" javaType="list">
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据主键获取最新动态详情 -->
+    <select id="getDetail" resultMap="DetailResultMap">
+        SELECT
+            n.news_content newsContent,
+            ni.url url
+        FROM
+            t_app_news n,
+            t_app_news_images ni
+        WHERE
+            n.news_id = ni.news_id
+        AND
+            ni.img_type = #{imgType}
+        AND
+            n.news_id = #{newsId}
+    </select>
+
+</mapper>
