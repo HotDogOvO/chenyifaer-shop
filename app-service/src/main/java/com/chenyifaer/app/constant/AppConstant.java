@@ -1,8 +1,4 @@
-package com.chenyifaer.app.entity.dto;
-
-import lombok.Data;
-import lombok.experimental.Accessors;
-
+package com.chenyifaer.app.constant;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \
@@ -13,20 +9,17 @@ import lombok.experimental.Accessors;
  *
  */
 
-@Data
-@Accessors(chain = true)
-public class NewsDTO {
+/**
+ * 小程序端 - 系统常量
+ * @Author:wudh
+ * @Date: 2019/7/8 17:14
+ */
+public class AppConstant {
 
-    /** 主键 */
-    private Integer newsId;
+    /** 首页数据起始分页数据 */
+    public static final Integer START_SIZE = 0;
 
-    /** 图片类型 */
-    private Integer imgType;
-
-    /** 分页起始数据 */
-    private Integer startSize;
-
-    /** 分页结束数据 */
-    private Integer endSize;
+    /** 首页数据结束分页数据 */
+    public static final Integer END_SIZE = 6;
 
 }

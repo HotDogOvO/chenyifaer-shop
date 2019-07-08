@@ -31,4 +31,11 @@ public interface AppNewsService extends IService<AppNewsPO> {
      * @Date: 2019/7/8 10:31
      */
     List<NewsDetailVO> getDetail(NewsDTO newsDTO);
+
+    /**
+     * 获取首页最新动态数据
+     * @Author:wudh
+     * @Date: 2019/7/8 17:12
+     */
+    List<NewsVO> getIndexList();
 }

@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 小程序端 - 最新动态图片表 前端控制器
+ * 小程序端 - 新歌发布表 前端控制器
  * </p>
  *
  * @author wudh
  * @since 2019-07-08
  */
 @RestController
-@RequestMapping("/news/img")
-public class AppNewsImagesController {
+@RequestMapping("/appMusicPO")
+public class AppMusicController {
 
 }

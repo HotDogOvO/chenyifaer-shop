@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 小程序端 - 最新动态表
+ * 小程序端 - 轮播图表
  * </p>
  *
  * @author wudh
@@ -24,21 +24,30 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("t_app_news")
-@ApiModel(value="AppNewsPO对象", description="小程序端 - 最新动态表")
-public class AppNewsPO extends Model<AppNewsPO> {
+@TableName("t_app_banner")
+@ApiModel(value="AppBannerPO对象", description="小程序端 - 轮播图表")
+public class AppBannerPO extends Model<AppBannerPO> {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "news_id", type = IdType.AUTO)
-    private Integer newsId;
+    @TableId(value = "app_banner_id", type = IdType.AUTO)
+    private Integer appBannerId;
 
-    @ApiModelProperty(value = "新闻标题")
-    private String newsName;
+    @ApiModelProperty(value = "其余4个模块的主键")
+    private Integer appId;
 
-    @ApiModelProperty(value = "新闻内容")
-    private String newsContent;
+    @ApiModelProperty(value = "类型（1：最新动态 2：每日推荐 3：新歌发布 4：茶话会）")
+    private Integer appType;
+
+    @ApiModelProperty(value = "轮播图名称")
+    private String appBannerName;
+
+    @ApiModelProperty(value = "轮播图路径")
+    private String appBannerImageUrl;
+
+    @ApiModelProperty(value = "权重")
+    private Integer weight;
 
     @ApiModelProperty(value = "状态（0：禁用 1：启用）")
     private Integer status;
@@ -52,7 +61,7 @@ public class AppNewsPO extends Model<AppNewsPO> {
 
     @Override
     protected Serializable pkVal() {
-        return this.newsId;
+        return this.appBannerId;
     }
 
 }

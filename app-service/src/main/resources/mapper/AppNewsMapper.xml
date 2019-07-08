@@ -32,6 +32,9 @@
             ni.img_type = #{imgType}
         ORDER BY
             n.create_time DESC
+        <if test="startSize != null and endSize != null">
+            Limit #{startSize} , #{endSize}
+        </if>
     </select>
 
     <!-- 根据主键获取最新动态详情 - 返回值 -->

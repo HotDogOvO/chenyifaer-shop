@@ -10,7 +10,7 @@ import com.chenyifaer.app.entity.dto.LoginDTO;
 import com.chenyifaer.app.entity.dto.WechatLoginDTO;
 import com.chenyifaer.app.entity.po.AppUserPO;
 import com.chenyifaer.app.service.AppUserService;
-import com.chenyifaer.app.util.OkHttpUtil;
+import com.chenyifaer.basic.common.util.OkHttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

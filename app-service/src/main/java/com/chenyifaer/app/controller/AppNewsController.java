@@ -48,9 +48,7 @@ public class AppNewsController {
     @RequestMapping(value = "/list" , method = RequestMethod.POST)
     public JsonResult list(){
         log.debug("【START】 - function AppNewsController - list");
-
         List<NewsVO> list = this.appNewsService.getList();
-
         log.debug("【END】 - function AppNewsController - list - 获取的数据为【{}】",list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS,list);
     }
@@ -62,10 +60,17 @@ public class AppNewsController {
     @RequestMapping(value = "/getDetail" , method = RequestMethod.POST)
     public JsonResult getDetail(@RequestBody NewsDTO newsDTO){
         log.debug("【START】 - function AppNewsController - getDetail");
-
         List<NewsDetailVO> list = this.appNewsService.getDetail(newsDTO);
-
         log.debug("【END】 - function AppNewsController - getDetail - 获取的数据为【{}】",list);
+        return ResponseResult.Success(ResultCodeEnums.SUCCESS,list);
+    }
+
+    @ApiOperation(value = "获取首页最新动态数据")
+    @RequestMapping(value = "/getIndexList" , method = RequestMethod.POST)
+    public JsonResult getIndexList(){
+        log.debug("【START】 - function AppNewsController - getIndexList");
+        List<NewsVO> list = this.appNewsService.getIndexList();
+        log.debug("【END】 - function AppNewsController - getIndexList - 获取的数据为【{}】",list);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS,list);
     }
 

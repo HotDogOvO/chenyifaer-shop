@@ -1,4 +1,4 @@
-package com.chenyifaer.app.entity.dto;
+package com.chenyifaer.app.entity.vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,18 +15,15 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class NewsDTO {
+public class BannerVO {
 
-    /** 主键 */
-    private Integer newsId;
+    /** 业务模块主键 */
+    private Integer appId;
 
-    /** 图片类型 */
-    private Integer imgType;
+    /** 类型（1：最新动态 2：每日推荐 3：新歌发布 4：茶话会） */
+    private Integer appType;
 
-    /** 分页起始数据 */
-    private Integer startSize;
-
-    /** 分页结束数据 */
-    private Integer endSize;
+    /** 轮播图路径 */
+    private String appBannerImageUrl;
 
 }

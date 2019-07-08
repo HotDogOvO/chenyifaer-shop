@@ -1,5 +1,6 @@
 package com.chenyifaer.app.service.impl;
 
+import com.chenyifaer.app.constant.AppConstant;
 import com.chenyifaer.app.entity.dto.NewsDTO;
 import com.chenyifaer.app.entity.po.AppNewsPO;
 import com.chenyifaer.app.dao.AppNewsDao;
@@ -35,5 +36,13 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsDao, AppNewsPO> imple
     @Override
     public List<NewsDetailVO> getDetail(NewsDTO newsDTO) {
         return this.appNewsDao.getDetail(newsDTO.setImgType(ImgTypeEnum.IMG_TYPE_002.getCode()));
+    }
+
+    @Override
+    public List<NewsVO> getIndexList() {
+        return this.appNewsDao.getList(new NewsDTO()
+                .setImgType(ImgTypeEnum.IMG_TYPE_001.getCode())
+                .setStartSize(AppConstant.START_SIZE)
+                .setEndSize(AppConstant.END_SIZE));
     }
 }
