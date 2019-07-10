@@ -63,4 +63,12 @@ public class SystemConstant {
     /** 订单 - 生成的流水号最小随机数 */
     public static final Integer ORDERS_FLOWNUMBER_SIZE = 100000;
 
+    /************************数据库****************************/
+    /** 创建时间 */
+    public static final String CREATE_TIME = "create_time";
+
+
+    /************************系统符号****************************/
+    public static final String SYSTEM_SYMBOLS_001 = "/";
+
 }

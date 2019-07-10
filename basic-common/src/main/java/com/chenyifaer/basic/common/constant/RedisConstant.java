@@ -21,6 +21,8 @@ public class RedisConstant {
     public static final String REDIS_SPLIT = ":";
     /** 邮箱验证码存储时间 - 5分钟 */
     public static final Long EMAIL_CODE_TIME = 300L;
+    /** 微信AccessToken存储时间 - 6000秒(1小时45分) */
+    public static final Long ACCESS_TOKEN_TIME = 6000L;
 
     /************************后台****************************/
 
@@ -32,5 +34,10 @@ public class RedisConstant {
 
     /** 商品ID集合 */
     public static final String REDIS_GOODS_S01 = "CYFE:67373:S01:";
+
+
+    /************************微信小程序****************************/
+    /** 微信小程序Access_Token */
+    public static final String REDIS_WECHAT_ACCESSTOKEN_W01 = "CYFE:67373:W01:1";
 
 }
