@@ -22,4 +22,13 @@ public class AppConstant {
     /** 首页数据结束分页数据 */
     public static final Integer END_SIZE = 6;
 
+    /** 首页新歌发布结束分页数据 */
+    public static final Integer MUSIC_END_SIZE = 4;
+
+    /** 分隔符 */
+    public static final String SPLIT = ",";
+
+    /******************** SQL *************************/
+    /** 分页拼接语句 */
+    public static final String LIMIT = "limit ";
 }

@@ -39,4 +39,26 @@ public class WechatConfig {
         WechatConfig.grantType = grantType;
     }
 
+    public static String env;
+    @Value("${wechat.env}")
+    public void setEnv(String env) {
+        WechatConfig.env = env;
+    }
+
+    public static String imgPath;
+    @Value("${wechat.imgPath}")
+    public void setImgPath(String imgPath) {
+        WechatConfig.imgPath = imgPath;
+    }
+
+    public static String musicPath;
+    @Value("${wechat.musicPath}")
+    public void setMusicPath(String musicPath) {
+        WechatConfig.musicPath = musicPath;
+    }
+
+
+
+
+
 }

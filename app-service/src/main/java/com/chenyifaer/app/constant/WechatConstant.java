@@ -16,6 +16,13 @@ package com.chenyifaer.app.constant;
  */
 public class WechatConstant {
 
+    /** 登录地址 */
     public static final String LOGIN_URL = "https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${appSecret}&js_code=${jsCode}&grant_type=${grantType}";
+
+    /** 获取AccessToken */
+    public static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appId}&secret=${appSecret}";
+
+    /** 云开发 - 获取文件上传链接 */
+    public static final String UPLOAD_FILE_URL = "https://api.weixin.qq.com/tcb/uploadfile?access_token=${accessToken}";
 
 }
