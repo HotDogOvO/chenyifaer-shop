@@ -5,3 +5,9 @@ wechat:
   appSecret: 69f4715f0b215ab9e6e5a079da077bfd
   #grant_type
   grant_type: authorization_code
+  #云开发 - 云环境ID
+  env: chenyifaer-67373
+  #云开发 - 图片上传路径
+  imgPath: images/
+  #云开发 - 音频上传路径
+  musicPath: music/
