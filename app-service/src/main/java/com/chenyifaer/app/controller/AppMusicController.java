@@ -108,11 +108,11 @@ public class AppMusicController {
                 .orderByDesc(SystemConstant.CREATE_TIME).last(sb.toString()));
         List<MusicVO> musicList = new ArrayList<>();
         list.stream().filter(x ->
-                musicList.add(new MusicVO()
-                        .setMusicId(x.getMusicId())
-                        .setMusicName(x.getMusicName())
-                        .setMusicAuthor(x.getMusicAuthor())
-                        .setMusicImgUrl(x.getMusicImgUrl()))
+            musicList.add(new MusicVO()
+                .setMusicId(x.getMusicId())
+                .setMusicName(x.getMusicName())
+                .setMusicAuthor(x.getMusicAuthor())
+                .setMusicImgUrl(x.getMusicImgUrl()))
         ).collect(Collectors.toList());
         log.debug("【END】 - function AppMusicController - getIndexList - 获取的数据为【{}】",musicList);
         return ResponseResult.Success(ResultCodeEnums.SUCCESS,musicList);

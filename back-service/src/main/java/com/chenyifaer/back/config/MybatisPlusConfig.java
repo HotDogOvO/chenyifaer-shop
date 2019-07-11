@@ -32,9 +32,10 @@ public class MybatisPlusConfig {
 
     /**
      * SQL执行效率插件
+     * 设置 dev test 环境开启
      */
     @Bean
-    @Profile({"dev","test"})// 设置 dev test 环境开启
+    @Profile({"dev","test"})
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor().setMaxTime(100);
     }

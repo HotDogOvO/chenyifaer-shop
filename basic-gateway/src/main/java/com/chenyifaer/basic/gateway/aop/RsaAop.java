@@ -1,6 +1,6 @@
 package com.chenyifaer.basic.gateway.aop;
 
-import com.chenyifaer.basic.common.util.RSA.RSAUtils;
+import com.chenyifaer.basic.common.util.rsa.RSAUtils;
 import com.chenyifaer.basic.gateway.annotation.RsaAnnotation;
 import com.chenyifaer.basic.gateway.config.RSAConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,10 @@ import java.lang.reflect.Type;
 @Slf4j
 @RestControllerAdvice
 public class RsaAop implements RequestBodyAdvice {
-    
+
+	/** RSA解密协议 - 判断请求参数前是否拥有以下格式的参数 */
+	public static final String RSA_DATA = "{\"data\":";
+
 	@Override
 	public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 		return true;
@@ -106,8 +109,8 @@ public class RsaAop implements RequestBodyAdvice {
 		 * @return
 		 */
 		public String easpString(String requestData){
-			if(requestData != null && !requestData.equals("")){
-				String s = "{\"data\":";
+			if(requestData != null && !"".equals(requestData)){
+				String s = RSA_DATA;
 				if(!requestData.startsWith(s)){
 					throw new RuntimeException("参数【requestData】缺失异常！");
 				}else{

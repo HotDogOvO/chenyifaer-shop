@@ -22,19 +22,19 @@ import org.springframework.stereotype.Component;
 public class RSAConfig {
 
     public static String publicKey;
-    @Value("${RSA.publicKey}")
+    @Value("${rsa.publicKey}")
     public void setPublicKey(String publicKey) {
         RSAConfig.publicKey = publicKey;
     }
 
     public static String privateKey;
-    @Value("${RSA.privateKey}")
+    @Value("${rsa.privateKey}")
     public void setPrivateKey(String privateKey) {
         RSAConfig.privateKey = privateKey;
     }
 
     public static boolean isRSA;
-    @Value("${RSA.isRSA}")
+    @Value("${rsa.isRSA}")
     public void setIsRSA(boolean isRSA) {
         RSAConfig.isRSA = isRSA;
     }

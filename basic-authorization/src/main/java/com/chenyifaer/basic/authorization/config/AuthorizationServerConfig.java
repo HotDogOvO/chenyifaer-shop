@@ -114,7 +114,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 userDetail.put("adminUserName",((LoginAppUser) principal).getAdminUserName());
                 userDetail.put("enabled",((LoginAppUser) principal).getEnabled());
 
-                Map<String, Object> map = new HashMap<>(defaultOAuth2AccessToken.getAdditionalInformation()); // 旧的附加参数
+                // 旧的附加参数
+                Map<String, Object> map = new HashMap<>(defaultOAuth2AccessToken.getAdditionalInformation());
                 // 追加当前登陆用户
                 map.put("userDetail", userDetail);
 

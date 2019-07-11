@@ -1,4 +1,4 @@
-package com.chenyifaer.web.rabbitmq.send;
+package com.chenyifaer.web.rabbitMq.send;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \

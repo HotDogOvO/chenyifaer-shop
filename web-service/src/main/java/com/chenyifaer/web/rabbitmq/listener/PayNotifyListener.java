@@ -1,4 +1,4 @@
-package com.chenyifaer.web.rabbitmq.listener;
+package com.chenyifaer.web.rabbitMq.listener;
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
  *	  / ____| |           \ \   / (_)  ____|              / /____  |___ \____  |___ \

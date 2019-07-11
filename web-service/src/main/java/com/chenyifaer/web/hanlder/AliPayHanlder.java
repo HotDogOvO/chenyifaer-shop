@@ -20,7 +20,7 @@ import com.chenyifaer.web.config.AlipayConfig;
 import com.chenyifaer.web.entity.dto.AlipayPayDTO;
 import com.chenyifaer.web.enums.AlipayPayStatusEnum;
 import com.chenyifaer.web.enums.PayStatusEnum;
-import com.chenyifaer.web.rabbitMq.send.SendService;
+import com.chenyifaer.web.rabbitmq.send.SendService;
 import com.chenyifaer.web.service.ShopPayService;
 import com.chenyifaer.web.util.AlipayUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -95,9 +95,9 @@ public class AliPayHanlder {
         //支付宝请求体
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
         //回调地址
-        request.setReturnUrl("http://22808683ef.iask.in:17128/success.html");
+        request.setReturnUrl(returnUrl);
         //异步回调地址
-        request.setNotifyUrl("http://22808683ef.iask.in:18231/api/web/aliPay/notifyReturn");
+        request.setNotifyUrl(notifyUrl);
         //请求参数
         request.setBizModel(model);
         log.debug("【RUN】 - function AliPayHanlder - aliPayPay - 支付宝请求体 - 【AlipayTradePagePayRequest】 - 创建成功");

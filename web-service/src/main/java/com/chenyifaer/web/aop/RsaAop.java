@@ -1,6 +1,6 @@
 package com.chenyifaer.web.aop;
 
-import com.chenyifaer.basic.common.util.RSA.RSAUtils;
+import com.chenyifaer.basic.common.util.rsa.RSAUtils;
 import com.chenyifaer.web.annotation.RsaAnnotation;
 import com.chenyifaer.web.config.RSAConfig;
 import lombok.extern.slf4j.Slf4j;

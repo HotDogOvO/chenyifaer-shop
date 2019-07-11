@@ -18,6 +18,8 @@ public class LoginAppUser extends AppUser implements UserDetails {
 
 	private static final long serialVersionUID = 1753977564987556640L;
 
+	public static final String ROLE_NAME = "ROLE_";
+
 	private Set<SysRole> sysRoles;
 
 	private Set<String> permissions;
@@ -28,7 +30,7 @@ public class LoginAppUser extends AppUser implements UserDetails {
 		Collection<GrantedAuthority> collection = new HashSet<>();
 		if (!CollectionUtils.isEmpty(sysRoles)) {
 			sysRoles.forEach(role -> {
-				if (role.getCode().startsWith("ROLE_")) {
+				if (role.getCode().startsWith(ROLE_NAME)) {
 					collection.add(new SimpleGrantedAuthority(role.getCode()));
 				} else {
 					collection.add(new SimpleGrantedAuthority("ROLE_" + role.getCode()));

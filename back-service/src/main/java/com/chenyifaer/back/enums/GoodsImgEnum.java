@@ -16,7 +16,9 @@ package com.chenyifaer.back.enums;
  */
 public enum GoodsImgEnum {
 
+    /** 封面图 */
     IMG_TYPE_001(1,"封面图"),
+    /** 内容图 */
     IMG_TYPE_002(2,"内容图");
 
     private Integer code;

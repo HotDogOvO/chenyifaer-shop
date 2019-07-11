@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.util.RSA;
+package com.chenyifaer.basic.common.util.rsa;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -38,7 +38,7 @@ public class RSASignature {
             PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(
                     Base64.decodeBase64(privateKey));
 
-            KeyFactory keyf = KeyFactory.getInstance("RSA");
+            KeyFactory keyf = KeyFactory.getInstance("rsa");
             PrivateKey priKey = keyf.generatePrivate(priPKCS8);
 
             java.security.Signature signature = java.security.Signature
@@ -61,7 +61,7 @@ public class RSASignature {
         try {
             PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(
                     Base64.decodeBase64(privateKey));
-            KeyFactory keyf = KeyFactory.getInstance("RSA");
+            KeyFactory keyf = KeyFactory.getInstance("rsa");
             PrivateKey priKey = keyf.generatePrivate(priPKCS8);
             java.security.Signature signature = java.security.Signature
                     .getInstance(SIGN_ALGORITHMS);
@@ -81,7 +81,7 @@ public class RSASignature {
     public static boolean doCheck(String content, String sign,
                                   String publicKey, String encode) {
         try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            KeyFactory keyFactory = KeyFactory.getInstance("rsa");
             byte[] encodedKey = Base64.decodeBase64(publicKey);
             PublicKey pubKey = keyFactory
                     .generatePublic(new X509EncodedKeySpec(encodedKey));
@@ -104,7 +104,7 @@ public class RSASignature {
 
     public static boolean doCheck(String content, String sign, String publicKey) {
         try {
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            KeyFactory keyFactory = KeyFactory.getInstance("rsa");
             byte[] encodedKey = Base64.decodeBase64(publicKey);
             PublicKey pubKey = keyFactory
                     .generatePublic(new X509EncodedKeySpec(encodedKey));

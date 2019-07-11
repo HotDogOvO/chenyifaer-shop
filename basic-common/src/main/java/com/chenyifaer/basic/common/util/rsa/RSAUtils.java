@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.util.RSA;
+package com.chenyifaer.basic.common.util.rsa;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -33,7 +33,7 @@ public class RSAUtils {
 	/**
 	 * 加密算法RSA
 	 */
-	public static final String KEY_ALGORITHM = "RSA";
+	public static final String KEY_ALGORITHM = "rsa";
 
 	/** */
 	/**
@@ -67,7 +67,7 @@ public class RSAUtils {
 
 	/** */
 	/**
-	 * RSA 位数 如果采用2048 上面最大加密和最大解密则须填写:  245 256
+	 * rsa 位数 如果采用2048 上面最大加密和最大解密则须填写:  245 256
 	 */
 	private static final int INITIALIZE_LENGTH = 2048;
 

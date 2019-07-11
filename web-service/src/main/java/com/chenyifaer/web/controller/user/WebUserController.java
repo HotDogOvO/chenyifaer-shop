@@ -16,7 +16,7 @@ import com.chenyifaer.web.entity.dto.UserDTO;
 import com.chenyifaer.web.entity.po.WebUserDetailPO;
 import com.chenyifaer.web.entity.po.WebUserPO;
 import com.chenyifaer.web.entity.vo.UserVO;
-import com.chenyifaer.web.rabbitMq.send.SendService;
+import com.chenyifaer.web.rabbitmq.send.SendService;
 import com.chenyifaer.web.redis.RedisService;
 import com.chenyifaer.web.service.WebUserDetailService;
 import com.chenyifaer.web.service.WebUserService;

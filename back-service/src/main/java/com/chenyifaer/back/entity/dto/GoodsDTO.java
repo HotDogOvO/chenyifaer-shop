@@ -51,8 +51,8 @@ public class GoodsDTO extends PageDTO {
     @NotNull(groups = {GoodsDTO.Add.class} , message = "商品简介不能为空")
     private String goodsText;
 
-    /** 商品详情 */
     //@NotNull(groups = {GoodsDTO.Add.class} , message = "商品详情不能为空")
+    /** 商品详情 */
     private String goodsContent;
 
     /** 商品价格 */

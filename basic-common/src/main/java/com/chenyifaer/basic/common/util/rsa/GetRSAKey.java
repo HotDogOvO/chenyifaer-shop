@@ -1,4 +1,4 @@
-package com.chenyifaer.basic.common.util.RSA;
+package com.chenyifaer.basic.common.util.rsa;
 
 /**
  *     _____ _            __     ___ ______                ________ ____ ______ ____
