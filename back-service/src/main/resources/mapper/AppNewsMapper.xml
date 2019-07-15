@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.back.dao.AppNewsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.back.entity.po.AppNewsPO">
+        <id column="news_id" property="newsId" />
+        <result column="news_name" property="newsName" />
+        <result column="news_content" property="newsContent" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        news_id, news_name, news_content, status, create_time, update_time
+    </sql>
+
+    <!-- 查询最新动态列表 -->
+    <resultMap id="NewsResultMap" type="com.chenyifaer.back.entity.vo.AppNewsVO">
+        <id column="newsId" property="newsId" />
+        <result column="newsName" property="newsName" />
+        <result column="newsContent" property="newsContent" />
+        <result column="status" property="status" />
+        <result column="createTime" property="createTime" />
+        <collection property="urlList" ofType="string" javaType="list">
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+    <select id="getList" resultMap="NewsResultMap">
+        SELECT
+            n.news_id newsId,
+            n.news_name newsName,
+            n.news_content newsContent,
+            n.status status,
+            n.create_time createTime,
+            ni.url url
+        FROM
+            t_app_news n
+        INNER JOIN
+            t_app_news_images ni ON n.news_id = ni.news_id
+        <where>
+            <if test="newsName != null and newsName != ''">
+                AND n.news_name LIKE CONCAT('%',#{newsName},'%')
+            </if>
+            <if test="status != null ">
+                AND n.status = #{status}
+            </if>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                AND
+                DATE_FORMAT(n.create_time,'%Y-%m-%d')
+                BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        ORDER BY n.create_time DESC
+    </select>
+
+</mapper>

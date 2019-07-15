@@ -1,4 +1,4 @@
-package com.chenyifaer.app.controller;
+package com.chenyifaer.back.controller.app;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author wudh
- * @since 2019-07-08
+ * @since 2019-07-12
  */
 @RestController
-@RequestMapping("/appRecommendImgPO")
-public class AppRecommendImgController {
+@RequestMapping("/appRecommendImagesPO")
+public class AppRecommendImagesController {
 
 }

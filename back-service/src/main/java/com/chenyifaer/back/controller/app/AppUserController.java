@@ -1,4 +1,4 @@
-package com.chenyifaer.app.controller;
+package com.chenyifaer.back.controller.app;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 小程序端 - 最新动态图片表 前端控制器
+ * 小程序端 - 用户表 前端控制器
  * </p>
  *
  * @author wudh
- * @since 2019-07-08
+ * @since 2019-07-12
  */
 @RestController
-@RequestMapping("/news/img")
-public class AppNewsImagesController {
+@RequestMapping("/appUserPO")
+public class AppUserController {
 
 }

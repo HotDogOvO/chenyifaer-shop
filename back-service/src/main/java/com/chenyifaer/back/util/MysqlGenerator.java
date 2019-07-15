@@ -28,7 +28,7 @@ public class MysqlGenerator {
         int result = scanner();
 
         //需要生成的表
-        String[] tableList = {"t_shop_goods_sku"};
+        String[] tableList = {"t_app_banner","t_app_music","t_app_news","t_app_news_images","t_app_recommend","t_app_recommend_images","t_app_tea","t_app_user"};
         final String projectPath = "E:\\JAVA\\Idea\\chenyifaer-shop\\back-service";
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator().setGlobalConfig(
