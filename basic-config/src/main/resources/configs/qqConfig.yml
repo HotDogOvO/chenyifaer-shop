@@ -1,0 +1,5 @@
+qq:
+  appKey: 101740252
+  appSecret: 4251d31abbb2413bb758ef90742049d9
+  redirectUri: https://www.chenyifaer67373.com/loginRedirect
+  grant_type: authorization_code
