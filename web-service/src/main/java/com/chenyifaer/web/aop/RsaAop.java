@@ -26,7 +26,7 @@ import java.lang.reflect.Type;
 @Slf4j
 @RestControllerAdvice
 public class RsaAop implements RequestBodyAdvice {
-    
+
 	@Override
 	public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
 		return true;

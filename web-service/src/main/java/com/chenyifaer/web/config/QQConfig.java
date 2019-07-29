@@ -14,28 +14,35 @@ import org.springframework.stereotype.Component;
  */
 
 /**
- * 读取config配置中心的RSA配置
+ * QQ配置文件
  * @Author:wudh
- * @Date: 2019/4/14 16:23
+ * @Date: 2019/7/29 11:42
  */
 @Component
-public class RSAConfig {
+public class QQConfig {
 
-    public static String publicKey;
-    @Value("${RSA.publicKey}")
-    public void setPublicKey(String publicKey) {
-        RSAConfig.publicKey = publicKey;
+    /** App秘钥 */
+    public static String appKey;
+    @Value("${qq.appKey}")
+    public void setAppKey(String appKey) {
+        QQConfig.appKey = appKey;
     }
 
-    public static String privateKey;
-    @Value("${RSA.privateKey}")
-    public void setPrivateKey(String privateKey) {
-        RSAConfig.privateKey = privateKey;
+    public static String appSecret;
+    @Value("${qq.appSecret}")
+    public void setAppSecret(String appSecret) {
+        QQConfig.appSecret = appSecret;
     }
 
-    public static boolean isRSA;
-    @Value("${RSA.isRSA}")
-    public void setIsRSA(boolean isRSA) {
-        RSAConfig.isRSA = isRSA;
+    public static String redirectUri;
+    @Value("${qq.redirectUri}")
+    public void setRedirectUri(String redirectUri) {
+        QQConfig.redirectUri = redirectUri;
+    }
+
+    public static String grantType;
+    @Value("${qq.grantType}")
+    public void setGrantType(String grantType) {
+        QQConfig.grantType = grantType;
     }
 }

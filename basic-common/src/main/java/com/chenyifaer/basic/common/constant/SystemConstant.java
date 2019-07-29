@@ -70,5 +70,12 @@ public class SystemConstant {
 
     /************************系统符号****************************/
     public static final String SYSTEM_SYMBOLS_001 = "/";
+    public static final String SYSTEM_SYMBOLS_002 = "&";
+    public static final String SYSTEM_SYMBOLS_003 = "=";
+    public static final String SYSTEM_SYMBOLS_004 = ",";
+
+    /************************系统参数****************************/
+    public static final String SYSTEM_PARAM_BOY = "男";
+    public static final String SYSTEM_PARAM_GIRL = "女";
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.web.dao.WebUserQQDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.WebUserQQPO">
+        <id column="user_qq_id" property="userQqId" />
+        <result column="user_id" property="userId" />
+        <result column="open_id" property="openId" />
+        <result column="qq_sex" property="qqSex" />
+        <result column="qq_province" property="qqProvince" />
+        <result column="qq_city" property="qqCity" />
+        <result column="qq_year" property="qqYear" />
+        <result column="qq_constellation" property="qqConstellation" />
+        <result column="qq_head_image" property="qqHeadImage" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_qq_id, user_id, open_id, qq_sex, qq_province, qq_city, qq_year, qq_constellation, qq_head_image, create_time, update_time
+    </sql>
+
+</mapper>
