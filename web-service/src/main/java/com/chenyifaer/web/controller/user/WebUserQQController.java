@@ -62,8 +62,9 @@ public class WebUserQQController {
         //查询该用户是否已经存在了，若存在，则直接放行
         int count = this.webUserQQService.count(new QueryWrapper<>(new WebUserQQPO().setOpenId(openId)));
         if(count > 0){
+            List<LoginUserVO> list = this.webUserQQService.getQQLoginUser(new UserQQDTO().setOpenId(openId));
             log.debug("【END】 - function WebUserQQController - qqLogin - 该用户已经存在了，直接放行 - 用户OpenId为：【{}】",openId);
-            return ResponseResult.Success(ResultCodeEnums.SUCCESS);
+            return ResponseResult.Success(ResultCodeEnums.SUCCESS,list);
         }
         //获取用户详情
         QQUserDTO qqUserDTO = qqHanlder.getUserDetail(accessToken,openId);

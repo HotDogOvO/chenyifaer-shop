@@ -22,4 +22,20 @@
         user_qq_id, user_id, open_id, qq_sex, qq_province, qq_city, qq_year, qq_constellation, qq_head_image, create_time, update_time
     </sql>
 
+    <select id="getQQLoginUser" resultType="com.chenyifaer.web.entity.vo.LoginUserVO">
+        SELECT
+            u.user_id userId,
+            u.user_nick_name userNickName,
+            u.STATUS STATUS,
+            r.role_name roleName,
+            uq.qq_head_image userHeadImage
+        FROM
+            t_web_user u
+            INNER JOIN t_web_user_qq uq ON u.user_id = uq.user_id
+            INNER JOIN t_web_user_role ur ON u.user_id = ur.user_id
+            INNER JOIN t_web_role r ON ur.role_id = r.role_id
+        WHERE
+            uq.open_id = #{openId}
+    </select>
+
 </mapper>

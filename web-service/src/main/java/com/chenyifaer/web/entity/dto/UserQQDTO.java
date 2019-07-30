@@ -20,4 +20,7 @@ public class UserQQDTO {
     /** code */
     private String code;
 
+    /** openId */
+    private String openId;
+
 }

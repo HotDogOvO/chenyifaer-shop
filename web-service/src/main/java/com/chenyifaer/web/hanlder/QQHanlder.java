@@ -12,7 +12,6 @@ package com.chenyifaer.web.hanlder;
 import com.alibaba.fastjson.JSONObject;
 import com.chenyifaer.basic.common.constant.SystemConstant;
 import com.chenyifaer.basic.common.util.OkHttpUtil;
-import com.chenyifaer.web.config.QQConfig;
 import com.chenyifaer.web.constant.QQConstant;
 import com.chenyifaer.web.entity.dto.QQUserDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -30,15 +29,23 @@ import java.util.Map;
 @Service
 public class QQHanlder {
 
+//    /** appKey */
+//    public final String appKey = QQConfig.appKey;
+//    /** appSecret */
+//    public final String appSecret = QQConfig.appSecret;
+//    /** redirectUri */
+//    public final String redirectUri = QQConfig.redirectUri;
+//    /** grantType */
+//    public final String grantType = QQConfig.grantType;
     /** appKey */
-    public final String appKey = QQConfig.appKey;
+    public final String appKey = "101740252";
     /** appSecret */
-    public final String appSecret = QQConfig.appSecret;
+    public final String appSecret = "4251d31abbb2413bb758ef90742049d9";
     /** redirectUri */
-    public final String redirectUri = QQConfig.redirectUri;
+    public final String redirectUri = "https://www.chenyifaer67373.com/loginRedirect";
     /** grantType */
-    public final String grantType = QQConfig.grantType;
-    
+    public final String grantType = "authorization_code";
+
     /**
      * 获取AccessToken
      * @Author:wudh
@@ -46,6 +53,12 @@ public class QQHanlder {
      */
     public String getAccessToken(String code){
         log.debug("【START】 - function QQHanlder - getAccessToken");
+        log.debug("【RUN】 - function QQHanlder - getAccessToken - " +
+                "appKey：【{}】，" +
+                "appSecret：【{}】，" +
+                "redirectUri：【{}】，" +
+                "grantType：【{}】",appKey,appSecret,redirectUri,grantType);
+
         String url = QQConstant.ACCESS_TOKEN_URL
                 .replace("${appKey}",appKey)
                 .replace("${appSecret}",appSecret)
