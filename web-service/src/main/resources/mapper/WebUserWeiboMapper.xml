@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenyifaer.web.dao.WebUserWeiboDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chenyifaer.web.entity.po.WebUserWeiboPO">
+        <id column="user_weibo_id" property="userWeiboId" />
+        <result column="user_id" property="userId" />
+        <result column="uid" property="uid" />
+        <result column="screen_name" property="screenName" />
+        <result column="province_id" property="provinceId" />
+        <result column="city_id" property="cityId" />
+        <result column="location" property="location" />
+        <result column="description" property="description" />
+        <result column="weibo_head_image" property="weiboHeadImage" />
+        <result column="weibo_sex" property="weiboSex" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_weibo_id, user_id, uid, screen_name, province_id, city_id, location, description, weibo_head_image, weibo_sex, create_time, update_time
+    </sql>
+
+    <select id="getWeiboLoginUser" resultType="com.chenyifaer.web.entity.vo.LoginUserVO">
+        SELECT
+            u.user_id userId,
+            u.user_nick_name userNickName,
+            u.STATUS STATUS,
+            r.role_name roleName,
+            uw.weibo_head_image userHeadImage
+        FROM
+            t_web_user u
+            INNER JOIN t_web_user_weibo uw ON u.user_id = uw.user_id
+            INNER JOIN t_web_user_role ur ON u.user_id = ur.user_id
+            INNER JOIN t_web_role r ON ur.role_id = r.role_id
+        WHERE
+            uw.uid = #{uid}
+    </select>
+
+</mapper>

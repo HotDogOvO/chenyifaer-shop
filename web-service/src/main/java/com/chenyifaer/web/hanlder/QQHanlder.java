@@ -33,16 +33,16 @@ public class QQHanlder {
 //    public final String appKey = QQConfig.appKey;
 //    /** appSecret */
 //    public final String appSecret = QQConfig.appSecret;
-//    /** redirectUri */
-//    public final String redirectUri = QQConfig.redirectUri;
+//    /** WeiboConfig */
+//    public final String redirectUrl = QQConfig.redirectUrl;
 //    /** grantType */
 //    public final String grantType = QQConfig.grantType;
     /** appKey */
     public final String appKey = "101740252";
     /** appSecret */
     public final String appSecret = "4251d31abbb2413bb758ef90742049d9";
-    /** redirectUri */
-    public final String redirectUri = "https://www.chenyifaer67373.com/loginRedirect";
+    /** WeiboConfig */
+    public final String redirectUrl = "https://www.chenyifaer67373.com/loginRedirect";
     /** grantType */
     public final String grantType = "authorization_code";
 
@@ -56,13 +56,13 @@ public class QQHanlder {
         log.debug("【RUN】 - function QQHanlder - getAccessToken - " +
                 "appKey：【{}】，" +
                 "appSecret：【{}】，" +
-                "redirectUri：【{}】，" +
-                "grantType：【{}】",appKey,appSecret,redirectUri,grantType);
+                "WeiboConfig：【{}】，" +
+                "grantType：【{}】",appKey,appSecret,redirectUrl,grantType);
 
         String url = QQConstant.ACCESS_TOKEN_URL
                 .replace("${appKey}",appKey)
                 .replace("${appSecret}",appSecret)
-                .replace("${redirectUri}",redirectUri)
+                .replace("${redirectUrl}",redirectUrl)
                 .replace("${grantType}",grantType)
                 .replace("${code}",code);
 

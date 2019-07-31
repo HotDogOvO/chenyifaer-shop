@@ -4,4 +4,4 @@ spring:
     config:
       name: dbConfig, ribbonConfig, logConfig, redisConfig, rabbitmqConfig,
             druidConfig, rsaConfig, fileConfig, alipayConfig, kdBirdConfig,
-            emailConfig, qqConfig
+            emailConfig, qqConfig, weiboConfig

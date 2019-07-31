@@ -14,35 +14,35 @@ import org.springframework.stereotype.Component;
  */
 
 /**
- * QQ配置文件
+ * 微博配置文件
  * @Author:wudh
- * @Date: 2019/7/29 11:42
+ * @Date: 2019/7/30 16:29
  */
 @Component
-public class QQConfig {
+public class WeiboConfig {
 
     /** App秘钥 */
     public static String appKey;
-    @Value("${qq.appKey}")
+    @Value("${weibo.appKey}")
     public void setAppKey(String appKey) {
-        QQConfig.appKey = appKey;
+        WeiboConfig.appKey = appKey;
     }
 
     public static String appSecret;
-    @Value("${qq.appSecret}")
+    @Value("${weibo.appSecret}")
     public void setAppSecret(String appSecret) {
-        QQConfig.appSecret = appSecret;
+        WeiboConfig.appSecret = appSecret;
     }
 
     public static String redirectUrl;
-    @Value("${qq.redirectUrl}")
+    @Value("${weibo.redirectUrl}")
     public void setRedirectUrl(String redirectUrl) {
-        QQConfig.redirectUrl = redirectUrl;
+        WeiboConfig.redirectUrl = redirectUrl;
     }
 
     public static String grantType;
-    @Value("${qq.grantType}")
+    @Value("${weibo.grantType}")
     public void setGrantType(String grantType) {
-        QQConfig.grantType = grantType;
+        WeiboConfig.grantType = grantType;
     }
 }

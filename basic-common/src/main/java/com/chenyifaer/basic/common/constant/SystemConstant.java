@@ -77,5 +77,7 @@ public class SystemConstant {
     /************************系统参数****************************/
     public static final String SYSTEM_PARAM_BOY = "男";
     public static final String SYSTEM_PARAM_GIRL = "女";
+    public static final String SYSTEM_PARAM_BOY_CODE = "m";
+    public static final String SYSTEM_PARAM_GIRL_CODE = "f";
 
 }

@@ -17,6 +17,10 @@ import com.chenyifaer.web.hanlder.QQHanlder;
 import com.chenyifaer.web.service.WebUserQQService;
 import com.chenyifaer.web.service.WebUserRoleService;
 import com.chenyifaer.web.service.WebUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +42,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user/qq")
+@Api(value = "登录", tags = {"登录 - QQ登录"})
 public class WebUserQQController {
 
     @Autowired
@@ -52,6 +57,10 @@ public class WebUserQQController {
     @Autowired
     private WebUserRoleService webUserRoleService;
 
+    @ApiOperation(value = "登录 - QQ登录")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "code", value = "code", dataType = "string"),
+    })
     @RequestMapping("/qqLogin")
     public JsonResult qqLogin(@RequestBody UserQQDTO userQQDTO){
         log.debug("【START】 - function WebUserQQController - qqLogin");
