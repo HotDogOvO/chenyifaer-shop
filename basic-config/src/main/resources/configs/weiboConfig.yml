@@ -1,5 +1,5 @@
-qq:
-  appKey: 101740252
-  appSecret: 4251d31abbb2413bb758ef90742049d9
+weibo:
+  appKey: 1201744819
+  appSecret: 946a7b891ec7134f46dd848a02dda47f
   redirectUrl: https://www.chenyifaer67373.com/loginRedirect
   grantType: authorization_code

@@ -33,7 +33,7 @@ public class QQHanlder {
 //    public final String appKey = QQConfig.appKey;
 //    /** appSecret */
 //    public final String appSecret = QQConfig.appSecret;
-//    /** WeiboConfig */
+//    /** redirectUrl */
 //    public final String redirectUrl = QQConfig.redirectUrl;
 //    /** grantType */
 //    public final String grantType = QQConfig.grantType;
@@ -56,7 +56,7 @@ public class QQHanlder {
         log.debug("【RUN】 - function QQHanlder - getAccessToken - " +
                 "appKey：【{}】，" +
                 "appSecret：【{}】，" +
-                "WeiboConfig：【{}】，" +
+                "redirectUrl：【{}】，" +
                 "grantType：【{}】",appKey,appSecret,redirectUrl,grantType);
 
         String url = QQConstant.ACCESS_TOKEN_URL

@@ -36,14 +36,6 @@ public class WeiboHanlder {
     public final String redirectUrl = WeiboConfig.redirectUrl;
     /** grantType */
     public final String grantType = WeiboConfig.grantType;
-//    /** appKey */
-//    public final String appKey = "101740252";
-//    /** appSecret */
-//    public final String appSecret = "4251d31abbb2413bb758ef90742049d9";
-//    /** redirectUrl */
-//    public final String redirectUrl = "https://www.chenyifaer67373.com/loginRedirect";
-//    /** grantType */
-//    public final String grantType = "authorization_code";
 
     /**
      * 获取AccessToken & uid

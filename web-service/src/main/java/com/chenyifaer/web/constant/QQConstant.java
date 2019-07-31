@@ -17,7 +17,7 @@ package com.chenyifaer.web.constant;
 public class QQConstant {
 
     /** 获取AccessToken */
-    public static final String ACCESS_TOKEN_URL = "https://graph.qq.com/oauth2.0/token?grant_type=${grantType}&client_id=${appKey}&client_secret=${appSecret}&code=${code}&redirect_uri=${redirectUri}";
+    public static final String ACCESS_TOKEN_URL = "https://graph.qq.com/oauth2.0/token?grant_type=${grantType}&client_id=${appKey}&client_secret=${appSecret}&code=${code}&redirect_uri=${redirectUrl}";
 
     /** 获取OpenId */
     public static final String OPEN_ID_URL = "https://graph.qq.com/oauth2.0/me?access_token=${accessToken}";
