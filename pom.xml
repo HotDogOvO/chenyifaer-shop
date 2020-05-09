@@ -22,6 +22,7 @@
         <module>basic-config</module>
         <module>back-service</module>
         <module>web-service</module>
+        <module>app-service</module>
     </modules>
 
     <properties>
